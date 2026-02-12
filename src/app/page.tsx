@@ -1,5 +1,23 @@
 import Link from "next/link";
 
+const audienceBlocks = [
+  {
+    title: "For Guests",
+    text: "Hand-picked villas with local support, transfers, and activities. Book with confidence.",
+    href: "/vacation-assistance",
+  },
+  {
+    title: "For Owners",
+    text: "Choose the right management model and grow revenue with transparent reporting.",
+    href: "/for-owners",
+  },
+  {
+    title: "Collaborate",
+    text: "PMCs, providers, and agents: partner for net pricing, listings, and shared tools.",
+    href: "/collaborate",
+  },
+];
+
 const destinations = [
   { name: "Santorini", tags: ["Luxury", "Romance"], href: "/destinations/santorini" },
   { name: "Crete", tags: ["Family", "Gastronomy"], href: "/destinations/crete" },
@@ -60,6 +78,27 @@ const ctas = [
   },
 ];
 
+const blogCards = [
+  {
+    title: "Best areas in Santorini for families",
+    category: "Destinations",
+    readTime: "6 min read",
+    href: "/blog/best-areas-in-santorini-for-families",
+  },
+  {
+    title: "What to ask before booking a villa",
+    category: "Guests",
+    readTime: "5 min read",
+    href: "/blog/what-to-ask-before-booking-a-villa",
+  },
+  {
+    title: "How to build the perfect trip plan",
+    category: "Concierge",
+    readTime: "4 min read",
+    href: "/blog/how-to-build-the-perfect-trip-plan",
+  },
+];
+
 export default function Home() {
   return (
     <main className="bg-slate-50 text-slate-900">
@@ -81,7 +120,7 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
+      <section className="mx-auto max-w-6xl px-6 py-14 sm:py-20">
         <p className="text-sm font-semibold uppercase tracking-wide text-sky-700">
           Trusted villa stays & management · 18+ years
         </p>
@@ -92,11 +131,25 @@ export default function Home() {
           Villa4you connects vetted villas, expert trip planning, and professional property
           management across Greece. Book with confidence and get local support where it matters.
         </p>
+
         <div className="mt-8 flex flex-wrap gap-3 text-sm">
           <span className="rounded-full bg-white px-4 py-2 shadow-sm">⭐ 4.8/5 guest reviews</span>
           <span className="rounded-full bg-white px-4 py-2 shadow-sm">🏝️ 6+ destinations</span>
-          <span className="rounded-full bg-white px-4 py-2 shadow-sm">🔄 seamless bookings</span>
+          <span className="rounded-full bg-white px-4 py-2 shadow-sm">🔄 seamless Planyo bookings</span>
         </div>
+      </section>
+
+      <section className="mx-auto grid max-w-6xl gap-4 px-6 pb-16 md:grid-cols-3">
+        {audienceBlocks.map((block) => (
+          <Link
+            key={block.title}
+            href={block.href}
+            className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow"
+          >
+            <h2 className="text-xl font-semibold">{block.title}</h2>
+            <p className="mt-2 text-sm text-slate-600">{block.text}</p>
+          </Link>
+        ))}
       </section>
 
       <section className="mx-auto grid max-w-6xl gap-6 px-6 pb-16 md:grid-cols-3">
@@ -135,6 +188,18 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-6 pb-16">
+        <div className="rounded-2xl bg-white p-7 shadow-sm">
+          <p className="text-sm leading-7 text-slate-700 sm:text-base">
+            “Flawless stay and concierge — transfers and a chef arranged in hours. Booking was super
+            clear.”
+          </p>
+          <p className="mt-3 text-xs font-medium uppercase tracking-wide text-slate-500">
+            Sofia K., Athens → Santorini, July 2025
+          </p>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-16">
         <h2 className="text-2xl font-bold">How it works</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-3">
           {steps.map((step) => (
@@ -164,10 +229,24 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-6xl px-6 pb-20">
+        <h2 className="text-2xl font-bold">From the journal</h2>
+        <div className="mt-5 grid gap-4 md:grid-cols-3">
+          {blogCards.map((post) => (
+            <Link key={post.title} href={post.href} className="rounded-2xl bg-white p-6 shadow-sm">
+              <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                {post.category} · {post.readTime}
+              </p>
+              <h3 className="mt-2 font-semibold">{post.title}</h3>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-6 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Villa4you. Homepage React pilot.</p>
-          <p>Next step: responsive polish + exact content parity + API form wiring.</p>
+          <p>Next step: API form wiring + destination/listing page templates.</p>
         </div>
       </footer>
     </main>
