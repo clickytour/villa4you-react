@@ -78,64 +78,91 @@ const ctas = [
   },
 ];
 
-const blogCards = [
-  {
-    title: "Best areas in Santorini for families",
-    category: "Destinations",
-    readTime: "6 min read",
-    href: "/blog/best-areas-in-santorini-for-families",
-  },
-  {
-    title: "What to ask before booking a villa",
-    category: "Guests",
-    readTime: "5 min read",
-    href: "/blog/what-to-ask-before-booking-a-villa",
-  },
-  {
-    title: "How to build the perfect trip plan",
-    category: "Concierge",
-    readTime: "4 min read",
-    href: "/blog/how-to-build-the-perfect-trip-plan",
-  },
-];
-
 export default function Home() {
   return (
     <main className="bg-slate-50 text-slate-900">
       <header className="sticky top-0 z-20 border-b border-slate-200/80 bg-white/90 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          <div className="text-lg font-semibold tracking-tight text-sky-900">Villa4you</div>
+          <div className="text-lg font-semibold tracking-tight text-slate-700">villa4you</div>
           <nav className="hidden gap-6 text-sm text-slate-700 md:flex">
-            <Link href="/destinations">Destinations</Link>
-            <Link href="/listing">Villas</Link>
-            <Link href="/for-owners">For owners</Link>
+            <Link href="/for-guests">For Guests</Link>
+            <Link href="/for-owners">For Owners</Link>
             <Link href="/collaborate">Collaborate</Link>
+            <Link href="/about">About</Link>
+            <Link href="/support">Support</Link>
+            <Link href="/blog">Blog</Link>
           </nav>
-          <Link
-            href="/vacation-assistance"
-            className="rounded-lg bg-sky-900 px-3 py-2 text-sm font-medium text-white"
-          >
-            Plan your trip
-          </Link>
+          <input
+            className="hidden rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm md:block"
+            value="Where to or what trip?"
+            readOnly
+          />
         </div>
       </header>
 
-      <section className="mx-auto max-w-6xl px-6 py-14 sm:py-20">
-        <p className="text-sm font-semibold uppercase tracking-wide text-sky-700">
-          Trusted villa stays & management · 18+ years
-        </p>
-        <h1 className="mt-4 max-w-3xl text-4xl font-bold leading-tight sm:text-5xl">
-          Find the perfect villa for your vacations in Greece
-        </h1>
-        <p className="mt-6 max-w-3xl text-lg text-slate-600">
-          Villa4you connects vetted villas, expert trip planning, and professional property
-          management across Greece. Book with confidence and get local support where it matters.
-        </p>
+      <section className="mx-auto max-w-6xl px-6 py-10">
+        <div className="grid gap-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm lg:grid-cols-2 lg:p-6">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-emerald-700">
+              Trusted villa stays & management · 18+ years
+            </p>
+            <h1 className="mt-3 text-4xl font-semibold leading-tight sm:text-5xl">
+              Find the perfect villa for your vacations in Greece
+            </h1>
+            <p className="mt-4 max-w-2xl text-lg text-slate-600">
+              Villa4you connects vetted villas, expert trip planning, and pro property management
+              across Greece. Book via Planyo, manage in Kommo, powered by ClickyTour Core.
+            </p>
 
-        <div className="mt-8 flex flex-wrap gap-3 text-sm">
-          <span className="rounded-full bg-white px-4 py-2 shadow-sm">⭐ 4.8/5 guest reviews</span>
-          <span className="rounded-full bg-white px-4 py-2 shadow-sm">🏝️ 6+ destinations</span>
-          <span className="rounded-full bg-white px-4 py-2 shadow-sm">🔄 seamless Planyo bookings</span>
+            <div className="mt-4 flex flex-wrap gap-2 text-sm">
+              <span className="rounded-full bg-emerald-50 px-3 py-1 text-emerald-700">Guests</span>
+              <span className="rounded-full bg-rose-50 px-3 py-1 text-rose-700">Owners</span>
+              <span className="rounded-full bg-violet-50 px-3 py-1 text-violet-700">Collaborate</span>
+            </div>
+
+            <div className="mt-4 flex gap-3">
+              <button className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white">
+                Find a Villa
+              </button>
+              <button className="rounded-xl border border-slate-300 px-4 py-2 text-sm font-medium">
+                Plan My Trip
+              </button>
+            </div>
+
+            <div className="mt-5 grid gap-3 rounded-xl border border-slate-200 p-3 sm:grid-cols-5">
+              <input className="rounded-lg border border-slate-200 px-3 py-2 text-sm" value="Destination" readOnly />
+              <input className="rounded-lg border border-slate-200 px-3 py-2 text-sm" value="Check-in" readOnly />
+              <input className="rounded-lg border border-slate-200 px-3 py-2 text-sm" value="Check-out" readOnly />
+              <input className="rounded-lg border border-slate-200 px-3 py-2 text-sm" value="Adults" readOnly />
+              <button className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white">Search</button>
+            </div>
+
+            <div className="mt-4 flex flex-wrap gap-3 text-sm text-slate-600">
+              <span>⭐ 4.8/5 guest reviews</span>
+              <span>🏝️ 6+ top destinations</span>
+              <span>🔄 seamless Planyo bookings</span>
+            </div>
+          </div>
+
+          <aside className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <h2 className="text-2xl font-semibold">Quick Request</h2>
+            <p className="text-sm text-slate-600">Get a shortlist fast — 60 seconds.</p>
+
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <label className="text-sm font-medium">Check-in *<input className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2" value="dd/mm/yyyy" readOnly /></label>
+              <label className="text-sm font-medium">Check-out *<input className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2" value="dd/mm/yyyy" readOnly /></label>
+              <label className="text-sm font-medium">Bedrooms *<input className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2" value="Please Select" readOnly /></label>
+              <label className="text-sm font-medium">Adults *<input className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2" value="Please Select" readOnly /></label>
+              <label className="text-sm font-medium">Children (3–14 age) *<input className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2" value="Please Select" readOnly /></label>
+              <label className="text-sm font-medium">Children (0–3 age)<input className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2" value="0" readOnly /></label>
+              <label className="text-sm font-medium">Distance to the beach<input className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2" value="Please Select" readOnly /></label>
+              <label className="text-sm font-medium">Distance to infrastructures<input className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2" value="Please Select" readOnly /></label>
+            </div>
+
+            <div className="mt-4 flex justify-end">
+              <button className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white">Next</button>
+            </div>
+          </aside>
         </div>
       </section>
 
@@ -188,18 +215,6 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-6 pb-16">
-        <div className="rounded-2xl bg-white p-7 shadow-sm">
-          <p className="text-sm leading-7 text-slate-700 sm:text-base">
-            “Flawless stay and concierge — transfers and a chef arranged in hours. Booking was super
-            clear.”
-          </p>
-          <p className="mt-3 text-xs font-medium uppercase tracking-wide text-slate-500">
-            Sofia K., Athens → Santorini, July 2025
-          </p>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-6 pb-16">
         <h2 className="text-2xl font-bold">How it works</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-3">
           {steps.map((step) => (
@@ -228,27 +243,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-      <section className="mx-auto max-w-6xl px-6 pb-20">
-        <h2 className="text-2xl font-bold">From the journal</h2>
-        <div className="mt-5 grid gap-4 md:grid-cols-3">
-          {blogCards.map((post) => (
-            <Link key={post.title} href={post.href} className="rounded-2xl bg-white p-6 shadow-sm">
-              <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-                {post.category} · {post.readTime}
-              </p>
-              <h3 className="mt-2 font-semibold">{post.title}</h3>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <footer className="border-t border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-6 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Villa4you. Homepage React pilot.</p>
-          <p>Next step: API form wiring + destination/listing page templates.</p>
-        </div>
-      </footer>
     </main>
   );
 }
