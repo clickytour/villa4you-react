@@ -108,13 +108,13 @@ export function ForOwnersSections() {
 
           <div className="mt-4 grid gap-3 md:grid-cols-3">
             {ownerModels.map((model) => (
-              <article key={model.title} className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+              <article key={model.title} className="flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white">
                 <div className="border-b border-slate-200 p-4">
                   <h3 className="text-[34px] font-semibold leading-none text-slate-900">{model.title}</h3>
                   <span className="mt-3 inline-block rounded-full border border-slate-300 px-2 py-1 text-[12px] text-slate-600">{model.badge}</span>
                 </div>
 
-                <div className="space-y-2.5 p-4">
+                <div className="flex-1 space-y-2.5 p-4">
                   {model.bullets.map((bullet) => (
                     <p key={bullet} className="text-[21px] text-slate-700">✓ {bullet}</p>
                   ))}
@@ -122,7 +122,7 @@ export function ForOwnersSections() {
                 </div>
 
                 <div className="border-t border-slate-200 p-4">
-                  <div className="flex flex-wrap items-center gap-3">
+                  <div className="flex flex-nowrap items-center gap-3">
                     <button className="whitespace-nowrap rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-medium text-white">{model.primaryCta}</button>
                     <button className="whitespace-nowrap rounded-xl border border-slate-400 bg-white px-5 py-2.5 text-sm font-medium text-slate-800">Learn more</button>
                   </div>
