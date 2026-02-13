@@ -148,27 +148,17 @@ export function ForGuestsSections() {
       </section>
 
       <section className="mx-auto max-w-[1280px] px-4 pb-10">
-        <div className="rounded-[24px] border border-slate-200 bg-white/95 p-5 shadow-sm md:p-6">
-          <h2 className="text-[42px] font-semibold tracking-[-0.01em] text-slate-900">What to do & where to go</h2>
-          <p className="mt-1 text-[22px] text-slate-700">Seasonal guides and experiences in our most popular areas.</p>
-
-          <div className="mt-4 grid gap-3 md:grid-cols-4">
-            <article className="rounded-xl border border-slate-200 bg-white p-4">
-              <h3 className="text-[30px] font-semibold leading-none text-slate-900">Santorini — Best Things to Do</h3>
-              <p className="mt-3 text-[21px] text-slate-700">Sunset spots, wine tours, sailing, cliff-side dining.</p>
-            </article>
-            <article className="rounded-xl border border-slate-200 bg-white p-4">
-              <h3 className="text-[30px] font-semibold leading-none text-slate-900">Halkidiki — Family Beaches</h3>
-              <p className="mt-3 text-[21px] text-slate-700">Calm bays, boat days, pine-framed waters.</p>
-            </article>
-            <article className="rounded-xl border border-slate-200 bg-white p-4">
-              <h3 className="text-[30px] font-semibold leading-none text-slate-900">Athens — Culture & Food</h3>
-              <p className="mt-3 text-[21px] text-slate-700">Acropolis, neighborhoods, restaurants, day trips.</p>
-            </article>
-            <article className="rounded-xl border border-slate-200 bg-white p-4">
-              <h3 className="text-[30px] font-semibold leading-none text-slate-900">Thessaloniki — City by the Sea</h3>
-              <p className="mt-3 text-[21px] text-slate-700">Waterfront walks, markets, Byzantine gems.</p>
-            </article>
+        <div className="rounded-[24px] border border-slate-200 bg-white/95 p-6 text-center shadow-sm md:p-8">
+          <h2 className="text-[42px] font-semibold leading-none tracking-[-0.01em] text-slate-900">
+            Need a shortlist tailored to your dates?
+          </h2>
+          <p className="mt-3 text-[21px] text-slate-700">
+            Tell us your dates, group size, and vibe—we&apos;ll send 3–5 perfect options.
+          </p>
+          <div className="mt-5">
+            <button className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-medium text-white">
+              Get a Free Trip Plan
+            </button>
           </div>
         </div>
       </section>
