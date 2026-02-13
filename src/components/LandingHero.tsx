@@ -2,6 +2,7 @@ import type { HeroPageConfig } from "@/lib/landingHeroes";
 
 export function LandingHero({ config }: { config: HeroPageConfig }) {
   const isGuests = config.slug === "for-guests";
+  const isHomepageTemplate = config.slug === "homepage-template";
   return (
     <main className="min-h-screen bg-[#f3f5f8] text-slate-900">
       <section className="mx-auto max-w-[1280px] px-4 py-8">
@@ -48,12 +49,25 @@ export function LandingHero({ config }: { config: HeroPageConfig }) {
                 )}
               </div>
 
-              <div className="mt-4 rounded-[12px] border border-slate-300 bg-white/85 p-3 backdrop-blur">
-                <p className="text-[12px] font-semibold uppercase tracking-[0.05em] text-slate-700">Key value proposition</p>
-                <p className="mt-1 text-[14px] text-slate-700 md:text-[15px]">
-                  Better matching, better communication, and better outcomes for guests, owners, and partners.
-                </p>
-              </div>
+              {isHomepageTemplate ? (
+                <div className="mt-4 rounded-[12px] border border-slate-300 bg-white/85 p-3 backdrop-blur">
+                  <div className="grid gap-2 lg:grid-cols-12">
+                    <input className="h-10 rounded-lg border border-slate-300 bg-white px-3 text-[13px] text-slate-800 placeholder:text-slate-500 lg:col-span-4" placeholder="Type a place (e.g., Santorini, Paros)" />
+                    <input className="h-10 rounded-lg border border-slate-300 bg-white px-3 text-[13px] text-slate-800 placeholder:text-slate-500 lg:col-span-2" placeholder="dd/mm/yyyy" />
+                    <input className="h-10 rounded-lg border border-slate-300 bg-white px-3 text-[13px] text-slate-800 placeholder:text-slate-500 lg:col-span-2" placeholder="dd/mm/yyyy" />
+                    <input className="h-10 rounded-lg border border-slate-300 bg-white px-3 text-[13px] text-slate-800 lg:col-span-2" defaultValue="2" />
+                    <button className="h-10 rounded-lg bg-slate-900 px-4 text-[14px] font-medium text-white lg:col-span-2">Search</button>
+                  </div>
+                  <p className="mt-1.5 text-[11px] text-slate-600">Tip: this destination will also be included in the Quick Request.</p>
+                </div>
+              ) : (
+                <div className="mt-4 rounded-[12px] border border-slate-300 bg-white/85 p-3 backdrop-blur">
+                  <p className="text-[12px] font-semibold uppercase tracking-[0.05em] text-slate-700">Key value proposition</p>
+                  <p className="mt-1 text-[14px] text-slate-700 md:text-[15px]">
+                    Better matching, better communication, and better outcomes for guests, owners, and partners.
+                  </p>
+                </div>
+              )}
 
               <div className="mt-3 flex flex-wrap gap-4 text-[14px] text-slate-700">
                 {config.trust.map((item) => (
@@ -73,18 +87,35 @@ export function LandingHero({ config }: { config: HeroPageConfig }) {
             ) : (
               <aside className="w-full max-w-[360px] rounded-[16px] border border-slate-300 bg-white/90 p-4 shadow-sm">
                 <h2 className="text-[18px] font-semibold leading-none text-slate-900">{config.panelTitle}</h2>
-                <p className="mt-1 text-[11px] text-slate-600">Contextual guidance block replacing the old quick request form.</p>
+                <p className="mt-1 text-[11px] text-slate-600">{config.panelFooter || "Contextual guidance block replacing the old quick request form."}</p>
 
-                <div className="mt-3 space-y-2.5">
-                  {config.panelItems.map((item) => (
-                    <div key={item.label} className="rounded-xl border border-slate-200 bg-slate-50/80 p-2.5">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.06em] text-slate-600">{item.label}</p>
-                      <p className="mt-1 text-[13px] text-slate-800">{item.value}</p>
-                    </div>
-                  ))}
-                </div>
+                {isHomepageTemplate ? (
+                  <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                    {config.panelItems.map((item) => (
+                      <label key={item.label} className="text-[10px] font-semibold text-slate-700">
+                        {item.label}
+                        <input className="mt-1 h-9 w-full rounded-md border border-slate-300 bg-white px-2.5 text-[12px] text-slate-800" defaultValue={item.value} />
+                      </label>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="mt-3 space-y-2.5">
+                    {config.panelItems.map((item) => (
+                      <div key={item.label} className="rounded-xl border border-slate-200 bg-slate-50/80 p-2.5">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.06em] text-slate-600">{item.label}</p>
+                        <p className="mt-1 text-[13px] text-slate-800">{item.value}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
-                <div className="mt-3 rounded-lg border border-blue-100 bg-blue-50 p-2.5 text-[12px] text-blue-900">{config.panelFooter}</div>
+                {isHomepageTemplate ? (
+                  <div className="mt-3 flex justify-end">
+                    <button className="h-9 min-w-[72px] rounded-md bg-blue-600 px-3 text-[13px] font-semibold text-white">Next</button>
+                  </div>
+                ) : (
+                  <div className="mt-3 rounded-lg border border-blue-100 bg-blue-50 p-2.5 text-[12px] text-blue-900">{config.panelFooter}</div>
+                )}
               </aside>
             )}
           </div>
