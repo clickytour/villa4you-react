@@ -40,6 +40,7 @@ const labelClass = "text-sm font-medium text-slate-700";
 
 export function FreeEvaluationSections() {
   const [step, setStep] = useState(1);
+  const [requestType, setRequestType] = useState("Property Evaluation");
 
   return (
     <>
@@ -166,10 +167,56 @@ export function FreeEvaluationSections() {
               <fieldset className="mt-4 rounded-xl border border-slate-200 p-3">
                 <legend className="px-2 text-sm font-semibold text-slate-800">Start</legend>
                 <div className="grid gap-3 md:grid-cols-2">
-                  <label className={labelClass}>What do you need? *<select className={inputClass}><option>Property Evaluation</option><option>Listing & Marketing</option><option>Full Management</option><option>Consultation</option></select></label>
+                  <label className={labelClass}>What do you need? *
+                    <select className={inputClass} value={requestType} onChange={(e) => setRequestType(e.target.value)}>
+                      <option>Property Evaluation</option>
+                      <option>Listing & Marketing</option>
+                      <option>Full Management</option>
+                      <option>Consultation</option>
+                    </select>
+                  </label>
                   <label className={labelClass}>Property Type *<select className={inputClass}><option>Villa</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Maisonette</option><option>Other</option></select></label>
                 </div>
               </fieldset>
+
+              {requestType === "Property Evaluation" && (
+                <fieldset className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50/40 p-3">
+                  <legend className="px-2 text-sm font-semibold text-emerald-800">Evaluation Snapshot</legend>
+                  <div className="grid gap-3 md:grid-cols-2">
+                    <label className={labelClass}>Current nightly range (€)<input className={inputClass} placeholder="e.g. 250-420" /></label>
+                    <label className={labelClass}>Target monthly revenue (€)<input className={inputClass} placeholder="Optional" /></label>
+                  </div>
+                </fieldset>
+              )}
+
+              {requestType === "Listing & Marketing" && (
+                <fieldset className="mt-4 rounded-xl border border-sky-200 bg-sky-50/40 p-3">
+                  <legend className="px-2 text-sm font-semibold text-sky-800">Listing & Marketing Focus</legend>
+                  <div className="grid gap-3 md:grid-cols-2">
+                    <label className={labelClass}>Existing listing URL<input className={inputClass} placeholder="https://..." /></label>
+                    <label className={labelClass}>Main issue<select className={inputClass}><option>Low visibility</option><option>Low conversion</option><option>Weak pricing</option><option>Content quality</option></select></label>
+                  </div>
+                </fieldset>
+              )}
+
+              {requestType === "Full Management" && (
+                <fieldset className="mt-4 rounded-xl border border-violet-200 bg-violet-50/40 p-3">
+                  <legend className="px-2 text-sm font-semibold text-violet-800">Full Management Needs</legend>
+                  <div className="grid gap-3 md:grid-cols-2">
+                    <label className={labelClass}>Current management status<select className={inputClass}><option>Self-managed</option><option>Agency-managed</option><option>Mixed</option></select></label>
+                    <label className={labelClass}>Preferred start month<input className={inputClass} placeholder="e.g. May 2026" /></label>
+                  </div>
+                </fieldset>
+              )}
+
+              {requestType === "Consultation" && (
+                <fieldset className="mt-4 rounded-xl border border-amber-200 bg-amber-50/40 p-3">
+                  <legend className="px-2 text-sm font-semibold text-amber-800">Consultation Brief</legend>
+                  <div className="grid gap-3 md:grid-cols-1">
+                    <label className={labelClass}>What do you want to discuss first?<textarea className={inputClass} rows={3} placeholder="Your goals, blockers, timeline..." /></label>
+                  </div>
+                </fieldset>
+              )}
 
               <fieldset className="mt-4 rounded-xl border border-slate-200 p-3">
                 <legend className="px-2 text-sm font-semibold text-slate-800">Owner / Contact</legend>
