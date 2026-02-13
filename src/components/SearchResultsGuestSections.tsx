@@ -197,9 +197,9 @@ export function SearchResultsGuestSections() {
                   ))}
                 </div>
               </div>
-              <div className="flex gap-2 border-t border-slate-300 p-3">
-                <button className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white">Check availability</button>
-                <button className="rounded-xl border border-slate-800 bg-white px-4 py-2 text-sm font-medium text-slate-900">View details</button>
+              <div className="flex flex-nowrap gap-2 border-t border-slate-300 p-3">
+                <button className="whitespace-nowrap rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white">Check availability</button>
+                <button className="whitespace-nowrap rounded-xl border border-slate-800 bg-white px-4 py-2 text-sm font-medium text-slate-900">View details</button>
               </div>
             </article>
           ))}
