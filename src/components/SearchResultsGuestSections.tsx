@@ -172,7 +172,7 @@ export function SearchResultsGuestSections() {
               ))}
             </div>
             <div className="flex items-center gap-3">
-              <select className="rounded-lg border border-slate-300 px-3 py-2 text-sm"><option>Sort: Relevance</option></select>
+              <select className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"><option>Sort: Relevance</option></select>
               <button className="rounded-xl border border-slate-800 bg-white px-4 py-2 text-sm font-medium text-slate-900">Reset filters</button>
             </div>
           </div>
