@@ -4,7 +4,17 @@ import { useMemo, useState } from "react";
 
 type RoleKey = "guests" | "owners" | "collab";
 
-const roleCfg = {
+type RoleConfig = {
+  eyebrow: string;
+  h1: string;
+  p: string;
+  ctas: [string, string];
+  kpis: string[];
+  trustTitle: string;
+  howSteps: string[];
+};
+
+const roleCfg: Record<RoleKey, RoleConfig> = {
   guests: {
     eyebrow: "Trusted villa stays & management · 18+ years",
     h1: "Find the perfect villa for your vacations in Greece",
@@ -12,6 +22,7 @@ const roleCfg = {
     ctas: ["Find a Villa", "Plan My Trip"],
     kpis: ["⭐ 4.8/5 guest reviews", "🏝️ 6+ top destinations", "🔄 seamless Planyo bookings"],
     trustTitle: "Why Villa4you?",
+    howSteps: ["Choose destination + dates", "Get curated villa shortlist", "Book with confidence"],
   },
   owners: {
     eyebrow: "Owners · Transparent management & reporting",
@@ -20,6 +31,7 @@ const roleCfg = {
     ctas: ["Free evaluation", "See how it works"],
     kpis: ["📈 Revenue strategy", "🧾 Transparent reporting", "🧰 Ops playbooks"],
     trustTitle: "Why owners choose Villa4you",
+    howSteps: ["Property audit", "Pricing & operations plan", "Monthly performance loop"],
   },
   collab: {
     eyebrow: "Partners · Agents · Providers · PMCs",
@@ -28,8 +40,9 @@ const roleCfg = {
     ctas: ["Partner programs", "Agents & affiliates"],
     kpis: ["🤝 Partner programs", "🏷️ Net pricing", "🔌 Tools & integrations"],
     trustTitle: "Why partners work with Villa4you",
+    howSteps: ["Onboard partner", "Publish offers & assets", "Scale with shared pipeline"],
   },
-} as const;
+};
 
 const collabPosts = [
   { title: "How agents earn with net pricing", meta: "Collaborate · 4 min read" },
@@ -37,12 +50,14 @@ const collabPosts = [
   { title: "How to list services effectively", meta: "Providers · 4 min read" },
 ];
 
+const destinations = ["Santorini", "Mykonos", "Paros", "Crete", "Rhodes", "Corfu"];
+
 export function HomepageRoleExperience() {
   const [role, setRole] = useState<RoleKey>("guests");
   const cfg = useMemo(() => roleCfg[role], [role]);
 
   return (
-    <main className="min-h-screen bg-[#f3f5f8] text-slate-900">
+    <main className="min-h-screen bg-[#f3f5f8] pb-24 text-slate-900 md:pb-10">
       <section className="mx-auto max-w-[1200px] px-4 py-8">
         <div className="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
           <div className="mb-5 flex flex-wrap gap-2">
@@ -97,6 +112,33 @@ export function HomepageRoleExperience() {
 
       <section className="mx-auto max-w-[1200px] px-4 pb-6">
         <div className="rounded-2xl border bg-white p-5 shadow-sm">
+          <h2 className="text-lg font-semibold">How it works</h2>
+          <div className="mt-3 grid gap-3 md:grid-cols-3">
+            {cfg.howSteps.map((step, i) => (
+              <div key={step} className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm">
+                <p className="text-xs font-semibold text-slate-500">STEP {i + 1}</p>
+                <p className="mt-1 font-medium text-slate-800">{step}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1200px] px-4 pb-6">
+        <div className="rounded-2xl border bg-white p-5 shadow-sm">
+          <h2 className="text-lg font-semibold">Top destinations</h2>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {destinations.map((d) => (
+              <span key={d} className="rounded-full border border-slate-300 px-3 py-1.5 text-sm">
+                {d}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1200px] px-4 pb-6">
+        <div className="rounded-2xl border bg-white p-5 shadow-sm">
           <h2 className="text-lg font-semibold">{cfg.trustTitle}</h2>
           <ul className="mt-3 grid gap-2 text-sm text-slate-700 md:grid-cols-2">
             <li>• Trusted network and operational consistency</li>
@@ -104,6 +146,9 @@ export function HomepageRoleExperience() {
             <li>• Clear process visibility for teams and partners</li>
             <li>• Baseline aligned to approved homepage system</li>
           </ul>
+          <blockquote className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">
+            “Fast response, clear options, and smooth booking handoff.”
+          </blockquote>
         </div>
       </section>
 
