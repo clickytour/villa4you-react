@@ -4,8 +4,8 @@ export function LandingHero({ config }: { config: HeroPageConfig }) {
   const isGuests = config.slug === "for-guests";
   const isHomepageTemplate = config.slug === "homepage-template";
   return (
-    <main className="min-h-screen bg-[#f3f5f8] text-slate-900">
-      <section className="mx-auto max-w-[1280px] px-4 py-8">
+    <main className="bg-[#f3f5f8] text-slate-900">
+      <section className="mx-auto max-w-[1280px] px-4 py-6">
         <div
           className="overflow-hidden rounded-[24px] border border-slate-200 p-4 md:p-6"
           style={{
