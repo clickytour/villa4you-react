@@ -38,6 +38,12 @@ Approved by Drcris as production reference set:
 - `/search-results-page-for-guests`
 - `/vacation-property-management`
 
+## Confluence approval rule
+For every approved hero/page:
+- Save the approval note in Confluence.
+- Include preview link(s) used for approval (Vercel URL + route URLs where applicable).
+- Keep links updated for future bot/agent handovers.
+
 ## Process note
 When starting any new hero session, begin from this baseline first, then apply page-specific adjustments.
 This approved 6-hero set is the reusable starting point for future bots/agents.
