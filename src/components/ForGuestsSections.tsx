@@ -110,6 +110,43 @@ export function ForGuestsSections() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-[1280px] px-4 pb-6">
+        <div className="rounded-[24px] border border-slate-200 bg-white/95 p-5 shadow-sm md:p-6">
+          <h2 className="text-[42px] font-semibold tracking-[-0.01em] text-slate-900">Guest FAQ</h2>
+
+          <div className="mt-4 overflow-hidden rounded-xl border border-slate-200 bg-white">
+            <article className="border-b border-slate-200 p-4">
+              <h3 className="text-[30px] font-semibold leading-none text-slate-900">How do I check availability?</h3>
+              <p className="mt-3 text-[21px] text-slate-700">
+                Open a property page and click <em>Check Availability</em> to load Planyo&apos;s live calendar.
+              </p>
+            </article>
+
+            <article className="border-b border-slate-200 p-4">
+              <h3 className="text-[30px] font-semibold leading-none text-slate-900">Can you help me choose a villa?</h3>
+              <p className="mt-3 text-[21px] text-slate-700">
+                Yes—use <span className="text-rose-700">Vacation Assistance</span> and we&apos;ll shortlist options.
+              </p>
+            </article>
+
+            <article className="border-b border-slate-200 p-4">
+              <h3 className="text-[30px] font-semibold leading-none text-slate-900">Do you arrange airport transfers?</h3>
+              <p className="mt-3 text-[21px] text-slate-700">
+                Absolutely. Add private transfers, drivers, and day trips during or after booking.
+              </p>
+            </article>
+
+            <article className="border border-blue-600 p-4">
+              <h3 className="text-[30px] font-semibold leading-none text-slate-900">What&apos;s your cancellation policy?</h3>
+              <p className="mt-3 text-[21px] text-slate-700">
+                Policies vary by property—see the <em>Policies</em> section on each listing or our{" "}
+                <span className="text-rose-700">Policies page</span>.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section className="mx-auto max-w-[1280px] px-4 pb-10">
         <div className="rounded-[24px] border border-slate-200 bg-white/95 p-5 shadow-sm md:p-6">
           <h2 className="text-[42px] font-semibold tracking-[-0.01em] text-slate-900">What to do & where to go</h2>
