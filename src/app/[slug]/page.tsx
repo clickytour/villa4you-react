@@ -12,9 +12,9 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
   }
 
   return (
-    <>
+    <div className="min-h-screen bg-[#f3f5f8]">
       <LandingHero config={page} />
       {slug === "for-guests" && <ForGuestsSections />}
-    </>
+    </div>
   );
 }
