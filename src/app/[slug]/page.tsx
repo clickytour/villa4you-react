@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { LandingHero } from "@/components/LandingHero";
+import { ForGuestsSections } from "@/components/ForGuestsSections";
 import { heroPagesBySlug } from "@/lib/landingHeroes";
 
 export default async function HeroPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -10,5 +11,10 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
     notFound();
   }
 
-  return <LandingHero config={page} />;
+  return (
+    <>
+      <LandingHero config={page} />
+      {slug === "for-guests" && <ForGuestsSections />}
+    </>
+  );
 }
