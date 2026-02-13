@@ -24,14 +24,16 @@ export const heroPages: HeroPageConfig[] = [
     badge: "TRUSTED VILLA STAYS & MANAGEMENT · 18+ YEARS",
     title: "Find the perfect villa for your vacations in Greece",
     subtitle:
-      "Villa4you connects vetted villas, expert trip planning, and pro property management across Greece.",
+      "Villa4you connects vetted villas, expert trip planning, and pro property management across Greece. Book via Planyo, manage in Kommo, powered by ClickyTour Core.",
     chips: ["Guests", "Owners", "Collaborate"],
     ctaPrimary: "Find a Villa",
     ctaSecondary: "Plan My Trip",
     trust: ["⭐ 4.8/5 guest reviews", "🏝️ 6+ top destinations", "🔄 seamless Planyo bookings"],
     heroImage:
       "https://images.unsplash.com/photo-1519046904884-53103b34b206?q=80&w=1800&auto=format&fit=crop",
-    sideMode: "panel",
+    sideMode: "image",
+    sideImage:
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1200&auto=format&fit=crop",
     panelTitle: "Quick Request",
     panelItems: [
       { label: "Destination", value: "Please Select" },
