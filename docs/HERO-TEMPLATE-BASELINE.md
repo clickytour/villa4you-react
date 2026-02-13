@@ -44,6 +44,10 @@ For every approved hero/page:
 - Include preview link(s) used for approval (Vercel URL + route URLs where applicable).
 - Keep links updated for future bot/agent handovers.
 
+## Global consistency rule (Drcris)
+For all upcoming pages, keep the same approved UI/UX/SEO/marketing style baseline to avoid rework.
+Deviations require explicit override/approval.
+
 ## Process note
 When starting any new hero session, begin from this baseline first, then apply page-specific adjustments.
 This approved 6-hero set is the reusable starting point for future bots/agents.
