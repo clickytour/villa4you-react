@@ -44,6 +44,40 @@ const popularDestinationCards = [
 
 ];
 
+const guestFaqItems = [
+  {
+    question: "How do I check availability?",
+    answer: (
+      <>
+        Open a property page and click <em>Check Availability</em> to load Planyo&apos;s live calendar.
+      </>
+    ),
+  },
+  {
+    question: "Can you help me choose a villa?",
+    answer: (
+      <>
+        Yes—use <span className="text-rose-700">Vacation Assistance</span> and we&apos;ll shortlist options.
+      </>
+    ),
+  },
+  {
+    question: "Do you arrange airport transfers?",
+    answer: <>
+      Absolutely. Add private transfers, drivers, and day trips during or after booking.
+    </>,
+  },
+  {
+    question: "What&apos;s your cancellation policy?",
+    answer: (
+      <>
+        Policies vary by property—see the <em>Policies</em> section on each listing or our{" "}
+        <span className="text-rose-700">Policies page</span>.
+      </>
+    ),
+  },
+];
+
 export function ForGuestsSections() {
   return (
     <>
@@ -115,34 +149,20 @@ export function ForGuestsSections() {
           <h2 className="text-[42px] font-semibold tracking-[-0.01em] text-slate-900">Guest FAQ</h2>
 
           <div className="mt-4 overflow-hidden rounded-xl border border-slate-200 bg-white">
-            <article className="border-b border-slate-200 p-4">
-              <h3 className="text-[30px] font-semibold leading-none text-slate-900">How do I check availability?</h3>
-              <p className="mt-3 text-[21px] text-slate-700">
-                Open a property page and click <em>Check Availability</em> to load Planyo&apos;s live calendar.
-              </p>
-            </article>
-
-            <article className="border-b border-slate-200 p-4">
-              <h3 className="text-[30px] font-semibold leading-none text-slate-900">Can you help me choose a villa?</h3>
-              <p className="mt-3 text-[21px] text-slate-700">
-                Yes—use <span className="text-rose-700">Vacation Assistance</span> and we&apos;ll shortlist options.
-              </p>
-            </article>
-
-            <article className="border-b border-slate-200 p-4">
-              <h3 className="text-[30px] font-semibold leading-none text-slate-900">Do you arrange airport transfers?</h3>
-              <p className="mt-3 text-[21px] text-slate-700">
-                Absolutely. Add private transfers, drivers, and day trips during or after booking.
-              </p>
-            </article>
-
-            <article className="border border-blue-600 p-4">
-              <h3 className="text-[30px] font-semibold leading-none text-slate-900">What&apos;s your cancellation policy?</h3>
-              <p className="mt-3 text-[21px] text-slate-700">
-                Policies vary by property—see the <em>Policies</em> section on each listing or our{" "}
-                <span className="text-rose-700">Policies page</span>.
-              </p>
-            </article>
+            {guestFaqItems.map((item, idx) => (
+              <details
+                key={item.question}
+                className={idx < guestFaqItems.length - 1 ? "border-b border-slate-200" : ""}
+                open={idx === guestFaqItems.length - 1}
+              >
+                <summary className="cursor-pointer list-none p-4 text-[30px] font-semibold leading-none text-slate-900 marker:content-none">
+                  {item.question}
+                </summary>
+                <div className="px-4 pb-4">
+                  <p className="text-[21px] text-slate-700">{item.answer}</p>
+                </div>
+              </details>
+            ))}
           </div>
         </div>
       </section>
