@@ -69,7 +69,7 @@ export function ForGuestsSections() {
                 <p className="mt-3 min-h-[48px] text-[15px] text-slate-700">{card.text}</p>
               </div>
               <div className="mt-auto flex items-center gap-2 border-t border-slate-200 p-4">
-                <button className="rounded-xl border border-slate-300 px-4 py-2 text-sm">Explore</button>
+                <button className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm text-slate-900">Explore</button>
                 <button className="rounded-xl bg-slate-900 px-4 py-2 text-sm text-white">See Villas</button>
               </div>
             </article>
