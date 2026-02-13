@@ -41,6 +41,45 @@ export function SupportSections() {
             </button>
           ))}
         </div>
+
+        <div className="mt-6 space-y-3">
+          {[
+            {
+              q: "How does booking work on Villa4you?",
+              a: "Browse destinations, pick a property, then we hand off to our live availability engine (Planyo) or confirm directly with the owner. You’ll receive a confirmation email with next steps.",
+            },
+            {
+              q: "What’s your cancellation policy?",
+              a: "Policies vary by property and season. You’ll see the specific terms before you pay. For questions, contact support with your dates and property name.",
+            },
+            {
+              q: "Which payment methods are accepted?",
+              a: "Most villas accept credit/debit cards and bank transfer. Some allow split payments. Exact options are shown at checkout.",
+            },
+            {
+              q: "Do you offer concierge (transfers, chef, tours)?",
+              a: "Yes. After booking, we share a link to request airport transfers, private chef, car rentals, and curated activities in your region.",
+            },
+            {
+              q: "I’m an owner — how do I get a free evaluation?",
+              a: "Use our Free Evaluation form. We’ll review your home, region, and revenue goals, then suggest a model (self-managed, multi-platform, or fully managed).",
+            },
+          ].map((item, idx) => (
+            <details key={item.q} className="overflow-hidden rounded-xl border border-slate-300 bg-white" open={idx === 0}>
+              <summary className="cursor-pointer list-none px-4 py-3 text-[30px] font-semibold leading-none text-slate-900 marker:content-none">
+                {item.q}
+              </summary>
+              <div className="px-4 pb-4">
+                <p className="text-[21px] text-slate-700">{item.a}</p>
+              </div>
+            </details>
+          ))}
+
+          <div className="flex flex-wrap gap-3 pt-1">
+            <button className="rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">View Policies</button>
+            <button className="rounded-xl border border-slate-800 bg-white px-5 py-2.5 text-base font-medium text-slate-900">Contact Support</button>
+          </div>
+        </div>
       </div>
     </section>
   );
