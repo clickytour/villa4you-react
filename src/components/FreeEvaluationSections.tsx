@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 const models = [
   {
     title: "Self-Managed Assist",
@@ -35,6 +39,8 @@ const inputClass = "mt-1 w-full rounded-lg border border-slate-300 bg-white px-3
 const labelClass = "text-sm font-medium text-slate-700";
 
 export function FreeEvaluationSections() {
+  const [step, setStep] = useState(1);
+
   return (
     <>
       <section className="mx-auto max-w-[1280px] px-4 pb-6 pt-4">
@@ -51,7 +57,7 @@ export function FreeEvaluationSections() {
                 <button className="rounded-xl border border-slate-800 bg-white px-5 py-2.5 text-base font-medium text-slate-900">Book a 15-min Call</button>
               </div>
 
-              <p className="mt-3 text-sm text-slate-500">Response within 1–2 business days. We’ll email the summary and next steps.</p>
+              <p className="mt-3 text-sm text-slate-500">Response within 1-2 business days. We'll email the summary and next steps.</p>
             </div>
 
             <img
@@ -150,118 +156,138 @@ export function FreeEvaluationSections() {
           <p className="mt-2 text-[21px] text-slate-600">UI-only now. We will wire Zapier/CRM and submission flow in the next phase.</p>
 
           <div className="mt-4 grid gap-3 md:grid-cols-3">
-            <div className="rounded-xl border border-slate-300 bg-slate-50 p-3 text-sm text-slate-700">Step 1 · Start + Contact</div>
-            <div className="rounded-xl border border-slate-300 bg-slate-50 p-3 text-sm text-slate-700">Step 2 · Region + Property Specs</div>
-            <div className="rounded-xl border border-slate-300 bg-slate-50 p-3 text-sm text-slate-700">Step 3 · Distances + Amenities</div>
+            <button type="button" onClick={() => setStep(1)} className={`rounded-xl border p-3 text-left text-sm ${step === 1 ? "border-slate-900 bg-slate-900 text-white" : "border-slate-300 bg-slate-50 text-slate-700"}`}>Step 1 · Start + Contact</button>
+            <button type="button" onClick={() => setStep(2)} className={`rounded-xl border p-3 text-left text-sm ${step === 2 ? "border-slate-900 bg-slate-900 text-white" : "border-slate-300 bg-slate-50 text-slate-700"}`}>Step 2 · Region + Property Specs</button>
+            <button type="button" onClick={() => setStep(3)} className={`rounded-xl border p-3 text-left text-sm ${step === 3 ? "border-slate-900 bg-slate-900 text-white" : "border-slate-300 bg-slate-50 text-slate-700"}`}>Step 3 · Distances + Amenities</button>
           </div>
 
-          <fieldset className="mt-4 rounded-xl border border-slate-200 p-3">
-            <legend className="px-2 text-sm font-semibold text-slate-800">Start</legend>
-            <div className="grid gap-3 md:grid-cols-2">
-              <label className={labelClass}>What do you need? *<select className={inputClass}><option>Property Evaluation</option><option>Listing & Marketing</option><option>Full Management</option><option>Consultation</option></select></label>
-              <label className={labelClass}>Property Type *<select className={inputClass}><option>Villa</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Maisonette</option><option>Other</option></select></label>
-            </div>
-          </fieldset>
-
-          <fieldset className="mt-4 rounded-xl border border-slate-200 p-3">
-            <legend className="px-2 text-sm font-semibold text-slate-800">Owner / Contact</legend>
-            <div className="grid gap-3 md:grid-cols-2">
-              <label className={labelClass}>First Name *<input className={inputClass} /></label>
-              <label className={labelClass}>Last Name *<input className={inputClass} /></label>
-              <label className={labelClass}>Email *<input type="email" className={inputClass} /></label>
-              <label className={labelClass}>Phone<input className={inputClass} placeholder="+30 ..." /></label>
-              <label className={labelClass}>Preferred chat<select className={inputClass}><option>Select...</option><option>whatsapp</option><option>viber</option><option>telegram</option><option>messenger</option><option>email</option></select></label>
-              <label className={labelClass}>Country<input className={inputClass} /></label>
-            </div>
-          </fieldset>
-
-          <fieldset className="mt-4 rounded-xl border border-slate-200 p-3">
-            <legend className="px-2 text-sm font-semibold text-slate-800">Region & Address</legend>
-            <div className="grid gap-3 md:grid-cols-2">
-              <label className={labelClass}>Region *<select className={inputClass}><option>Crete</option><option>Halkidiki</option><option>Santorini</option><option>Athens</option><option>Mykonos</option><option>Paros</option><option>Other</option></select><span className="mt-1 block text-xs text-slate-500">Choose “Other” if not listed.</span></label>
-              <label className={labelClass}>Region (text)<input className={inputClass} placeholder="e.g., Ida-Viru maakond" /></label>
-              <label className={labelClass}>Street 1<input className={inputClass} /></label>
-              <label className={labelClass}>Street 2<input className={inputClass} /></label>
-              <label className={labelClass}>City<input className={inputClass} /></label>
-              <label className={labelClass}>State / Region<input className={inputClass} /></label>
-              <label className={labelClass}>Postal Code<input className={inputClass} /></label>
-              <label className={labelClass}>Google Map URL<input className={inputClass} placeholder="https://..." /></label>
-            </div>
-          </fieldset>
-
-          <fieldset className="mt-4 rounded-xl border border-slate-200 p-3">
-            <legend className="px-2 text-sm font-semibold text-slate-800">History</legend>
-            <div className="grid gap-3 md:grid-cols-2">
-              <div className={labelClass}>Rented before?
-                <div className="mt-2 flex flex-wrap gap-4 text-sm text-slate-700">
-                  <label className="flex items-center gap-2"><input type="radio" name="rentedBefore" /> Yes</label>
-                  <label className="flex items-center gap-2"><input type="radio" name="rentedBefore" defaultChecked /> No</label>
+          {step === 1 && (
+            <>
+              <fieldset className="mt-4 rounded-xl border border-slate-200 p-3">
+                <legend className="px-2 text-sm font-semibold text-slate-800">Start</legend>
+                <div className="grid gap-3 md:grid-cols-2">
+                  <label className={labelClass}>What do you need? *<select className={inputClass}><option>Property Evaluation</option><option>Listing & Marketing</option><option>Full Management</option><option>Consultation</option></select></label>
+                  <label className={labelClass}>Property Type *<select className={inputClass}><option>Villa</option><option>House</option><option>Apartment</option><option>Townhouse</option><option>Maisonette</option><option>Other</option></select></label>
                 </div>
-              </div>
-              <label className={labelClass}>Existing Listing URL<input className={inputClass} placeholder="https://..." /></label>
-            </div>
-            <label className={`${labelClass} mt-3 block`}>Brief history<textarea className={inputClass} rows={3} /></label>
-          </fieldset>
+              </fieldset>
 
-          <fieldset className="mt-4 rounded-xl border border-slate-200 p-3">
-            <legend className="px-2 text-sm font-semibold text-slate-800">Property Specs</legend>
-            <div className="grid gap-3 md:grid-cols-2">
-              <label className={labelClass}>Title<input className={inputClass} placeholder="Internal name" /></label>
-              <label className={labelClass}>Condition<select className={inputClass}><option>Select</option><option>New</option><option>Excellent</option><option>Good</option><option>Needs renovation</option></select></label>
-            </div>
-            <div className="mt-3 grid gap-3 md:grid-cols-3">
-              <label className={labelClass}>Square meters<input type="number" className={inputClass} /></label>
-              <label className={labelClass}>Bedrooms *<input type="number" className={inputClass} /></label>
-              <label className={labelClass}>Beds<input type="number" className={inputClass} /></label>
-              <label className={labelClass}>Bathrooms<input type="number" className={inputClass} /></label>
-              <label className={labelClass}>Max Guests<input type="number" className={inputClass} /></label>
-              <label className={labelClass}>Floors<input type="number" className={inputClass} /></label>
-            </div>
-            <div className="mt-3 grid gap-3 md:grid-cols-2">
-              <div className={labelClass}>Has Pool?
-                <div className="mt-2 flex flex-wrap gap-4 text-sm text-slate-700">
-                  <label className="flex items-center gap-2"><input type="radio" name="hasPool" /> Yes</label>
-                  <label className="flex items-center gap-2"><input type="radio" name="hasPool" defaultChecked /> No</label>
+              <fieldset className="mt-4 rounded-xl border border-slate-200 p-3">
+                <legend className="px-2 text-sm font-semibold text-slate-800">Owner / Contact</legend>
+                <div className="grid gap-3 md:grid-cols-2">
+                  <label className={labelClass}>First Name *<input className={inputClass} /></label>
+                  <label className={labelClass}>Last Name *<input className={inputClass} /></label>
+                  <label className={labelClass}>Email *<input type="email" className={inputClass} /></label>
+                  <label className={labelClass}>Phone<input className={inputClass} placeholder="+30 ..." /></label>
+                  <label className={labelClass}>Preferred chat<select className={inputClass}><option>Select...</option><option>whatsapp</option><option>viber</option><option>telegram</option><option>messenger</option><option>email</option></select></label>
+                  <label className={labelClass}>Country<input className={inputClass} /></label>
                 </div>
+              </fieldset>
+            </>
+          )}
+
+          {step === 2 && (
+            <>
+              <fieldset className="mt-4 rounded-xl border border-slate-200 p-3">
+                <legend className="px-2 text-sm font-semibold text-slate-800">Region & Address</legend>
+                <div className="grid gap-3 md:grid-cols-2">
+                  <label className={labelClass}>Region *<select className={inputClass}><option>Crete</option><option>Halkidiki</option><option>Santorini</option><option>Athens</option><option>Mykonos</option><option>Paros</option><option>Other</option></select><span className="mt-1 block text-xs text-slate-500">Choose “Other” if not listed.</span></label>
+                  <label className={labelClass}>Region (text)<input className={inputClass} placeholder="e.g., Ida-Viru maakond" /></label>
+                  <label className={labelClass}>Street 1<input className={inputClass} /></label>
+                  <label className={labelClass}>Street 2<input className={inputClass} /></label>
+                  <label className={labelClass}>City<input className={inputClass} /></label>
+                  <label className={labelClass}>State / Region<input className={inputClass} /></label>
+                  <label className={labelClass}>Postal Code<input className={inputClass} /></label>
+                  <label className={labelClass}>Google Map URL<input className={inputClass} placeholder="https://..." /></label>
+                </div>
+              </fieldset>
+
+              <fieldset className="mt-4 rounded-xl border border-slate-200 p-3">
+                <legend className="px-2 text-sm font-semibold text-slate-800">History</legend>
+                <div className="grid gap-3 md:grid-cols-2">
+                  <div className={labelClass}>Rented before?
+                    <div className="mt-2 flex flex-wrap gap-4 text-sm text-slate-700">
+                      <label className="flex items-center gap-2"><input type="radio" name="rentedBefore" /> Yes</label>
+                      <label className="flex items-center gap-2"><input type="radio" name="rentedBefore" defaultChecked /> No</label>
+                    </div>
+                  </div>
+                  <label className={labelClass}>Existing Listing URL<input className={inputClass} placeholder="https://..." /></label>
+                </div>
+                <label className={`${labelClass} mt-3 block`}>Brief history<textarea className={inputClass} rows={3} /></label>
+              </fieldset>
+
+              <fieldset className="mt-4 rounded-xl border border-slate-200 p-3">
+                <legend className="px-2 text-sm font-semibold text-slate-800">Property Specs</legend>
+                <div className="grid gap-3 md:grid-cols-2">
+                  <label className={labelClass}>Title<input className={inputClass} placeholder="Internal name" /></label>
+                  <label className={labelClass}>Condition<select className={inputClass}><option>Select</option><option>New</option><option>Excellent</option><option>Good</option><option>Needs renovation</option></select></label>
+                </div>
+                <div className="mt-3 grid gap-3 md:grid-cols-3">
+                  <label className={labelClass}>Square meters<input type="number" className={inputClass} /></label>
+                  <label className={labelClass}>Bedrooms *<input type="number" className={inputClass} /></label>
+                  <label className={labelClass}>Beds<input type="number" className={inputClass} /></label>
+                  <label className={labelClass}>Bathrooms<input type="number" className={inputClass} /></label>
+                  <label className={labelClass}>Max Guests<input type="number" className={inputClass} /></label>
+                  <label className={labelClass}>Floors<input type="number" className={inputClass} /></label>
+                </div>
+                <div className="mt-3 grid gap-3 md:grid-cols-2">
+                  <div className={labelClass}>Has Pool?
+                    <div className="mt-2 flex flex-wrap gap-4 text-sm text-slate-700">
+                      <label className="flex items-center gap-2"><input type="radio" name="hasPool" /> Yes</label>
+                      <label className="flex items-center gap-2"><input type="radio" name="hasPool" defaultChecked /> No</label>
+                    </div>
+                  </div>
+                  <label className={labelClass}>Pool Type<input className={inputClass} placeholder="Private / Shared" /></label>
+                </div>
+              </fieldset>
+            </>
+          )}
+
+          {step === 3 && (
+            <>
+              <fieldset className="mt-4 rounded-xl border border-slate-200 p-3">
+                <legend className="px-2 text-sm font-semibold text-slate-800">Distances</legend>
+                <div className="grid gap-3 md:grid-cols-3">
+                  <label className={labelClass}>Beach (m)<input type="number" className={inputClass} /></label>
+                  <label className={labelClass}>Infrastructure (km)<input type="number" className={inputClass} /></label>
+                  <label className={labelClass}>Airport (km)<input type="number" className={inputClass} /></label>
+                  <label className={labelClass}>Supermarket (km)<input type="number" className={inputClass} /></label>
+                  <label className={labelClass}>Restaurants (km)<input type="number" className={inputClass} /></label>
+                  <label className={labelClass}>Marina (km)<input type="number" className={inputClass} /></label>
+                  <label className={labelClass}>Police (km)<input type="number" className={inputClass} /></label>
+                  <label className={labelClass}>Medical (km)<input type="number" className={inputClass} /></label>
+                </div>
+              </fieldset>
+
+              <fieldset className="mt-4 rounded-xl border border-slate-200 p-3">
+                <legend className="px-2 text-sm font-semibold text-slate-800">Key Amenities</legend>
+                <div className="flex flex-wrap gap-2">
+                  {["Pool", "Sea view", "Parking", "Wi-Fi", "A/C", "BBQ", "Pet-friendly", "Baby equipment", "EV charger", "Hot tub", "Gym", "Accessible"].map((a) => (
+                    <label key={a} className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-3 py-1 text-sm text-slate-700">
+                      <input type="checkbox" /> {a}
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+
+              <div className="mt-4 rounded-xl border border-slate-200 p-3 text-sm text-slate-700">
+                <label className="flex items-start gap-2"><input type="checkbox" className="mt-1" /> I consent to data processing for evaluation and contact purposes.</label>
               </div>
-              <label className={labelClass}>Pool Type<input className={inputClass} placeholder="Private / Shared" /></label>
-            </div>
-          </fieldset>
+            </>
+          )}
 
-          <fieldset className="mt-4 rounded-xl border border-slate-200 p-3">
-            <legend className="px-2 text-sm font-semibold text-slate-800">Distances</legend>
-            <div className="grid gap-3 md:grid-cols-3">
-              <label className={labelClass}>Beach (m)<input type="number" className={inputClass} /></label>
-              <label className={labelClass}>Infrastructure (km)<input type="number" className={inputClass} /></label>
-              <label className={labelClass}>Airport (km)<input type="number" className={inputClass} /></label>
-              <label className={labelClass}>Supermarket (km)<input type="number" className={inputClass} /></label>
-              <label className={labelClass}>Restaurants (km)<input type="number" className={inputClass} /></label>
-              <label className={labelClass}>Marina (km)<input type="number" className={inputClass} /></label>
-              <label className={labelClass}>Police (km)<input type="number" className={inputClass} /></label>
-              <label className={labelClass}>Medical (km)<input type="number" className={inputClass} /></label>
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex gap-3">
+              <button type="button" onClick={() => setStep((s) => Math.max(1, s - 1))} className="rounded-xl border border-slate-800 bg-white px-5 py-2.5 text-sm font-medium text-slate-900">Previous</button>
+              <button type="button" onClick={() => setStep((s) => Math.min(3, s + 1))} className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-medium text-white">{step < 3 ? "Next step" : "Review"}</button>
             </div>
-          </fieldset>
 
-          <fieldset className="mt-4 rounded-xl border border-slate-200 p-3">
-            <legend className="px-2 text-sm font-semibold text-slate-800">Key Amenities</legend>
-            <div className="flex flex-wrap gap-2">
-              {["Pool", "Sea view", "Parking", "Wi-Fi", "A/C", "BBQ", "Pet-friendly", "Baby equipment", "EV charger", "Hot tub", "Gym", "Accessible"].map((a) => (
-                <label key={a} className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-3 py-1 text-sm text-slate-700">
-                  <input type="checkbox" /> {a}
-                </label>
-              ))}
+            <div className="flex flex-wrap items-center gap-3">
+              <button type="button" className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-medium text-white">Submit evaluation request</button>
+              <button type="button" className="rounded-xl border border-slate-800 bg-white px-5 py-2.5 text-sm font-medium text-slate-900">Save draft</button>
             </div>
-          </fieldset>
-
-          <div className="mt-4 rounded-xl border border-slate-200 p-3 text-sm text-slate-700">
-            <label className="flex items-start gap-2"><input type="checkbox" className="mt-1" /> I consent to data processing for evaluation and contact purposes.</label>
           </div>
 
-          <div className="mt-5 flex flex-wrap items-center gap-3">
-            <button type="button" className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-medium text-white">Submit evaluation request</button>
-            <button type="button" className="rounded-xl border border-slate-800 bg-white px-5 py-2.5 text-sm font-medium text-slate-900">Save draft</button>
-            <p className="text-xs text-slate-500">UI only in this phase. Submission logic will be connected in the integration step.</p>
-          </div>
+          <p className="mt-3 text-xs text-slate-500">UI only in this phase. Submission logic will be connected in the integration step.</p>
         </form>
       </section>
 
