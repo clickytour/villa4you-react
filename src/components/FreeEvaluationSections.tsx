@@ -130,6 +130,35 @@ export function FreeEvaluationSections() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-[1280px] px-4 pb-6">
+        <h2 className="text-[42px] font-semibold leading-none text-slate-900">Frequently asked questions</h2>
+        <div className="mt-4 overflow-hidden rounded-xl border border-slate-300 bg-white">
+          {[
+            {
+              q: "Is the evaluation really free?",
+              a: "Yes. It’s a complimentary assessment to help you understand fit and potential before any commitment.",
+            },
+            {
+              q: "How fast do I get the results?",
+              a: "Usually within 1–2 business days. In peak months it may take slightly longer; we’ll keep you posted.",
+            },
+            {
+              q: "Can I keep my existing cleaners/maintenance?",
+              a: "Absolutely. We can coordinate with your team and add distribution, pricing, and guest ops on top.",
+            },
+            {
+              q: "Which areas do you cover?",
+              a: "Crete, Halkidiki, Santorini, Athens, Mykonos, and Paros. For other regions, ask—we expand via partners.",
+            },
+          ].map((item, idx) => (
+            <div key={item.q} className={idx === 0 ? "" : "border-t border-slate-200"}>
+              <p className="px-4 py-3 text-lg font-semibold text-fuchsia-800">{item.q}</p>
+              <p className="px-4 pb-4 text-[18px] text-slate-700">{item.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="mx-auto max-w-[1280px] px-4 pb-10">
         <form className="rounded-2xl border border-slate-300 bg-white p-4">
           <h2 className="text-[42px] font-semibold leading-none text-slate-900">Owner / Property Intake Form</h2>
