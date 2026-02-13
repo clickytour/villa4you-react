@@ -183,12 +183,12 @@ export function SearchResultsGuestSections() {
         <p className="text-[22px] text-slate-700">12 villas match your filters</p>
         <div className="mt-4 grid gap-4 md:grid-cols-3">
           {resultCards.map((card) => (
-            <article key={card.name} className="overflow-hidden rounded-xl border border-slate-300 bg-white">
+            <article key={card.name} className="flex h-full flex-col overflow-hidden rounded-xl border border-slate-300 bg-white">
               <div className="relative">
                 <img src={card.image} alt={card.name} className="h-[260px] w-full object-cover" />
                 <span className="absolute left-3 top-3 rounded-full bg-slate-800 px-3 py-1 text-sm text-white">from {card.price}</span>
               </div>
-              <div className="p-3">
+              <div className="flex-1 p-3">
                 <h3 className="text-[34px] font-semibold leading-none text-slate-900">{card.name}</h3>
                 <p className="mt-2 text-[21px] text-slate-600">{card.location} · {card.guests} · {card.bedsBaths} · ★ {card.rating}</p>
                 <div className="mt-2 flex flex-wrap gap-2">
