@@ -7,6 +7,7 @@ import { AboutSections } from "@/components/AboutSections";
 import { VacationPropertyManagementSections } from "@/components/VacationPropertyManagementSections";
 import { SearchResultsGuestSections } from "@/components/SearchResultsGuestSections";
 import { FreeEvaluationSections } from "@/components/FreeEvaluationSections";
+import { SupportSections } from "@/components/SupportSections";
 import { heroPagesBySlug } from "@/lib/landingHeroes";
 
 export default async function HeroPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -15,6 +16,14 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
     return (
       <div className="min-h-screen bg-[#f3f5f8]">
         <FreeEvaluationSections />
+      </div>
+    );
+  }
+
+  if (slug === "support") {
+    return (
+      <div className="min-h-screen bg-[#f3f5f8]">
+        <SupportSections />
       </div>
     );
   }
