@@ -1,5 +1,6 @@
-import { HomepageRoleExperience } from "@/components/HomepageRoleExperience";
+import { LandingHero } from "@/components/LandingHero";
+import { heroPagesBySlug } from "@/lib/landingHeroes";
 
 export default function Home() {
-  return <HomepageRoleExperience />;
+  return <LandingHero config={heroPagesBySlug["homepage-template"]} />;
 }
