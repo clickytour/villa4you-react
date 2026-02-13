@@ -144,18 +144,24 @@ export function VacationPropertyManagementSections() {
       <section className="mx-auto max-w-[1280px] px-4 pb-6">
         <h2 className="text-[56px] font-semibold leading-none text-slate-900">Owners — frequently asked questions</h2>
         <div className="mt-4 overflow-hidden rounded-xl border border-slate-300 bg-white">
-          <article className="border-b border-slate-300 p-4">
-            <h3 className="text-[30px] font-semibold text-rose-600">Which model should I choose?</h3>
-            <p className="mt-2 text-[21px] text-slate-700">If you want hands-on control, start with <em>Self-Managed</em>. Want growth without changing ops? Pick <em>Multi-Platform Sync</em>. Prefer a complete hand-off? Go <em>Fully Managed</em>. We’ll advise after your evaluation.</p>
-          </article>
-          <article className="border-b border-slate-300 p-4">
-            <h3 className="text-[30px] font-semibold text-rose-600">How are fees structured?</h3>
-            <p className="mt-2 text-[21px] text-slate-700">Transparent, model-based. Self-Managed is advisory, Sync is distribution-based, Fully Managed uses a management % with KPI reviews. Exact terms are tailored per property and seasonality.</p>
-          </article>
-          <article>
-            <h3 className="border-b-2 border-blue-600 bg-rose-600 px-4 py-2 text-[30px] font-semibold text-white">Can you work with our existing team?</h3>
-            <p className="px-4 pb-4 pt-2 text-[21px] text-slate-700">Yes. We integrate with your current cleaners, maintenance, or concierge—then layer pricing, content, and distribution on top.</p>
-          </article>
+          <details className="border-b border-slate-300">
+            <summary className="cursor-pointer list-none px-4 py-3 text-[30px] font-semibold text-slate-900 marker:content-none">
+              Which model should I choose?
+            </summary>
+            <p className="px-4 pb-4 text-[21px] text-slate-700">If you want hands-on control, start with <em>Self-Managed</em>. Want growth without changing ops? Pick <em>Multi-Platform Sync</em>. Prefer a complete hand-off? Go <em>Fully Managed</em>. We’ll advise after your evaluation.</p>
+          </details>
+          <details className="border-b border-slate-300">
+            <summary className="cursor-pointer list-none px-4 py-3 text-[30px] font-semibold text-slate-900 marker:content-none">
+              How are fees structured?
+            </summary>
+            <p className="px-4 pb-4 text-[21px] text-slate-700">Transparent, model-based. Self-Managed is advisory, Sync is distribution-based, Fully Managed uses a management % with KPI reviews. Exact terms are tailored per property and seasonality.</p>
+          </details>
+          <details open>
+            <summary className="cursor-pointer list-none px-4 py-3 text-[30px] font-semibold text-slate-900 marker:content-none">
+              Can you work with our existing team?
+            </summary>
+            <p className="px-4 pb-4 text-[21px] text-slate-700">Yes. We integrate with your current cleaners, maintenance, or concierge—then layer pricing, content, and distribution on top.</p>
+          </details>
         </div>
       </section>
 
