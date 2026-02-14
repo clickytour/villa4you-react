@@ -70,7 +70,7 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
     );
   }
 
-  if (slug === "servis-apply" || slug === "service-apply") {
+  if (slug === "service-apply") {
     return (
       <div className="min-h-screen bg-[#f3f5f8]">
         <ServisApplySections />

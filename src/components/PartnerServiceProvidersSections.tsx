@@ -9,7 +9,7 @@ const quickFlags = ["✅ Fast listing", "✅ Clean categories", "⚡ Mobile-opti
 
 const navItems = [
   { title: "Categories", desc: "Choose where your service appears", href: "/partner-service-providers" },
-  { title: "List Service", desc: "Create your business profile", href: "/servis-apply" },
+  { title: "List Service", desc: "Create your business profile", href: "/service-apply" },
   { title: "Pricing", desc: "Plans, fees, and visibility options", href: "/plans-offers" },
   { title: "Support", desc: "FAQ and guided onboarding help", href: "/support" },
 ];
@@ -90,7 +90,7 @@ export function PartnerServiceProvidersSections() {
           <h2 className="text-[42px] font-semibold leading-none tracking-[-0.01em] text-slate-900">Ready to join as a provider?</h2>
           <p className="mt-3 text-[21px] text-slate-700">Create your listing or request free guidance and we’ll walk you through setup.</p>
           <div className="mt-5 flex flex-wrap justify-center gap-3">
-            <a href="/servis-apply" className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-medium text-white">List your service</a>
+            <a href="/service-apply" className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-medium text-white">List your service</a>
             <a href="/free-evaluation" className="rounded-xl border border-slate-400 bg-white px-5 py-2.5 text-sm font-medium text-slate-800">Request free evaluation</a>
           </div>
         </div>
