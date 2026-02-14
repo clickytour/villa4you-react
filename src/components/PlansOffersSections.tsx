@@ -239,6 +239,37 @@ export function PlansOffersSections() {
         </section>
 
         <section className="mt-6">
+          <h2 className="text-[42px] font-semibold leading-none text-slate-900">What to do & where to go</h2>
+          <p className="mt-2 text-[21px] text-slate-600">Seasonal guides and experiences in our most popular areas.</p>
+
+          <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            {[
+              {
+                t: "Santorini — Best Things to Do",
+                d: "Sunset spots, wine tours, sailing, cliff-side dining.",
+              },
+              {
+                t: "Halkidiki — Family Beaches",
+                d: "Calm bays, boat days, pine-framed waters.",
+              },
+              {
+                t: "Athens — Culture & Food",
+                d: "Acropolis, neighborhoods, restaurants, day trips.",
+              },
+              {
+                t: "Thessaloniki — City by the Sea",
+                d: "Waterfront walks, markets, Byzantine gems.",
+              },
+            ].map((item) => (
+              <article key={item.t} className="rounded-xl border border-slate-300 bg-white p-3">
+                <h3 className="text-[30px] font-semibold leading-none text-slate-900">{item.t}</h3>
+                <p className="mt-2 text-[21px] text-slate-700">{item.d}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-6">
           <h2 className="text-[42px] font-semibold leading-none text-slate-900">FAQ</h2>
           <div className="mt-3 overflow-hidden rounded-xl border border-slate-300 bg-white">
             {[
