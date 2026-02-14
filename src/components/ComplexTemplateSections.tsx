@@ -152,6 +152,59 @@ export function ComplexTemplateSections({ variant = "default" }: ComplexTemplate
           </div>
         </div>
       </section>
+
+      <section className="mt-6 rounded-2xl border border-slate-300 bg-white p-6">
+        <h2 className="text-[34px] font-semibold leading-none text-slate-900">About this complex</h2>
+        <p className="mt-3 text-[18px] text-slate-700">
+          {isLuxuryElsa
+            ? "Luxury Suites Elsa combines calm surroundings with premium comfort. The complex is designed for short and extended stays, with easy access to beaches, restaurants and Porto Carras experiences."
+            : "This complex template includes reusable sections for property story, amenities, location highlights and guest support."}
+        </p>
+      </section>
+
+      <section className="mt-6 rounded-2xl border border-slate-300 bg-white p-6">
+        <h2 className="text-[34px] font-semibold leading-none text-slate-900">Amenities</h2>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            "Shared swimming pool",
+            "Free Wi-Fi",
+            "Private parking",
+            "Air conditioning",
+            "Family-friendly",
+            "Outdoor seating",
+            "Fully equipped kitchen",
+            "Weekly housekeeping",
+          ].map((item) => (
+            <div key={item} className="rounded-xl border border-blue-500 px-4 py-3 text-[16px] font-medium text-slate-900">
+              {item}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-2xl border border-slate-300 bg-white p-6">
+        <h2 className="text-[34px] font-semibold leading-none text-slate-900">Location highlights</h2>
+        <div className="mt-4 grid gap-3 md:grid-cols-3">
+          {[
+            "5 min to beach",
+            "10 min to marina",
+            "Near Porto Carras resort",
+          ].map((item) => (
+            <div key={item} className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-4 text-center text-[17px] font-semibold text-slate-900">
+              {item}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-2xl border border-slate-300 bg-[#091339] p-6 text-white">
+        <h2 className="text-[34px] font-semibold leading-none">Need help choosing your suite?</h2>
+        <p className="mt-3 max-w-[760px] text-[18px] text-slate-200">Tell us your travel dates and guest details — we’ll recommend the best available option in this complex.</p>
+        <div className="mt-5 flex flex-wrap gap-2">
+          <button className="rounded-xl bg-emerald-500 px-5 py-2.5 text-base font-semibold text-slate-900">Contact host team</button>
+          <button className="rounded-xl border border-white/40 bg-white px-5 py-2.5 text-base font-semibold text-slate-900">Check all dates</button>
+        </div>
+      </section>
     </section>
   );
 }
