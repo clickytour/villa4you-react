@@ -14,7 +14,6 @@ import { GuestHelpFaqSections } from "@/components/GuestHelpFaqSections";
 import { DestinationsSections } from "@/components/DestinationsSections";
 import { ExploreMapSections } from "@/components/ExploreMapSections";
 import { ComplexTemplateSections } from "@/components/ComplexTemplateSections";
-import { LuxurySuitesElsaSections } from "@/components/LuxurySuitesElsaSections";
 import { heroPagesBySlug } from "@/lib/landingHeroes";
 
 export default async function HeroPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -86,7 +85,7 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
   if (slug === "luxury-suites-elsa") {
     return (
       <div className="min-h-screen bg-[#f3f5f8]">
-        <LuxurySuitesElsaSections />
+        <ComplexTemplateSections variant="luxury-elsa" />
       </div>
     );
   }
