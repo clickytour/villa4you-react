@@ -105,13 +105,16 @@ export function GuestHelpFaqSections() {
             <div className="mt-3 flex flex-wrap gap-2">
               {categories.map((cat) => {
                 const active = cat === activeCategory;
+                const activeChipClass =
+                  cat === "Payments" ? "border-sky-500 text-sky-700" : "border-emerald-600 text-emerald-700";
+
                 return (
                   <button
                     key={cat}
                     type="button"
                     onClick={() => setActiveCategory(cat)}
                     className={`rounded-full border px-3 py-1.5 text-sm ${
-                      active ? "border-emerald-600 text-emerald-700" : "border-slate-300 text-slate-700"
+                      active ? activeChipClass : "border-slate-300 text-slate-700"
                     } bg-white`}
                   >
                     {cat}
