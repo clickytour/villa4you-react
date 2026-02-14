@@ -261,7 +261,7 @@ export function PmcApplySections() {
               <div className="mt-4 flex flex-wrap gap-2">
                 <span className="rounded-full border border-slate-300 bg-slate-50 px-3 py-1 text-sm text-slate-700">⚡ Structured onboarding</span>
                 <span className="rounded-full border border-slate-300 bg-slate-50 px-3 py-1 text-sm text-slate-700">🛡️ GDPR-ready consent</span>
-                <span className="rounded-full border border-slate-300 bg-slate-50 px-3 py-1 text-sm text-slate-700">📊 Payload review before submit</span>
+                <span className="rounded-full border border-slate-300 bg-slate-50 px-3 py-1 text-sm text-slate-700">🧩 Turnstile-ready captcha slot</span>
               </div>
             </div>
 
@@ -277,7 +277,7 @@ export function PmcApplySections() {
       <section id="pmc-form-anchor" className="mx-auto max-w-[1280px] px-4 pb-10">
         <div className="rounded-2xl border border-slate-300 bg-white p-4 md:p-6">
           <h2 className="text-[42px] font-semibold leading-none text-slate-900">PMC Application Form</h2>
-          <p className="mt-2 text-[21px] text-slate-600">3-step application with validation, dynamic fields, and live payload preview.</p>
+          <p className="mt-2 text-[21px] text-slate-600">3-step application with validation, dynamic fields, and consent checks before submit.</p>
           <p className="mt-1 text-sm text-slate-500">Required fields are marked with *</p>
 
           <div className="mt-4 grid gap-3 md:grid-cols-3">
@@ -451,12 +451,6 @@ export function PmcApplySections() {
             {step === 3 && (
               <>
                 <fieldset className="rounded-xl border border-slate-200 p-3">
-                  <legend className="px-2 text-sm font-semibold text-slate-800">Review generated payload</legend>
-                  <p className="text-sm text-slate-600">This JSON is submitted to the onboarding webhook.</p>
-                  <textarea readOnly className="mt-2 h-[260px] w-full rounded-lg border border-slate-300 bg-slate-50 p-3 font-mono text-xs text-slate-800" value={JSON.stringify(payload, null, 2)} />
-                </fieldset>
-
-                <fieldset className="rounded-xl border border-slate-200 p-3">
                   <legend className="px-2 text-sm font-semibold text-slate-800">Consent & verification</legend>
                   <label className="flex items-start gap-2 text-sm text-slate-700">
                     <input type="checkbox" className="mt-1" checked={form.consentData} onChange={(e) => setField("consentData", e.target.checked)} />
@@ -470,10 +464,19 @@ export function PmcApplySections() {
                   </label>
                   {errors.consentAccuracy && <p className="mt-1 text-xs text-red-600">{errors.consentAccuracy}</p>}
 
-                  <label className="mt-3 block text-xs text-slate-400">
-                    Leave this field empty
-                    <input className="mt-1 w-full rounded-md border border-slate-200 px-2 py-1" value={form.websiteHp} onChange={(e) => setField("websiteHp", e.target.value)} />
-                  </label>
+                  <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700">
+                    Captcha: Cloudflare Turnstile placeholder (to be activated with site key + server verification).
+                  </div>
+
+                  <input
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    className="hidden"
+                    value={form.websiteHp}
+                    onChange={(e) => setField("websiteHp", e.target.value)}
+                  />
                   {errors.websiteHp && <p className="mt-1 text-xs text-red-600">{errors.websiteHp}</p>}
                 </fieldset>
               </>
