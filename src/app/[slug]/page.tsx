@@ -98,6 +98,54 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
     );
   }
 
+  if (slug === "olea-suites-apartments-complex") {
+    return (
+      <div className="min-h-screen bg-[#f3f5f8]">
+        <ComplexTemplateSections variant="olea-suites" />
+      </div>
+    );
+  }
+
+  if (slug === "deluxe-suites-bomo") {
+    return (
+      <div className="min-h-screen bg-[#f3f5f8]">
+        <ComplexTemplateSections variant="deluxe-suites-bomo" />
+      </div>
+    );
+  }
+
+  if (slug === "simonitiko-beachfront-villas-complex") {
+    return (
+      <div className="min-h-screen bg-[#f3f5f8]">
+        <ComplexTemplateSections variant="simonitiko-beachfront-villas" />
+      </div>
+    );
+  }
+
+  if (slug === "tripotsmos-beachfront-complex-a") {
+    return (
+      <div className="min-h-screen bg-[#f3f5f8]">
+        <ComplexTemplateSections variant="tripotsmos-beachfront-a" />
+      </div>
+    );
+  }
+
+  if (slug === "tripotamos-beachfront-villas-complex-b") {
+    return (
+      <div className="min-h-screen bg-[#f3f5f8]">
+        <ComplexTemplateSections variant="tripotamos-beachfront-b" />
+      </div>
+    );
+  }
+
+  if (slug === "afitos-kassandra-halkidiki") {
+    return (
+      <div className="min-h-screen bg-[#f3f5f8]">
+        <ComplexTemplateSections variant="afitos-kassandra-halkidiki" />
+      </div>
+    );
+  }
+
   const page = heroPagesBySlug[slug];
 
   if (!page) {
