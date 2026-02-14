@@ -57,14 +57,14 @@ const faqItems: FaqItem[] = [
     categories: ["Transfers & extras"],
   },
   {
-    q: "Can I change dates?",
-    a: "Date changes are possible subject to availability and the property’s change/cancellation terms.",
+    q: "Can I change dates or guest count?",
+    a: "Yes, subject to availability and any rate differences. Send your booking reference and new dates via the form.",
     categories: ["Changes & refunds"],
   },
   {
     q: "How do refunds work?",
     a: "When eligible, refunds follow the cancellation policy and payment provider timelines.",
-    categories: ["Changes & refunds"],
+    categories: ["Policies"],
   },
 ];
 
