@@ -1,4 +1,5 @@
 import type { HeroPageConfig } from "@/lib/landingHeroes";
+import { QuickRequestForm } from "@/components/QuickRequestForm";
 
 export function LandingHero({ config }: { config: HeroPageConfig }) {
   const isGuests = config.slug === "for-guests";
@@ -50,16 +51,7 @@ export function LandingHero({ config }: { config: HeroPageConfig }) {
               </div>
 
               {isHomepageTemplate ? (
-                <div className="mt-4 rounded-[12px] border border-slate-300 bg-white/85 p-3 backdrop-blur">
-                  <div className="grid gap-2 lg:grid-cols-12">
-                    <input className="h-10 rounded-lg border border-slate-300 bg-white px-3 text-[13px] text-slate-800 placeholder:text-slate-500 lg:col-span-4" placeholder="Type a place (e.g., Santorini, Paros)" />
-                    <input className="h-10 rounded-lg border border-slate-300 bg-white px-3 text-[13px] text-slate-800 placeholder:text-slate-500 lg:col-span-2" placeholder="dd/mm/yyyy" />
-                    <input className="h-10 rounded-lg border border-slate-300 bg-white px-3 text-[13px] text-slate-800 placeholder:text-slate-500 lg:col-span-2" placeholder="dd/mm/yyyy" />
-                    <input className="h-10 rounded-lg border border-slate-300 bg-white px-3 text-[13px] text-slate-800 lg:col-span-2" defaultValue="2" />
-                    <button className="h-10 rounded-lg bg-slate-900 px-4 text-[14px] font-medium text-white lg:col-span-2">Search</button>
-                  </div>
-                  <p className="mt-1.5 text-[11px] text-slate-600">Tip: this destination will also be included in the Quick Request.</p>
-                </div>
+                <QuickRequestForm />
               ) : (
                 <div className="mt-4 rounded-[12px] border border-slate-300 bg-white/85 p-3 backdrop-blur">
                   <p className="text-[12px] font-semibold uppercase tracking-[0.05em] text-slate-700">Key value proposition</p>
