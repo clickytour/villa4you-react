@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LandingHero } from "@/components/LandingHero";
 import { ForGuestsSections } from "@/components/ForGuestsSections";
@@ -21,6 +22,34 @@ import { ServisApplySections } from "@/components/ServisApplySections";
 import { AgentsSections } from "@/components/AgentsSections";
 import { AgentsApplySections } from "@/components/AgentsApplySections";
 import { heroPagesBySlug } from "@/lib/landingHeroes";
+
+const baseUrl = "https://villa4you-react.vercel.app";
+
+const seoBySlug: Record<string, { title: string; description: string }> = {
+  agents: {
+    title: "For Agents | ClickyTour Partner Ecosystem",
+    description: "Join as an agent or tour operator. Access rentals, services, white-label offers, and net pricing tools.",
+  },
+  "agents-apply": {
+    title: "Agents Apply | ClickyTour",
+    description: "Submit your agent application in 3 steps and request white-label + net-pricing partnership setup.",
+  },
+};
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const seo = seoBySlug[slug];
+
+  if (!seo) return {};
+
+  return {
+    title: seo.title,
+    description: seo.description,
+    alternates: {
+      canonical: `${baseUrl}/${slug}`,
+    },
+  };
+}
 
 export default async function HeroPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
