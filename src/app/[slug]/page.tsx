@@ -20,6 +20,26 @@ import { PartnerPmcSections } from "@/components/PartnerPmcSections";
 import { heroPagesBySlug } from "@/lib/landingHeroes";
 
 const seoBySlug: Record<string, Metadata> = {
+  "pmc-apply": {
+    title: "PMC Application | Partner with Villa4you in Greece",
+    description:
+      "Submit your Property Management Company application to partner with Villa4you. Share your portfolio, destinations, and operating model for onboarding review.",
+    keywords: [
+      "PMC application form",
+      "property management company onboarding",
+      "villa management partner Greece",
+      "Villa4you PMC apply",
+      "vacation rental management partnership",
+    ],
+    alternates: { canonical: "/pmc-apply" },
+    openGraph: {
+      title: "Apply as a Property Management Company Partner | Villa4you",
+      description:
+        "Complete the PMC onboarding form and get a structured review for distribution, pricing, and growth collaboration.",
+      type: "website",
+      url: "/pmc-apply",
+    },
+  },
   "partner-pmc": {
     title: "Partner with Villa4you as a PMC in Greece | Distribution, Pricing & Growth",
     description:
@@ -200,6 +220,20 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
     notFound();
   }
 
+  const pmcApplySchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "PMC Application",
+    url: "/pmc-apply",
+    description:
+      "Apply as a Property Management Company partner with Villa4you by submitting your portfolio, coverage, and operating model.",
+    potentialAction: {
+      "@type": "ApplyAction",
+      name: "Submit PMC Application",
+      target: "/pmc-apply",
+    },
+  };
+
   const partnerPmcFaqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -241,6 +275,9 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
 
   return (
     <div className="min-h-screen bg-[#f3f5f8]">
+      {slug === "pmc-apply" && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pmcApplySchema) }} />
+      )}
       {slug === "partner-pmc" && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(partnerPmcFaqSchema) }} />
       )}
