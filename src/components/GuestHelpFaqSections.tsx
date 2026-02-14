@@ -171,6 +171,30 @@ export function GuestHelpFaqSections() {
           <p className="mt-2 text-[21px] text-slate-600">Send us a support request — we usually reply within a few hours.</p>
           <button className="mt-4 rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Open support form</button>
         </section>
+
+        <section className="mt-6 rounded-2xl border border-slate-300 bg-white p-4 md:p-5">
+          <h2 className="text-[42px] font-semibold leading-none text-slate-900">Post-Booking Support / Changes</h2>
+
+          <div className="mt-3 grid gap-3 md:grid-cols-2">
+            <label className="block text-sm font-medium text-slate-700">Name *<input className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2" /></label>
+            <label className="block text-sm font-medium text-slate-700">Email *<input className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2" /></label>
+            <label className="block text-sm font-medium text-slate-700">Phone<input className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2" placeholder="+30 697..." /></label>
+            <label className="block text-sm font-medium text-slate-700">Booking Ref<input className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2" placeholder="(optional)" /></label>
+            <label className="block text-sm font-medium text-slate-700">Issue *
+              <select className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900">
+                <option>Select...</option>
+              </select>
+            </label>
+            <label className="block text-sm font-medium text-slate-700">Property ID (optional)<input className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2" /></label>
+          </div>
+
+          <label className="mt-3 block text-sm font-medium text-slate-700">Message *
+            <textarea className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2" rows={4} placeholder="Tell us what you need help with..." />
+          </label>
+
+          <label className="mt-3 flex items-start gap-2 text-sm text-slate-700"><input type="checkbox" className="mt-1" /> I consent to processing my data to handle this request. *</label>
+          <button className="mt-3 rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Send request</button>
+        </section>
       </div>
     </section>
   );
