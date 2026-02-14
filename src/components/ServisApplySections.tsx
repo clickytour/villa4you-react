@@ -25,17 +25,6 @@ const inputClass = "mt-1 w-full rounded-lg border border-slate-300 bg-white px-3
 const labelClass = "text-sm font-medium text-slate-700";
 
 const subcategoryByCategory: Record<string, string[]> = {
-  "For Guests": [
-    "Local Activities",
-    "Wellness & Spa",
-    "Transfers & Transport",
-    "Vehicle Rentals",
-    "Concierge & Event Services",
-    "Outdoor Activities",
-    "Cultural Performances",
-    "Attractions & Family Activities",
-    "Photo & Viewpoint Tours",
-  ],
   "For Owners": ["Cleaning Services", "Plumbing & Electrical", "Home Maintenance"],
 };
 
@@ -46,8 +35,8 @@ const initial: FormState = {
   phone: "",
   website: "",
   region: "",
-  serviceCategory: "For Guests",
-  serviceSubcategory: "Local Activities",
+  serviceCategory: "For Owners",
+  serviceSubcategory: "Cleaning Services",
   serviceDescription: "",
   pricingModel: "Per service",
   packages: "",
