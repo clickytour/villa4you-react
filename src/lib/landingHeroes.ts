@@ -112,9 +112,9 @@ export const heroPages: HeroPageConfig[] = [
     slug: "partner-pmc",
     route: "/partner-pmc",
     badge: "Home › Collaborate › Partner PMC",
-    title: "Partner with Villa4you as a Property Management Company",
+    title: "Grow your portfolio and bookings with a structured PMC path",
     subtitle:
-      "Scale portfolio performance with multi-channel distribution, pricing optimization, and owner-ready reporting built for serious PMCs in Greece.",
+      "List your properties for more demand and partner exposure, and sell network inventory to your clients with white-label and net-pricing options.",
     chips: ["PMC growth", "Distribution", "Owner reporting"],
     ctaPrimary: "Apply as PMC",
     ctaSecondary: "Explore collaboration",
