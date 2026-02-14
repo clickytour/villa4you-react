@@ -206,6 +206,39 @@ export function PlansOffersSections() {
         </div>
 
         <section className="mt-6">
+          <h2 className="text-[42px] font-semibold leading-none text-slate-900">How booking works</h2>
+          <p className="mt-2 text-[21px] text-slate-600">Three simple steps from shortlist to confirmed stay.</p>
+
+          <div className="mt-4 grid gap-3 md:grid-cols-3">
+            {[
+              {
+                icon: "🔎",
+                title: "1) Shortlist",
+                text: "Browse destinations & villas or tell us your dates and group size—we’ll curate options.",
+              },
+              {
+                icon: "📅",
+                title: "2) Check availability",
+                text: "Click \"Check Availability\" to open Planyo for live calendars and instant inquiries.",
+              },
+              {
+                icon: "✅",
+                title: "3) Book & add-ons",
+                text: "Confirm your stay, then add transfers, activities, and concierge services.",
+              },
+            ].map((step) => (
+              <article key={step.title} className="rounded-xl border border-slate-300 bg-white p-4">
+                <p className="text-xl">{step.icon}</p>
+                <h3 className="mt-1 text-[30px] font-semibold leading-none text-slate-900">{step.title}</h3>
+                <p className="mt-2 text-[21px] text-slate-700">{step.text}</p>
+              </article>
+            ))}
+          </div>
+
+          <button className="mt-4 rounded-xl border border-slate-800 bg-white px-5 py-2.5 text-base font-medium text-slate-900">Guest Help & FAQ</button>
+        </section>
+
+        <section className="mt-6">
           <h2 className="text-[42px] font-semibold leading-none text-slate-900">FAQ</h2>
           <div className="mt-3 overflow-hidden rounded-xl border border-slate-300 bg-white">
             {[
