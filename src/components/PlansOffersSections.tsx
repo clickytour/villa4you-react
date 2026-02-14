@@ -269,6 +269,23 @@ export function PlansOffersSections() {
           </div>
         </section>
 
+        <section className="mt-6 rounded-2xl border border-slate-300 bg-white p-4 md:p-5">
+          <h2 className="text-[42px] font-semibold leading-none text-slate-900">Why book with Villa4you</h2>
+          <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            {[
+              ["18+ years", "Experience in Greek stays"],
+              ["Vetted villas", "Quality, safety, compliance"],
+              ["Trip assistance", "Transfers & activities"],
+              ["Transparent", "Clear pricing & policies"],
+            ].map(([title, sub]) => (
+              <article key={title} className="rounded-xl border border-slate-300 bg-white p-4 text-center">
+                <h3 className="text-[30px] font-semibold leading-none text-slate-900">{title}</h3>
+                <p className="mt-2 text-[21px] text-slate-600">{sub}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
         <section className="mt-6">
           <h2 className="text-[42px] font-semibold leading-none text-slate-900">FAQ</h2>
           <div className="mt-3 overflow-hidden rounded-xl border border-slate-300 bg-white">
