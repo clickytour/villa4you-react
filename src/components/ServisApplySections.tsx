@@ -17,7 +17,6 @@ type FormState = {
   pricingModel: string;
   packages: string;
   mediaLinks: string;
-  payoutBank: string;
   termsAccepted: boolean;
 };
 
@@ -53,7 +52,6 @@ const initial: FormState = {
   pricingModel: "Per service",
   packages: "",
   mediaLinks: "",
-  payoutBank: "",
   termsAccepted: false,
 };
 
@@ -89,7 +87,6 @@ export function ServisApplySections() {
       },
       assets: {
         mediaLinks: csv(form.mediaLinks),
-        payoutBank: form.payoutBank,
       },
       consent: { termsAccepted: form.termsAccepted },
     }),
@@ -131,9 +128,21 @@ export function ServisApplySections() {
           <p className="mt-3 text-[21px] text-slate-600">Join ClickyTour and make your service visible to tourists, property owners, and agents — in just a few steps.</p>
 
           <div className="mt-4 grid gap-3 md:grid-cols-3">
-            <div className="rounded-xl border border-slate-200 bg-white p-3"><p className="text-[30px] font-semibold">1</p><p className="text-sm text-slate-700">Create account and start onboarding.</p></div>
-            <div className="rounded-xl border border-slate-200 bg-white p-3"><p className="text-[30px] font-semibold">2</p><p className="text-sm text-slate-700">Fill service details, pricing, images.</p></div>
-            <div className="rounded-xl border border-slate-200 bg-white p-3"><p className="text-[30px] font-semibold">3</p><p className="text-sm text-slate-700">Publish and start receiving bookings.</p></div>
+            <div className="rounded-xl border border-slate-200 bg-white p-3">
+              <div className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">1</div>
+              <p className="mt-2 text-sm font-semibold text-slate-900">Step 1</p>
+              <p className="text-sm text-slate-700">Create account and start onboarding.</p>
+            </div>
+            <div className="rounded-xl border border-slate-200 bg-white p-3">
+              <div className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">2</div>
+              <p className="mt-2 text-sm font-semibold text-slate-900">Step 2</p>
+              <p className="text-sm text-slate-700">Fill service details, pricing, images.</p>
+            </div>
+            <div className="rounded-xl border border-slate-200 bg-white p-3">
+              <div className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">3</div>
+              <p className="mt-2 text-sm font-semibold text-slate-900">Step 3</p>
+              <p className="text-sm text-slate-700">Publish and start receiving bookings.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -195,7 +204,6 @@ export function ServisApplySections() {
               <label className={`${labelClass} mt-3 block`}>Service description<textarea className={inputClass} rows={4} value={form.serviceDescription} onChange={(e)=>setField("serviceDescription", e.target.value)} /></label>
               <label className={`${labelClass} mt-3 block`}>Prices / packages<textarea className={inputClass} rows={3} value={form.packages} onChange={(e)=>setField("packages", e.target.value)} /></label>
               <label className={`${labelClass} mt-3 block`}>Photos / video links (comma-separated)<textarea className={inputClass} rows={3} value={form.mediaLinks} onChange={(e)=>setField("mediaLinks", e.target.value)} /></label>
-              <label className={`${labelClass} mt-3 block`}>Bank account details (for payouts)<input className={inputClass} value={form.payoutBank} onChange={(e)=>setField("payoutBank", e.target.value)} /></label>
             </fieldset>
           )}
 
