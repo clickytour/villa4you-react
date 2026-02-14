@@ -22,39 +22,49 @@ const categories: FaqCategory[] = [
 
 const faqItems: FaqItem[] = [
   {
-    q: "How does booking work?",
-    a: "Select your villa and click Check availability to open live calendars and inquiry options.",
+    q: "How do I book?",
+    a: "Open a property page and click “Check Availability.” We use Planyo for live calendars and secure bookings. If you prefer, send dates via the form and we’ll place a hold.",
     categories: ["Booking"],
   },
   {
     q: "What deposit is required?",
     a: "Deposit size depends on property terms and season. Exact amount appears before payment.",
-    categories: ["Payments", "Policies"],
+    categories: ["Payments"],
+  },
+  {
+    q: "Which payment methods are accepted?",
+    a: "Most villas accept credit/debit cards and bank transfer. In some cases split payments are available.",
+    categories: ["Payments"],
   },
   {
     q: "What is the cancellation policy?",
-    a: "Each property has its own policy. You’ll always see it before confirming.",
-    categories: ["Policies", "Changes & refunds"],
+    a: "Each property has its own cancellation terms. You’ll always see the exact policy before confirming.",
+    categories: ["Policies"],
   },
   {
     q: "Do you require a security deposit?",
-    a: "Some homes require it, others don’t. Terms are listed in each property page.",
-    categories: ["Policies", "Payments"],
+    a: "Some homes require a refundable security deposit, others do not. Property page terms always apply.",
+    categories: ["Policies"],
   },
   {
-    q: "How do refunds work?",
-    a: "When eligible, refunds follow the property’s cancellation window and payment channel timelines.",
-    categories: ["Changes & refunds", "Payments"],
+    q: "How does check-in work?",
+    a: "We share check-in details before arrival. Depending on villa, check-in is self-service or host-assisted.",
+    categories: ["Check-in & stay"],
+  },
+  {
+    q: "Can I request concierge services?",
+    a: "Yes. Transfers, chefs, and experiences can be arranged depending on destination and availability.",
+    categories: ["Transfers & extras", "Check-in & stay"],
   },
   {
     q: "Can I change dates?",
-    a: "Date changes are possible subject to availability and property policy.",
-    categories: ["Changes & refunds", "Booking"],
+    a: "Date changes are possible subject to availability and the property’s change/cancellation terms.",
+    categories: ["Changes & refunds"],
   },
   {
-    q: "How fast do you reply?",
-    a: "Typically within working hours. Urgent in-stay requests are prioritized.",
-    categories: ["Check-in & stay"],
+    q: "How do refunds work?",
+    a: "When eligible, refunds follow the cancellation policy and payment provider timelines.",
+    categories: ["Changes & refunds"],
   },
 ];
 
@@ -107,10 +117,11 @@ export function GuestHelpFaqSections() {
 
             <div className="mt-3 overflow-hidden rounded-xl border border-slate-300 bg-white">
               {filteredFaq.map((item, idx) => (
-                <details key={item.q} className={idx < filteredFaq.length - 1 ? "border-b border-slate-200" : ""}>
-                  <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-[30px] font-semibold leading-none text-slate-900 marker:content-none">
-                    <span>{item.q}</span>
-                    <span className="text-xl font-normal">+</span>
+                <details key={item.q} className={idx < filteredFaq.length - 1 ? "border-b border-slate-200" : ""} open={idx === 0}>
+                  <summary className="list-none p-2 marker:content-none">
+                    <div className={`rounded-lg border px-3 py-2 text-[30px] font-semibold leading-none ${idx === 0 ? "border-sky-500" : "border-transparent"} text-slate-900`}>
+                      {item.q}
+                    </div>
                   </summary>
                   <div className="px-4 pb-4">
                     <p className="text-[21px] text-slate-700">{item.a}</p>
