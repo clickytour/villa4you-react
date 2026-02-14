@@ -105,10 +105,7 @@ export function GuestHelpFaqSections() {
             <div className="mt-3 flex flex-wrap gap-2">
               {categories.map((cat) => {
                 const active = cat === activeCategory;
-                const activeChipClass =
-                  cat === "Payments" || cat === "Transfers & extras"
-                    ? "border-slate-900 text-slate-900"
-                    : "border-emerald-600 text-emerald-700";
+                const activeChipClass = "border-emerald-600 text-emerald-700";
 
                 return (
                   <button
@@ -131,7 +128,7 @@ export function GuestHelpFaqSections() {
                 const openByDefault = idx === 0 || (dualHighlight && idx === 1);
                 const headerClass =
                   dualHighlight && idx === 0
-                    ? "border-fuchsia-300 text-fuchsia-800"
+                    ? "border-fuchsia-300 text-slate-900"
                     : dualHighlight && idx === 1
                       ? "border-sky-500 text-slate-900"
                       : idx === 0
