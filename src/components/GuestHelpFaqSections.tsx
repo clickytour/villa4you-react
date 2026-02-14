@@ -107,7 +107,7 @@ export function GuestHelpFaqSections() {
                 const active = cat === activeCategory;
                 const activeChipClass =
                   cat === "Payments" || cat === "Transfers & extras"
-                    ? "border-sky-500 text-sky-700"
+                    ? "border-slate-900 text-slate-900"
                     : "border-emerald-600 text-emerald-700";
 
                 return (
