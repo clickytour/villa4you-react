@@ -307,6 +307,16 @@ export function DestinationsSections() {
           ))}
         </div>
       </section>
+
+      <section className="mt-6 rounded-2xl border border-slate-300 bg-white p-5 md:p-6">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h2 className="text-[42px] font-semibold leading-none text-slate-900">Prefer to explore on a map?</h2>
+            <p className="mt-2 text-[21px] leading-none text-slate-600">See every villa, hotel and complex by location, with filters for beach distance, pool and more.</p>
+          </div>
+          <button className="rounded-xl bg-sky-500 px-6 py-3 text-base font-semibold text-white hover:bg-sky-600">Open Map Search</button>
+        </div>
+      </section>
     </section>
   );
 }
