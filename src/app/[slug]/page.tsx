@@ -90,6 +90,14 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
     );
   }
 
+  if (slug === "galini-beachfront-masonettes-complex") {
+    return (
+      <div className="min-h-screen bg-[#f3f5f8]">
+        <ComplexTemplateSections variant="galini-beachfront" />
+      </div>
+    );
+  }
+
   const page = heroPagesBySlug[slug];
 
   if (!page) {
