@@ -21,13 +21,14 @@ type FormState = {
   managedCount: string;
   years: string;
   onboardingIntent: OnboardingIntent;
+  onboardingStatus: "ready-now" | "pilot-phase" | "planning";
   currentChannels: string[];
   pmsTool: string;
   averageAdr: string;
   occupancyTarget: string;
   serviceModelNote: string;
   description: string;
-  mediaLinks: string;
+  logoFileName: string;
   referral: string;
   consentData: boolean;
   consentAccuracy: boolean;
@@ -52,13 +53,14 @@ const initialState: FormState = {
   managedCount: "",
   years: "",
   onboardingIntent: "full-management",
+  onboardingStatus: "ready-now",
   currentChannels: [],
   pmsTool: "",
   averageAdr: "",
   occupancyTarget: "",
   serviceModelNote: "",
   description: "",
-  mediaLinks: "",
+  logoFileName: "",
   referral: "",
   consentData: false,
   consentAccuracy: false,
@@ -127,6 +129,7 @@ export function PmcApplySections() {
       },
       operations: {
         onboardingIntent: form.onboardingIntent,
+        onboardingStatus: form.onboardingStatus,
         currentChannels: form.currentChannels,
         pmsTool: form.pmsTool,
         averageAdr: form.averageAdr,
@@ -135,7 +138,7 @@ export function PmcApplySections() {
       },
       profile: {
         description: form.description,
-        mediaLinks: splitCsv(form.mediaLinks),
+        logoFileName: form.logoFileName,
         referral: form.referral,
       },
       consent: {
@@ -171,20 +174,27 @@ export function PmcApplySections() {
     if (targetStep === 1) {
       if (!form.companyName.trim()) nextErrors.companyName = "Company name is required.";
       if (!form.contactPerson.trim()) nextErrors.contactPerson = "Contact person is required.";
+      if (!form.role.trim()) nextErrors.role = "Role / position is required.";
       if (!form.email.trim()) nextErrors.email = "Email is required.";
       if (form.email && !/^\S+@\S+\.\S+$/.test(form.email)) nextErrors.email = "Enter a valid email.";
+      if (!form.phone.trim()) nextErrors.phone = "Phone is required.";
+      if (!form.messaging.trim()) nextErrors.messaging = "Preferred chat is required.";
+      if (!form.website.trim()) nextErrors.website = "Website is required.";
       if (!form.regions.trim()) nextErrors.regions = "At least one region is required.";
       if (!form.languages.trim()) nextErrors.languages = "At least one language is required.";
       if (!form.propertyTypes.trim()) nextErrors.propertyTypes = "At least one property type is required.";
     }
 
     if (targetStep === 2) {
+      if (!form.onboardingIntent) nextErrors.onboardingIntent = "Service model is required.";
+      if (!form.onboardingStatus) nextErrors.onboardingStatus = "Onboarding status is required.";
       if (!form.description.trim() || form.description.trim().length < 40) {
         nextErrors.description = "Please add a short profile description (min 40 chars).";
       }
       if (!form.managedCount.trim()) nextErrors.managedCount = "Managed properties count is required.";
       if (!form.years.trim()) nextErrors.years = "Years of experience is required.";
       if (form.currentChannels.length === 0) nextErrors.currentChannels = "Select at least one active channel.";
+      if (!form.logoFileName.trim()) nextErrors.logoFileName = "Upload one logo file.";
     }
 
     if (targetStep === 3) {
@@ -318,21 +328,25 @@ export function PmcApplySections() {
                       <input className={inputClass} value={form.contactPerson} onChange={(e) => setField("contactPerson", e.target.value)} />
                       {errors.contactPerson && <span className="text-xs text-red-600">{errors.contactPerson}</span>}
                     </label>
-                    <label className={labelClass}>Role / position
+                    <label className={labelClass}>Role / position *
                       <input className={inputClass} value={form.role} onChange={(e) => setField("role", e.target.value)} />
+                      {errors.role && <span className="text-xs text-red-600">{errors.role}</span>}
                     </label>
                     <label className={labelClass}>Email *
                       <input type="email" className={inputClass} value={form.email} onChange={(e) => setField("email", e.target.value)} />
                       {errors.email && <span className="text-xs text-red-600">{errors.email}</span>}
                     </label>
-                    <label className={labelClass}>Phone
+                    <label className={labelClass}>Phone *
                       <input className={inputClass} placeholder="+30 ..." value={form.phone} onChange={(e) => setField("phone", e.target.value)} />
+                      {errors.phone && <span className="text-xs text-red-600">{errors.phone}</span>}
                     </label>
-                    <label className={labelClass}>WhatsApp / Viber
+                    <label className={labelClass}>Preferred chat (WhatsApp / Viber) *
                       <input className={inputClass} value={form.messaging} onChange={(e) => setField("messaging", e.target.value)} />
+                      {errors.messaging && <span className="text-xs text-red-600">{errors.messaging}</span>}
                     </label>
-                    <label className={labelClass}>Website
+                    <label className={labelClass}>Website *
                       <input className={inputClass} placeholder="https://..." value={form.website} onChange={(e) => setField("website", e.target.value)} />
+                      {errors.website && <span className="text-xs text-red-600">{errors.website}</span>}
                     </label>
                   </div>
                 </fieldset>
@@ -363,7 +377,7 @@ export function PmcApplySections() {
             {step === 2 && (
               <>
                 <fieldset className="rounded-xl border border-slate-200 p-3">
-                  <legend className="px-2 text-sm font-semibold text-slate-800">Onboarding intent</legend>
+                  <legend className="px-2 text-sm font-semibold text-slate-800">Service model</legend>
                   <div className="grid gap-3 md:grid-cols-3">
                     {(Object.keys(intentMeta) as OnboardingIntent[]).map((intent) => {
                       const active = form.onboardingIntent === intent;
@@ -380,6 +394,16 @@ export function PmcApplySections() {
                       );
                     })}
                   </div>
+                  {errors.onboardingIntent && <p className="mt-2 text-xs text-red-600">{errors.onboardingIntent}</p>}
+
+                  <label className={`${labelClass} mt-3 block`}>Onboarding status *
+                    <select className={inputClass} value={form.onboardingStatus} onChange={(e) => setField("onboardingStatus", e.target.value as FormState["onboardingStatus"])}>
+                      <option value="ready-now">Ready now (can start immediately)</option>
+                      <option value="pilot-phase">Pilot phase (small rollout first)</option>
+                      <option value="planning">Planning stage (needs alignment first)</option>
+                    </select>
+                    {errors.onboardingStatus && <span className="text-xs text-red-600">{errors.onboardingStatus}</span>}
+                  </label>
                 </fieldset>
 
                 <fieldset className="rounded-xl border border-slate-200 p-3">
@@ -437,8 +461,19 @@ export function PmcApplySections() {
                     {errors.description && <span className="text-xs text-red-600">{errors.description}</span>}
                   </label>
 
-                  <label className={`${labelClass} mt-3 block`}>Media links (comma-separated)
-                    <textarea className={inputClass} rows={3} placeholder="https://..., https://..." value={form.mediaLinks} onChange={(e) => setField("mediaLinks", e.target.value)} />
+                  <label className={`${labelClass} mt-3 block`}>Upload logo *
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className={inputClass}
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        setField("logoFileName", file ? file.name : "");
+                      }}
+                    />
+                    <span className="mt-1 block text-xs text-slate-500">Limit: 1 file (logo image).</span>
+                    {form.logoFileName && <span className="mt-1 block text-xs text-slate-600">Selected: {form.logoFileName}</span>}
+                    {errors.logoFileName && <span className="text-xs text-red-600">{errors.logoFileName}</span>}
                   </label>
 
                   <label className={`${labelClass} mt-3 block`}>Extra details for this onboarding model
