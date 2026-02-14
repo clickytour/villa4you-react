@@ -106,7 +106,9 @@ export function GuestHelpFaqSections() {
               {categories.map((cat) => {
                 const active = cat === activeCategory;
                 const activeChipClass =
-                  cat === "Payments" ? "border-sky-500 text-sky-700" : "border-emerald-600 text-emerald-700";
+                  cat === "Payments" || cat === "Transfers & extras"
+                    ? "border-sky-500 text-sky-700"
+                    : "border-emerald-600 text-emerald-700";
 
                 return (
                   <button
