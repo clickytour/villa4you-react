@@ -31,7 +31,7 @@ export const heroPages: HeroPageConfig[] = [
     trust: ["⭐ 4.8/5 guest reviews", "🏝️ 6+ top destinations", "🔄 seamless Planyo bookings"],
     heroImage:
       "https://images.unsplash.com/photo-1519046904884-53103b34b206?q=80&w=1800&auto=format&fit=crop",
-    sideMode: "image",
+    sideMode: "panel",
     panelTitle: "Quick Request",
     panelItems: [
       { label: "Destination", value: "Please Select" },
