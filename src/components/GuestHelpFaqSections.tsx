@@ -125,7 +125,7 @@ export function GuestHelpFaqSections() {
             <div className="mt-3 overflow-hidden rounded-xl border border-slate-300 bg-white">
               {filteredFaq.map((item, idx) => {
                 const dualHighlight = activeCategory === "Payments" || activeCategory === "Transfers & extras";
-                const openByDefault = idx === 0 || (dualHighlight && idx === 1);
+                const openByDefault = false;
                 const headerClass =
                   dualHighlight && idx === 0
                     ? "border-fuchsia-300 text-slate-900"
