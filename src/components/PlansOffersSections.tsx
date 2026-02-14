@@ -158,28 +158,6 @@ export function PlansOffersSections() {
           </div>
         </div>
 
-        <div className="mt-6 grid gap-4 lg:grid-cols-2">
-          <article className="rounded-xl border border-slate-300 bg-white p-4 md:p-5">
-            <h3 className="text-[42px] font-semibold leading-none text-slate-900">Premium Plan — concierge & flexibility</h3>
-            <p className="mt-2 text-[21px] text-slate-600">Upgrade your stay with priority holds, bespoke shortlists, and add-on services coordinated by our local team.</p>
-            <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-slate-700">
-              <li>Priority villa holds & rapid shortlist updates</li>
-              <li>Chef, boats, transfers, and in-villa services</li>
-              <li>Flexible arrival planning & troubleshooting</li>
-            </ul>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <button className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white">Start planning</button>
-              <button className="rounded-xl border border-slate-800 bg-white px-4 py-2 text-sm font-medium text-slate-900">Talk to a specialist</button>
-            </div>
-          </article>
-
-          <article className="rounded-xl border border-slate-300 bg-white p-4 md:p-5">
-            <h3 className="text-[42px] font-semibold leading-none text-slate-900">How discounts work</h3>
-            <p className="mt-2 text-[21px] text-slate-600">Genuine promotions come from partners and owners (shoulder season, gap nights, or long-stay incentives). We verify before publishing and link you to the live calendar or direct inquiry.</p>
-            <p className="mt-3 text-sm text-slate-600">Tip: flexibility by ±2 days often unlocks bigger savings.</p>
-          </article>
-        </div>
-
         <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {filteredOffers.map((offer) => (
             <article key={offer.title} className="overflow-hidden rounded-xl border border-slate-300 bg-white">
@@ -203,6 +181,28 @@ export function PlansOffersSections() {
               </div>
             </article>
           ))}
+        </div>
+
+        <div className="mt-6 grid gap-4 lg:grid-cols-2">
+          <article className="rounded-xl border border-slate-300 bg-white p-4 md:p-5">
+            <h3 className="text-[42px] font-semibold leading-none text-slate-900">Premium Plan — concierge & flexibility</h3>
+            <p className="mt-2 text-[21px] text-slate-600">Upgrade your stay with priority holds, bespoke shortlists, and add-on services coordinated by our local team.</p>
+            <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-slate-700">
+              <li>Priority villa holds & rapid shortlist updates</li>
+              <li>Chef, boats, transfers, and in-villa services</li>
+              <li>Flexible arrival planning & troubleshooting</li>
+            </ul>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <button className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white">Start planning</button>
+              <button className="rounded-xl border border-slate-800 bg-white px-4 py-2 text-sm font-medium text-slate-900">Talk to a specialist</button>
+            </div>
+          </article>
+
+          <article className="rounded-xl border border-slate-300 bg-white p-4 md:p-5">
+            <h3 className="text-[42px] font-semibold leading-none text-slate-900">How discounts work</h3>
+            <p className="mt-2 text-[21px] text-slate-600">Genuine promotions come from partners and owners (shoulder season, gap nights, or long-stay incentives). We verify before publishing and link you to the live calendar or direct inquiry.</p>
+            <p className="mt-3 text-sm text-slate-600">Tip: flexibility by ±2 days often unlocks bigger savings.</p>
+          </article>
         </div>
 
         <section className="mt-6">
