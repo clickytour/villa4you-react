@@ -5,6 +5,12 @@ const trustCards = [
   { title: "Net pricing", text: "Optional agent resale model" },
 ];
 
+const bestFirstActions = [
+  "Request matches from property owners in your region",
+  "List your properties for ClickyTour demand",
+  "Use white-label proposals to win contracts",
+];
+
 const pathCards = [
   {
     title: "Path A — List your properties on ClickyTour",
@@ -138,6 +144,19 @@ export function PartnerPmcSections() {
               <p className="mt-1 text-[19px] text-slate-600">{card.text}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1280px] px-4 pb-6">
+        <div className="rounded-[24px] border border-slate-200 bg-white/95 p-5 shadow-sm md:p-6">
+          <h2 className="text-[42px] font-semibold tracking-[-0.01em] text-slate-900">Best first actions</h2>
+          <div className="mt-4 grid gap-3 md:grid-cols-3">
+            {bestFirstActions.map((item) => (
+              <article key={item} className="rounded-xl border border-slate-200 bg-white p-4">
+                <p className="text-[21px] font-medium text-slate-800">{item}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
