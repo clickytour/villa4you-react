@@ -314,6 +314,12 @@ export function PlansOffersSections() {
             ))}
           </div>
         </section>
+
+        <section className="mt-6 rounded-2xl border border-slate-300 bg-white px-4 py-8 text-center md:px-8">
+          <h2 className="text-[42px] font-semibold leading-none text-slate-900">Need a shortlist tailored to your dates?</h2>
+          <p className="mt-2 text-[21px] text-slate-600">Tell us your dates, group size, and vibe—we’ll send 3-5 perfect options.</p>
+          <button className="mt-4 rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Get a Free Trip Plan</button>
+        </section>
       </div>
     </section>
   );
