@@ -37,7 +37,7 @@ export type CoreMirrorProperty = {
   faqs: { q: string; a: string }[];
   related: { title: string; href: string; from: number; image: string }[];
   videoUrl: string;
-  nearbyServices: { name: string; detail: string }[];
+  nearbyServices: { name: string; detail: string; href: string; blogHref?: string }[];
   blogPosts: { title: string; href: string; date: string; excerpt: string; image: string }[];
 };
 
@@ -132,10 +132,20 @@ const properties: CoreMirrorProperty[] = [
     ],
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     nearbyServices: [
-      { name: "Airport Transfer", detail: "Door-to-door transfer from SKG airport" },
-      { name: "Private Chef", detail: "In-villa Greek and Mediterranean menus" },
-      { name: "Boat Experience", detail: "Daily cruises from nearby marina" },
-      { name: "Wellness & Massage", detail: "At-home relaxation sessions" },
+      {
+        name: "Airport Transfer",
+        detail: "Door-to-door transfer from SKG airport",
+        href: "/services/airport-transfer-halkidiki",
+        blogHref: "/blog/family-seaside-vacation-checklist",
+      },
+      {
+        name: "Private Chef",
+        detail: "In-villa Greek and Mediterranean menus",
+        href: "/services/private-chef-villa-service",
+        blogHref: "/blog/best-coastal-towns-halkidiki",
+      },
+      { name: "Boat Experience", detail: "Daily cruises from nearby marina", href: "/services/airport-transfer-halkidiki" },
+      { name: "Wellness & Massage", detail: "At-home relaxation sessions", href: "/services/private-chef-villa-service" },
     ],
     blogPosts: [
       {

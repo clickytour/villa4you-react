@@ -108,6 +108,12 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
             <article key={service.name} className="rounded-lg border border-slate-200 p-3">
               <h3 className="text-sm font-semibold text-slate-900">{service.name}</h3>
               <p className="mt-1 text-sm text-slate-600">{service.detail}</p>
+              <div className="mt-2 flex gap-2">
+                <a href={service.href} className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-medium text-white">View service</a>
+                {service.blogHref && (
+                  <a href={service.blogHref} className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-900">Related post</a>
+                )}
+              </div>
             </article>
           ))}
         </div>
