@@ -22,6 +22,8 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
         null
       : sortedSeasons.find((s) => s.nightly < highestPrice) ?? null;
 
+  const normalizeSeasonLabel = (label: string) => label.replace(/low/gi, "Mid");
+
   return (
     <div className="mx-auto max-w-[1320px] px-4 py-8">
       <div className="mb-4 text-sm text-slate-500">For Guests / Property Details / {property.title}</div>
@@ -69,17 +71,17 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
             </p>
             {seasonBeforeHigh && (
               <p className="mt-1 text-[11px] text-blue-700">
-                Medium Season ({seasonBeforeHigh.label}): {seasonBeforeHigh.nightly} {property.pricing.currency}
+                Medium Season ({normalizeSeasonLabel(seasonBeforeHigh.label)}): {seasonBeforeHigh.nightly} {property.pricing.currency}
               </p>
             )}
             {highSeason && (
               <p className="text-xs text-blue-800">
-                High Season ({highSeason.label}): {highSeason.nightly} {property.pricing.currency} · min stay {property.pricing.minStayNights} nights
+                High Season ({normalizeSeasonLabel(highSeason.label)}): {highSeason.nightly} {property.pricing.currency} · min stay {property.pricing.minStayNights} nights
               </p>
             )}
             {seasonAfterHigh && (
               <p className="text-[11px] text-blue-700">
-                Medium Season ({seasonAfterHigh.label}): {seasonAfterHigh.nightly} {property.pricing.currency}
+                Medium Season ({normalizeSeasonLabel(seasonAfterHigh.label)}): {seasonAfterHigh.nightly} {property.pricing.currency}
               </p>
             )}
           </div>
