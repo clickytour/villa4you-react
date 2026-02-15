@@ -177,7 +177,7 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
               <div className="p-3">
                 <h3 className="text-sm font-semibold text-slate-900">{service.name}</h3>
                 <p className="mt-1 text-sm text-slate-600">{service.detail}</p>
-                <div className="mt-2 flex gap-2">
+                <div className="mt-2 flex flex-wrap gap-2">
                   <a href={service.href} className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-medium text-white">
                     View service
                   </a>
@@ -186,6 +186,9 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
                       Related post
                     </a>
                   )}
+                  <a href={`/property/${property.slug}`} className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-900">
+                    Related property
+                  </a>
                 </div>
               </div>
             </article>
@@ -212,7 +215,7 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
                   <div className="p-3">
                     <h3 className="text-sm font-semibold text-slate-900">{service.name}</h3>
                     <p className="mt-1 text-sm text-slate-600">{service.detail}</p>
-                    <div className="mt-2 flex gap-2">
+                    <div className="mt-2 flex flex-wrap gap-2">
                       <a href={service.href} className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-medium text-white">
                         View service
                       </a>
@@ -221,6 +224,9 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
                           Related post
                         </a>
                       )}
+                      <a href={`/property/${property.slug}`} className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-900">
+                        Related property
+                      </a>
                     </div>
                   </div>
                 </article>
@@ -243,9 +249,14 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
                 <p className="text-xs text-slate-500">{post.date}</p>
                 <h3 className="mt-1 text-base font-semibold leading-tight text-slate-900">{post.title}</h3>
                 <p className="mt-2 text-sm text-slate-600">{post.excerpt}</p>
-                <a href={post.href} className="mt-3 inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white">
-                  Read
-                </a>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <a href={post.href} className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white">
+                    Read
+                  </a>
+                  <a href={`/property/${property.slug}`} className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900">
+                    Related property
+                  </a>
+                </div>
               </div>
             </article>
           ))}
@@ -264,9 +275,14 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
                     <p className="text-xs text-slate-500">{post.date}</p>
                     <h3 className="mt-1 text-base font-semibold leading-tight text-slate-900">{post.title}</h3>
                     <p className="mt-2 text-sm text-slate-600">{post.excerpt}</p>
-                    <a href={post.href} className="mt-3 inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white">
-                      Read
-                    </a>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <a href={post.href} className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white">
+                        Read
+                      </a>
+                      <a href={`/property/${property.slug}`} className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900">
+                        Related property
+                      </a>
+                    </div>
                   </div>
                 </article>
               ))}
@@ -323,9 +339,14 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
               <div className="p-4">
                 <h3 className="text-base font-semibold text-slate-900">{item.title}</h3>
                 <p className="mt-1 text-sm text-slate-600">From {item.from} EUR / night</p>
-                <a href={item.href} className="mt-3 inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900">
-                  View
-                </a>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <a href={item.href} className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900">
+                    View
+                  </a>
+                  <a href="/services" className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white">
+                    Related services
+                  </a>
+                </div>
               </div>
             </article>
           ))}
@@ -343,9 +364,14 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
                   <div className="p-4">
                     <h3 className="text-base font-semibold text-slate-900">{item.title}</h3>
                     <p className="mt-1 text-sm text-slate-600">From {item.from} EUR / night</p>
-                    <a href={item.href} className="mt-3 inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900">
-                      View
-                    </a>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <a href={item.href} className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900">
+                        View
+                      </a>
+                      <a href="/services" className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white">
+                        Related services
+                      </a>
+                    </div>
                   </div>
                 </article>
               ))}
