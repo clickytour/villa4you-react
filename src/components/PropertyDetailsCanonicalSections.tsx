@@ -32,46 +32,26 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
             ))}
           </div>
 
-          <div className="mt-4 overflow-hidden rounded-xl border border-cyan-600">
-            <div className="grid grid-cols-2">
-              <div className="border-b border-r border-cyan-700 bg-cyan-500 p-3 text-slate-900">
-                <p className="text-xs font-semibold uppercase tracking-wide">🛏 Bedrooms</p>
-                <p className="mt-1 text-lg font-bold">4</p>
-              </div>
-              <div className="border-b border-cyan-700 bg-cyan-500 p-3 text-slate-900">
-                <p className="text-xs font-semibold uppercase tracking-wide">🛁 Bathrooms</p>
-                <p className="mt-1 text-lg font-bold">3</p>
-              </div>
-              <div className="border-b border-r border-cyan-700 bg-cyan-500 p-3 text-slate-900">
-                <p className="text-xs font-semibold uppercase tracking-wide">👥 Max Guests</p>
-                <p className="mt-1 text-lg font-bold">8</p>
-              </div>
-              <div className="border-b border-cyan-700 bg-cyan-500 p-3 text-slate-900">
-                <p className="text-xs font-semibold uppercase tracking-wide">🏢 Floors</p>
-                <p className="mt-1 text-lg font-bold">3</p>
-              </div>
-              <div className="border-r border-cyan-700 bg-cyan-500 p-3 text-slate-900">
-                <p className="text-xs font-semibold uppercase tracking-wide">🏊 Pool</p>
-                <p className="mt-1 text-lg font-bold">No</p>
-              </div>
-              <div className="bg-cyan-500 p-3 text-slate-900">
-                <p className="text-xs font-semibold uppercase tracking-wide">🐾 Pets Friendly</p>
-                <p className="mt-1 text-lg font-bold">Yes</p>
-              </div>
-            </div>
+          <div className="mt-4 grid grid-cols-2 gap-2 text-sm text-slate-700">
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-2">👥 {property.metrics.guests} guests</div>
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-2">🛏 {property.metrics.bedrooms} bedrooms</div>
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-2">🛁 {property.metrics.bathrooms} bathrooms</div>
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-2">📐 {property.metrics.areaSqm} m²</div>
           </div>
 
-          <div className="mt-4 rounded-xl border border-slate-200 bg-white p-3 text-center">
-            <p className="text-xl font-semibold text-slate-900">Check Price & Availability</p>
-            <p className="mt-1 text-sm text-cyan-700">Book Your Stay at Our Vacation Rental Today</p>
-            <p className="mt-2 text-sm text-slate-600">
-              From {property.pricing.seasonalFrom} {property.pricing.currency} / night · {property.pricing.seasonName}
+          <div className="mt-4 rounded-xl border border-blue-200 bg-blue-50 p-3">
+            <p className="text-xs text-blue-700">Pricing (Core mirror logic)</p>
+            <p className="text-xl font-semibold text-blue-900">
+              From {property.pricing.seasonalFrom} {property.pricing.currency} / night
+            </p>
+            <p className="text-xs text-blue-800">
+              {property.pricing.seasonName} · fallback basic from {property.pricing.basicFrom} {property.pricing.currency} · min stay {property.pricing.minStayNights} nights
             </p>
           </div>
 
           <a
             href="/for-guests"
-            className="mt-3 inline-flex w-full items-center justify-center rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white"
+            className="mt-4 inline-flex w-full items-center justify-center rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white"
           >
             Check availability
           </a>
