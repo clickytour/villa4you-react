@@ -880,10 +880,10 @@ export function QuickRequestPanel() {
 
       <div className="mt-3 flex items-center justify-end gap-2">
         {currentStep > 1 && (
-          <button type="button" onClick={() => setStep(1)} className="h-9 min-w-[86px] whitespace-nowrap rounded-md border border-slate-300 bg-white px-3 text-[13px] font-semibold text-slate-700">← Back</button>
+          <button type="button" onClick={() => setStep((currentStep - 1) as Step)} className="h-9 min-w-[86px] whitespace-nowrap rounded-md border border-slate-300 bg-white px-3 text-[13px] font-semibold text-slate-700">← Back</button>
         )}
         {currentStep < maxStep ? (
-          <button type="button" onClick={() => validateStep(1) && setStep(2)} className="h-9 w-full rounded-md bg-[#1c2f66] px-3 text-[13px] font-semibold text-white">Next</button>
+          <button type="button" onClick={() => validateStep(currentStep) && setStep((currentStep + 1) as Step)} className="h-9 w-full rounded-md bg-[#1c2f66] px-3 text-[13px] font-semibold text-white">Next</button>
         ) : (
           <button type="button" onClick={submit} disabled={submitting} className="h-9 w-full rounded-md bg-[#1c2f66] px-3 text-[13px] font-semibold text-white disabled:opacity-60">{submitting ? "Sending..." : "Submit request"}</button>
         )}
