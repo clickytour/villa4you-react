@@ -9,12 +9,6 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
     <div className="mx-auto max-w-[1320px] px-4 py-8">
       <div className="mb-4 text-sm text-slate-500">For Guests / Property Details / {property.title}</div>
 
-      <section className="mb-6 rounded-2xl border border-slate-200 bg-white p-6">
-        <h1 className="text-4xl font-semibold leading-tight text-slate-900">{property.title}</h1>
-        <h2 className="mt-2 text-2xl font-semibold text-slate-800">{property.headline}</h2>
-        <p className="mt-2 max-w-4xl text-base text-slate-600">{property.shortDescription}</p>
-      </section>
-
       <section className="grid gap-6 xl:grid-cols-[1.55fr_1fr]">
         <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm">
           <img src={property.gallery[0]} alt={property.title} className="h-[500px] w-full object-cover" />
@@ -27,14 +21,16 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
 
         <aside className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
           <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700">{property.location.region}</p>
+          <h1 className="mt-2 text-3xl font-semibold leading-tight text-slate-900">{property.title}</h1>
+          <p className="mt-2 text-base font-medium text-slate-700">{property.headline}</p>
 
           <div className="mt-3 flex flex-wrap gap-2">
             {property.badges.map((b) => (
-              <span key={b} className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] text-slate-700">{b}</span>
+              <span key={b} className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] text-slate-700">
+                {b}
+              </span>
             ))}
           </div>
-
-          <p className="mt-3 text-sm leading-6 text-slate-600">{property.detailDescription}</p>
 
           <div className="mt-4 grid grid-cols-2 gap-2 text-sm text-slate-700">
             <div className="rounded-lg border border-slate-200 bg-slate-50 p-2">👥 {property.metrics.guests} guests</div>
@@ -45,13 +41,18 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
 
           <div className="mt-4 rounded-xl border border-blue-200 bg-blue-50 p-3">
             <p className="text-xs text-blue-700">Pricing (Core mirror logic)</p>
-            <p className="text-xl font-semibold text-blue-900">From {property.pricing.seasonalFrom} {property.pricing.currency} / night</p>
+            <p className="text-xl font-semibold text-blue-900">
+              From {property.pricing.seasonalFrom} {property.pricing.currency} / night
+            </p>
             <p className="text-xs text-blue-800">
               {property.pricing.seasonName} · fallback basic from {property.pricing.basicFrom} {property.pricing.currency} · min stay {property.pricing.minStayNights} nights
             </p>
           </div>
 
-          <a href="/for-guests" className="mt-4 inline-flex w-full items-center justify-center rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white">
+          <a
+            href="/for-guests"
+            className="mt-4 inline-flex w-full items-center justify-center rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white"
+          >
             Check availability
           </a>
 
@@ -67,17 +68,20 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
         </aside>
       </section>
 
-      <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-4">
-        <details className="group">
-          <summary className="flex cursor-pointer list-none items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-900">
-            <span>Detail description</span>
-            <span className="text-slate-500 group-open:rotate-180">⌄</span>
-          </summary>
-          <p className="px-2 pb-2 pt-3 text-sm leading-7 text-slate-700">{property.detailDescription}</p>
-        </details>
-      </section>
-
       <section className="mt-6 grid gap-6 lg:grid-cols-2">
+        <article className="rounded-2xl border border-slate-200 bg-white p-6">
+          <h2 className="text-2xl font-semibold text-slate-900">Short Description</h2>
+          <p className="mt-3 text-sm leading-7 text-slate-700">{property.shortDescription}</p>
+
+          <details className="group mt-4">
+            <summary className="flex cursor-pointer list-none items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-900">
+              <span>Detail description</span>
+              <span className="text-slate-500 group-open:rotate-180">⌄</span>
+            </summary>
+            <p className="px-2 pb-2 pt-3 text-sm leading-7 text-slate-700">{property.detailDescription}</p>
+          </details>
+        </article>
+
         <article className="rounded-2xl border border-slate-200 bg-white p-6">
           <h2 className="text-2xl font-semibold text-slate-900">Overview & Highlights</h2>
           <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
@@ -86,28 +90,36 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
             ))}
           </ul>
         </article>
+      </section>
 
+      <section className="mt-6 grid gap-6 lg:grid-cols-2">
         <article className="rounded-2xl border border-slate-200 bg-white p-6">
           <h2 className="text-2xl font-semibold text-slate-900">Amenities</h2>
           <div className="mt-3 grid grid-cols-2 gap-2 text-sm text-slate-700">
             {property.amenities.map((a) => (
-              <div key={a} className="rounded-lg border border-slate-200 bg-slate-50 px-2 py-1.5">{a}</div>
+              <div key={a} className="rounded-lg border border-slate-200 bg-slate-50 px-2 py-1.5">
+                {a}
+              </div>
+            ))}
+          </div>
+        </article>
+
+        <article className="rounded-2xl border border-slate-200 bg-white p-6">
+          <h2 className="text-2xl font-semibold text-slate-900">Location & Getting Around</h2>
+          <p className="mt-2 text-sm text-slate-600">
+            {property.location.area}, {property.location.region}, {property.location.country}
+          </p>
+          <div className="mt-3 grid grid-cols-2 gap-2 text-sm text-slate-700">
+            {property.nearby.map((n) => (
+              <div key={n.label} className="rounded-lg border border-slate-200 bg-slate-50 p-2">
+                {n.label}: {n.value}
+              </div>
             ))}
           </div>
         </article>
       </section>
 
       <section className="mt-6 grid gap-6 lg:grid-cols-2">
-        <article className="rounded-2xl border border-slate-200 bg-white p-6">
-          <h2 className="text-2xl font-semibold text-slate-900">Location & Getting Around</h2>
-          <p className="mt-2 text-sm text-slate-600">{property.location.area}, {property.location.region}, {property.location.country}</p>
-          <div className="mt-3 grid grid-cols-2 gap-2 text-sm text-slate-700">
-            {property.nearby.map((n) => (
-              <div key={n.label} className="rounded-lg border border-slate-200 bg-slate-50 p-2">{n.label}: {n.value}</div>
-            ))}
-          </div>
-        </article>
-
         <article className="rounded-2xl border border-slate-200 bg-white p-6">
           <h2 className="text-2xl font-semibold text-slate-900">Map Location</h2>
           <iframe src={mapSrc} className="mt-3 h-[280px] w-full rounded-lg border border-slate-200" title="Property map location" />
@@ -120,9 +132,7 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
             Open full map
           </a>
         </article>
-      </section>
 
-      <section className="mt-6 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <article className="rounded-2xl border border-slate-200 bg-white p-6">
           <h2 className="text-2xl font-semibold text-slate-900">Property Video</h2>
           <div className="mt-3 overflow-hidden rounded-xl border border-slate-200">
@@ -135,31 +145,39 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
             />
           </div>
         </article>
+      </section>
 
-        <article className="rounded-2xl border border-slate-200 bg-white p-6">
-          <h2 className="text-2xl font-semibold text-slate-900">Services Nearby</h2>
-          <div className="mt-3 grid gap-4 md:grid-cols-2">
-            {property.nearbyServices.map((service, idx) => (
-              <article key={service.name} className="overflow-hidden rounded-xl border border-slate-300 bg-white">
-                <img
-                  src={idx % 2 === 0 ? "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=1200&auto=format&fit=crop" : "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1200&auto=format&fit=crop"}
-                  alt={service.name}
-                  className="h-28 w-full object-cover"
-                />
-                <div className="p-3">
-                  <h3 className="text-sm font-semibold text-slate-900">{service.name}</h3>
-                  <p className="mt-1 text-sm text-slate-600">{service.detail}</p>
-                  <div className="mt-2 flex gap-2">
-                    <a href={service.href} className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-medium text-white">View service</a>
-                    {service.blogHref && (
-                      <a href={service.blogHref} className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-900">Related post</a>
-                    )}
-                  </div>
+      <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6">
+        <h2 className="text-2xl font-semibold text-slate-900">Services Nearby</h2>
+        <div className="mt-3 grid gap-4 md:grid-cols-2">
+          {property.nearbyServices.map((service, idx) => (
+            <article key={service.name} className="overflow-hidden rounded-xl border border-slate-300 bg-white">
+              <img
+                src={
+                  idx % 2 === 0
+                    ? "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=1200&auto=format&fit=crop"
+                    : "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1200&auto=format&fit=crop"
+                }
+                alt={service.name}
+                className="h-28 w-full object-cover"
+              />
+              <div className="p-3">
+                <h3 className="text-sm font-semibold text-slate-900">{service.name}</h3>
+                <p className="mt-1 text-sm text-slate-600">{service.detail}</p>
+                <div className="mt-2 flex gap-2">
+                  <a href={service.href} className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-medium text-white">
+                    View service
+                  </a>
+                  {service.blogHref && (
+                    <a href={service.blogHref} className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-900">
+                      Related post
+                    </a>
+                  )}
                 </div>
-              </article>
-            ))}
-          </div>
-        </article>
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6">
@@ -172,19 +190,16 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
                 <p className="text-xs text-slate-500">{post.date}</p>
                 <h3 className="mt-1 text-base font-semibold leading-tight text-slate-900">{post.title}</h3>
                 <p className="mt-2 text-sm text-slate-600">{post.excerpt}</p>
-                <a href={post.href} className="mt-3 inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white">Read</a>
+                <a href={post.href} className="mt-3 inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white">
+                  Read
+                </a>
               </div>
             </article>
           ))}
         </div>
       </section>
 
-      <GuestRequestInlineForm
-        contextType="property"
-        contextId={property.id}
-        contextSlug={property.slug}
-        contextTitle={property.title}
-      />
+      <GuestRequestInlineForm contextType="property" contextId={property.id} contextSlug={property.slug} contextTitle={property.title} />
 
       <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6">
         <h2 className="text-2xl font-semibold text-slate-900">FAQ (Core-mirror readiness)</h2>
@@ -207,7 +222,9 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
               <div className="p-4">
                 <h3 className="text-base font-semibold text-slate-900">{item.title}</h3>
                 <p className="mt-1 text-sm text-slate-600">From {item.from} EUR / night</p>
-                <a href={item.href} className="mt-3 inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900">View</a>
+                <a href={item.href} className="mt-3 inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900">
+                  View
+                </a>
               </div>
             </article>
           ))}
