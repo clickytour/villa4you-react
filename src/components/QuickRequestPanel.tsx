@@ -92,7 +92,7 @@ const initial: FormState = {
   legalSupport: false,
 
   budgetTotal: "",
-  budgetFrom: "",
+  budgetFrom: "100",
   budgetTo: "150",
   firstName: "",
   lastName: "",
@@ -408,6 +408,7 @@ export function QuickRequestPanel() {
 
     if (target === 1) {
       if (!form.email.trim()) next.email = "Required";
+      if (!form.phone.trim()) next.phone = "Required";
 
       if (form.guestRole === "travel-rentals") {
         if (!form.checkIn.trim()) next.checkIn = "Required";
@@ -608,8 +609,9 @@ export function QuickRequestPanel() {
             <input type="email" className={inputClass} value={form.email} onChange={(e) => setField("email", e.target.value)} />
             {errors.email && <span className="text-[10px] text-red-600">{errors.email}</span>}
           </label>
-          <label className="text-[10px] font-semibold text-slate-700">Phone
+          <label className="text-[10px] font-semibold text-slate-700">Phone*
             <input className={inputClass} value={form.phone} onChange={(e) => setField("phone", e.target.value)} />
+            {errors.phone && <span className="text-[10px] text-red-600">{errors.phone}</span>}
           </label>
         </div>
       )}
@@ -768,11 +770,43 @@ export function QuickRequestPanel() {
           {form.guestRole === "travel-rentals" && (
             <div className="grid gap-2 sm:grid-cols-2">
               <label className="text-[10px] font-semibold text-slate-700">Budget From (€)*
-                <input type="number" min={100} className={inputClass} placeholder="min 100" value={form.budgetFrom} onChange={(e) => setField("budgetFrom", e.target.value)} />
+                <input
+                  type="number"
+                  min={100}
+                  className={inputClass}
+                  placeholder="min 100"
+                  value={form.budgetFrom}
+                  onChange={(e) => {
+                    const raw = e.target.value;
+                    const num = Number(raw || 0);
+                    const normalizedFrom = !raw ? "" : String(Math.max(100, num));
+                    setField("budgetFrom", normalizedFrom);
+                    if (normalizedFrom) {
+                      const minTo = Number(normalizedFrom) + 50;
+                      const currTo = Number(form.budgetTo || 0);
+                      if (!form.budgetTo || Number.isNaN(currTo) || currTo < minTo) {
+                        setField("budgetTo", String(minTo));
+                      }
+                    }
+                  }}
+                />
                 {errors.budgetFrom && <span className="text-[10px] text-red-600">{errors.budgetFrom}</span>}
               </label>
               <label className="text-[10px] font-semibold text-slate-700">Budget To (€)*
-                <input type="number" min={150} className={inputClass} placeholder="min +50 from From" value={form.budgetTo} onChange={(e) => setField("budgetTo", e.target.value)} />
+                <input
+                  type="number"
+                  min={150}
+                  className={inputClass}
+                  placeholder="min +50 from From"
+                  value={form.budgetTo}
+                  onChange={(e) => {
+                    const raw = e.target.value;
+                    const num = Number(raw || 0);
+                    const minTo = Math.max(150, (Number(form.budgetFrom || 0) || 100) + 50);
+                    const normalizedTo = !raw ? "" : String(Math.max(minTo, num));
+                    setField("budgetTo", normalizedTo);
+                  }}
+                />
                 {errors.budgetTo && <span className="text-[10px] text-red-600">{errors.budgetTo}</span>}
               </label>
             </div>
