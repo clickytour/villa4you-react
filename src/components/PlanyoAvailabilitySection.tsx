@@ -57,7 +57,8 @@ export function PlanyoAvailabilitySection({
     const end = toDate(checkOut).getTime();
     return unavailableDates.some((d) => {
       const t = toDate(d).getTime();
-      return t >= start && t <= end;
+      // end date is treated as checkout boundary (exclusive), so same-day turnover is allowed
+      return t >= start && t < end;
     });
   }, [checkIn, checkOut, unavailableDates]);
 
@@ -91,7 +92,8 @@ export function PlanyoAvailabilitySection({
     const end = toDate(endIso).getTime();
     return unavailableDates.some((d) => {
       const t = toDate(d).getTime();
-      return t >= start && t <= end;
+      // end date is checkout boundary (exclusive)
+      return t >= start && t < end;
     });
   }
 
@@ -193,6 +195,7 @@ export function PlanyoAvailabilitySection({
           </label>
         </div>
         <p className="mt-2 text-xs text-slate-600">Minimum stay: {minStay} {minStay === 1 ? "night" : "nights"}.</p>
+        <p className="mt-1 text-xs text-slate-500">Consecutive-rental gap: 0 nights (same-day check-out/check-in allowed).</p>
 
         {checkIn && checkOut ? (
           <div className="mt-3 space-y-2 text-sm text-slate-700">
