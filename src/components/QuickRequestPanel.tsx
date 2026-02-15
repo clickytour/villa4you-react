@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-type Step = 1 | 2 | 3;
+type Step = 1 | 2;
 type GuestRole = "travel-rentals" | "tours-activities" | "real-estate";
 
 type FormState = {
@@ -248,12 +248,9 @@ export function QuickRequestPanel() {
       if (form.guestRole === "real-estate") {
         if (form.propertyTypesMulti.length === 0) next.propertyTypesMulti = "Select at least one";
       }
-    }
 
-    if (target === 3) {
       if (!form.email.trim()) next.email = "Required";
       if (!form.consentData) next.consentData = "Consent is required.";
-      if (form.websiteHp.trim()) next.websiteHp = "Spam check failed.";
 
       if (form.guestRole === "tours-activities" && form.budgetTotal && Number(form.budgetTotal) < 0) {
         next.budgetTotal = "Invalid budget.";
@@ -271,7 +268,7 @@ export function QuickRequestPanel() {
   }
 
   async function submit() {
-    if (!validateStep(3)) return;
+    if (!validateStep(2)) return;
     setSubmitting(true);
     setMsg("");
     try {
@@ -515,7 +512,7 @@ export function QuickRequestPanel() {
         </div>
       )}
 
-      {step === 3 && (
+      {step === 2 && (
         <div className="mt-2 space-y-2">
           {form.guestRole === "travel-rentals" && (
             <label className="text-[10px] font-semibold text-slate-700">Budget (per night)
@@ -584,10 +581,10 @@ export function QuickRequestPanel() {
 
       <div className="mt-3 flex items-center justify-end gap-2">
         {step > 1 && (
-          <button type="button" onClick={() => setStep((s) => (s === 3 ? 2 : 1))} className="h-9 rounded-md border border-slate-300 bg-white px-3 text-[13px] font-semibold text-slate-700">← Back</button>
+          <button type="button" onClick={() => setStep(1)} className="h-9 rounded-md border border-slate-300 bg-white px-3 text-[13px] font-semibold text-slate-700">← Back</button>
         )}
-        {step < 3 ? (
-          <button type="button" onClick={() => validateStep(step) && setStep((s) => (s === 1 ? 2 : 3))} className="h-9 w-full rounded-md bg-[#1c2f66] px-3 text-[13px] font-semibold text-white">Next</button>
+        {step === 1 ? (
+          <button type="button" onClick={() => validateStep(1) && setStep(2)} className="h-9 w-full rounded-md bg-[#1c2f66] px-3 text-[13px] font-semibold text-white">Next</button>
         ) : (
           <button type="button" onClick={submit} disabled={submitting} className="h-9 w-full rounded-md bg-[#1c2f66] px-3 text-[13px] font-semibold text-white disabled:opacity-60">{submitting ? "Sending..." : "Submit request"}</button>
         )}
