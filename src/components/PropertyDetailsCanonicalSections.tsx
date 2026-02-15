@@ -89,6 +89,45 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
       </section>
 
       <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
+        <h2 className="text-xl font-semibold text-slate-900">View Video</h2>
+        <div className="mt-3 overflow-hidden rounded-xl border border-slate-200">
+          <iframe
+            src={property.videoUrl}
+            title={`${property.title} video`}
+            className="h-[360px] w-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
+        <h2 className="text-xl font-semibold text-slate-900">Services Nearby</h2>
+        <div className="mt-3 grid gap-3 md:grid-cols-2">
+          {property.nearbyServices.map((service) => (
+            <article key={service.name} className="rounded-lg border border-slate-200 p-3">
+              <h3 className="text-sm font-semibold text-slate-900">{service.name}</h3>
+              <p className="mt-1 text-sm text-slate-600">{service.detail}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
+        <h2 className="text-xl font-semibold text-slate-900">Related Blog Posts</h2>
+        <div className="mt-3 grid gap-3 md:grid-cols-3">
+          {property.blogPosts.map((post) => (
+            <article key={post.title} className="rounded-lg border border-slate-200 p-3">
+              <p className="text-xs text-slate-500">{post.date}</p>
+              <h3 className="mt-1 text-sm font-semibold text-slate-900">{post.title}</h3>
+              <p className="mt-1 text-sm text-slate-600">{post.excerpt}</p>
+              <a href={post.href} className="mt-2 inline-flex text-sm font-medium text-blue-700 hover:underline">Read article</a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
         <h2 className="text-xl font-semibold text-slate-900">FAQ (Core-mirror readiness)</h2>
         <div className="mt-3 space-y-3">
           {property.faqs.map((item) => (

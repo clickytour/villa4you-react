@@ -36,6 +36,9 @@ export type CoreMirrorProperty = {
   badges: string[];
   faqs: { q: string; a: string }[];
   related: { title: string; href: string; from: number; image: string }[];
+  videoUrl: string;
+  nearbyServices: { name: string; detail: string }[];
+  blogPosts: { title: string; href: string; date: string; excerpt: string }[];
 };
 
 const properties: CoreMirrorProperty[] = [
@@ -125,6 +128,33 @@ const properties: CoreMirrorProperty[] = [
         from: 100,
         image:
           "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1200&auto=format&fit=crop",
+      },
+    ],
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    nearbyServices: [
+      { name: "Airport Transfer", detail: "Door-to-door transfer from SKG airport" },
+      { name: "Private Chef", detail: "In-villa Greek and Mediterranean menus" },
+      { name: "Boat Experience", detail: "Daily cruises from nearby marina" },
+      { name: "Wellness & Massage", detail: "At-home relaxation sessions" },
+    ],
+    blogPosts: [
+      {
+        title: "Best Coastal Towns for Summer in Halkidiki",
+        href: "/blog/best-coastal-towns-halkidiki",
+        date: "2026-02-10",
+        excerpt: "A practical guide to choosing the right coastal base for your holiday.",
+      },
+      {
+        title: "Family-Friendly Seaside Vacation Planning Checklist",
+        href: "/blog/family-seaside-vacation-checklist",
+        date: "2026-02-08",
+        excerpt: "Everything families should plan before booking a sea-view villa.",
+      },
+      {
+        title: "How Seasonal Rates Work for Vacation Rentals",
+        href: "/blog/seasonal-rates-explained",
+        date: "2026-02-05",
+        excerpt: "Understand high/low season pricing and basic-rate fallback logic.",
       },
     ],
   },
