@@ -36,7 +36,9 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
             <div className="rounded-lg border border-slate-200 bg-slate-50 p-2">👥 {property.metrics.guests} guests</div>
             <div className="rounded-lg border border-slate-200 bg-slate-50 p-2">🛏 {property.metrics.bedrooms} bedrooms</div>
             <div className="rounded-lg border border-slate-200 bg-slate-50 p-2">🛁 {property.metrics.bathrooms} bathrooms</div>
-            <div className="rounded-lg border border-slate-200 bg-slate-50 p-2">📐 {property.metrics.areaSqm} m²</div>
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-2">🏖 {property.location.beachDistanceM} m to beach</div>
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-2">🏊 Pool: {property.amenities.includes("Private Swimming Pool") ? "Yes" : "No"}</div>
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-2">🐾 Pets: {property.policies.petsAllowed ? "Yes" : "No"}</div>
           </div>
 
           <div className="mt-4 rounded-xl border border-blue-200 bg-blue-50 p-3">
