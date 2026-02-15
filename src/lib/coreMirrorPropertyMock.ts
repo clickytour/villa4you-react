@@ -90,7 +90,7 @@ const properties: CoreMirrorProperty[] = [
       basicFrom: 500,
       seasonalFrom: 900,
       seasonName: "High Season",
-      minStayNights: 5,
+      minStayNights: 3,
       seasonalRates: [
         { label: "Mid", from: "2026-05-01", to: "2026-06-20", nightly: 500 },
         { label: "Mid", from: "2026-06-21", to: "2026-06-30", nightly: 750 },
