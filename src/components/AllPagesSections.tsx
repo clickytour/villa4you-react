@@ -31,6 +31,20 @@ const groups = [
     ],
   },
   {
+    title: "Complexes / Template Instances (QA)",
+    links: [
+      ["/luxury-suites-elsa", "Luxury Suites Elsa"],
+      ["/galini-beachfront-masonettes-complex", "Galini Beachfront Masonettes"],
+      ["/olea-suites-apartments-complex", "Olea Suites Apartments"],
+      ["/deluxe-suites-bomo", "Deluxe Suites Bomo"],
+      ["/simonitiko-beachfront-villas-complex", "Simonitiko Beachfront Villas"],
+      ["/tripotsmos-beachfront-complex-a", "Tripotsmos Beachfront Complex A"],
+      ["/tripotamos-beachfront-villas-complex-b", "Tripotamos Beachfront Villas B"],
+      ["/afitos-kassandra-halkidiki", "Afitos Kassandra Halkidiki"],
+      ["/complexes-sani-club-private-villas", "Sani Club Private Villas"],
+    ],
+  },
+  {
     title: "Company & Utility",
     links: [
       ["/", "Homepage"],
