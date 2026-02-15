@@ -12,6 +12,7 @@ const staticRoutes: QARoute[] = [
   { href: "/support", label: "Support", group: "Company & Utility", status: "Pending QA" },
   { href: "/about", label: "About", group: "Company & Utility", status: "Pending QA" },
   { href: "/blog", label: "Blog", group: "Company & Utility", status: "Pending QA" },
+  { href: "/blog/best-coastal-towns-halkidiki", label: "Blog Post (Sample)", group: "Company & Utility", status: "Pending QA" },
   { href: "/all-pages", label: "All Pages (QA)", group: "Company & Utility", status: "Pending QA" },
 
   { href: "/pmc-apply", label: "PMC Apply", group: "Collaborate", status: "Pending QA" },
