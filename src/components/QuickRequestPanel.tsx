@@ -295,7 +295,9 @@ export function QuickRequestPanel() {
       <h2 className="text-[18px] font-semibold leading-none text-slate-900">{meta.title}</h2>
       <p className="mt-1 text-[11px] text-slate-600">{meta.subtitle}</p>
 
-      <label className="mt-3 block text-[11px] font-semibold text-slate-700">
+      <p className="mt-2 text-[11px] font-semibold text-slate-600">Step {step} of 2</p>
+
+      <label className="mt-2 block text-[11px] font-semibold text-slate-700">
         I&apos;m a...
         <select className={inputClass} value={form.guestRole} onChange={(e) => setField("guestRole", e.target.value as GuestRole)}>
           <option value="travel-rentals">Guest (Travel & Rentals)</option>
