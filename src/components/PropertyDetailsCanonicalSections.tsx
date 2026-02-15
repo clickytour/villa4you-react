@@ -256,6 +256,9 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
                   <a href={`/property/${property.slug}`} className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900">
                     Related property
                   </a>
+                  <a href="/services" className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900">
+                    Related services
+                  </a>
                 </div>
               </div>
             </article>
@@ -281,6 +284,9 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
                       </a>
                       <a href={`/property/${property.slug}`} className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900">
                         Related property
+                      </a>
+                      <a href="/services" className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900">
+                        Related services
                       </a>
                     </div>
                   </div>
@@ -346,6 +352,9 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
                   <a href="/services" className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white">
                     Related services
                   </a>
+                  <a href="/blog" className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900">
+                    Related blog posts
+                  </a>
                 </div>
               </div>
             </article>
@@ -370,6 +379,9 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
                       </a>
                       <a href="/services" className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white">
                         Related services
+                      </a>
+                      <a href="/blog" className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900">
+                        Related blog posts
                       </a>
                     </div>
                   </div>
