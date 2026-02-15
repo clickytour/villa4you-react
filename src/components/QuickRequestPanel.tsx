@@ -7,49 +7,84 @@ type GuestRole = "travel-rentals" | "tours-activities" | "real-estate";
 
 type FormState = {
   guestRole: GuestRole;
+
+  // common
   destination: string;
-  checkIn: string;
-  checkOut: string;
   adults: string;
   email: string;
   phone: string;
-  serviceCategory: string;
-  serviceDate: string;
-  realEstateMode: string;
-  realEstateType: string;
-  regions: string;
+
+  // rentals
+  checkIn: string;
+  checkOut: string;
+  bedrooms: string;
   children3to14: string;
   children0to3: string;
   distanceToBeach: string;
   distanceToInfrastructure: string;
-  notes: string;
+
+  // tours
+  serviceCategory: string;
+  serviceSubcategory: string;
+  serviceDateTime: string;
+  pickup: string;
+  dropoff: string;
+  preferredTimeWindow: string;
+
+  // real estate
+  realEstateMode: string;
+  realEstateType: string;
+  regions: string;
+  realEstateBedrooms: string;
+  propertyTypesMulti: string[];
+  minSqm: string;
+  maxSqm: string;
+  featuresMulti: string[];
+  timeframe: string;
+  legalSupport: boolean;
+
   websiteHp: string;
 };
 
 const WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/14582531/ueuzwpy/";
+const inputClass = "mt-1 h-9 w-full rounded-md border border-slate-300 bg-[#eef8f8] px-2.5 text-[12px] text-slate-800";
 
 const initial: FormState = {
   guestRole: "travel-rentals",
+
   destination: "",
-  checkIn: "",
-  checkOut: "",
   adults: "2",
   email: "",
   phone: "",
-  serviceCategory: "",
-  serviceDate: "",
-  realEstateMode: "",
-  realEstateType: "Home",
-  regions: "",
+
+  checkIn: "",
+  checkOut: "",
+  bedrooms: "",
   children3to14: "0",
   children0to3: "0",
   distanceToBeach: "",
   distanceToInfrastructure: "",
-  notes: "",
+
+  serviceCategory: "",
+  serviceSubcategory: "",
+  serviceDateTime: "",
+  pickup: "",
+  dropoff: "",
+  preferredTimeWindow: "",
+
+  realEstateMode: "",
+  realEstateType: "Home",
+  regions: "",
+  realEstateBedrooms: "any",
+  propertyTypesMulti: [],
+  minSqm: "",
+  maxSqm: "",
+  featuresMulti: [],
+  timeframe: "",
+  legalSupport: false,
+
   websiteHp: "",
 };
-
-const inputClass = "mt-1 h-9 w-full rounded-md border border-slate-300 bg-[#eef8f8] px-2.5 text-[12px] text-slate-800";
 
 const roleMeta: Record<GuestRole, { title: string; subtitle: string }> = {
   "travel-rentals": {
@@ -65,6 +100,9 @@ const roleMeta: Record<GuestRole, { title: string; subtitle: string }> = {
     subtitle: "Fill the form and we will respond quickly with tailored proposals within 1 business day.",
   },
 };
+
+const propertyTypeOptions = ["Apartment", "House", "Villa", "Land Plot", "Commercial"];
+const featureOptions = ["Sea View", "Pool", "Parking", "Garden", "New Build", "Renovated"];
 
 export function QuickRequestPanel() {
   const [step, setStep] = useState<Step>(1);
@@ -86,18 +124,34 @@ export function QuickRequestPanel() {
         adults: Number(form.adults || 0),
         email: form.email,
         phone: form.phone,
-        serviceCategory: form.serviceCategory,
-        serviceDate: form.serviceDate,
-        realEstateMode: form.realEstateMode,
-        realEstateType: form.realEstateType,
-        regions: form.regions,
       },
       step2: {
+        // rentals
+        rentalsBedrooms: form.bedrooms,
         children3to14: Number(form.children3to14 || 0),
         children0to3: Number(form.children0to3 || 0),
         distanceToBeach: form.distanceToBeach,
         distanceToInfrastructure: form.distanceToInfrastructure,
-        notes: form.notes,
+
+        // tours
+        serviceCategory: form.serviceCategory,
+        serviceSubcategory: form.serviceSubcategory,
+        serviceDateTime: form.serviceDateTime,
+        pickup: form.pickup,
+        dropoff: form.dropoff,
+        preferredTimeWindow: form.preferredTimeWindow,
+
+        // real-estate
+        mode: form.realEstateMode,
+        type: form.realEstateType,
+        regions: form.regions,
+        realEstateBedrooms: form.realEstateBedrooms,
+        propertyTypesMulti: form.propertyTypesMulti,
+        minSqm: form.minSqm,
+        maxSqm: form.maxSqm,
+        featuresMulti: form.featuresMulti,
+        timeframe: form.timeframe,
+        legalSupport: form.legalSupport,
       },
     }),
     [form]
@@ -113,36 +167,58 @@ export function QuickRequestPanel() {
     });
   }
 
+  function toggleMulti(key: "propertyTypesMulti" | "featuresMulti", value: string) {
+    setForm((prev) => {
+      const has = prev[key].includes(value);
+      return {
+        ...prev,
+        [key]: has ? prev[key].filter((x) => x !== value) : [...prev[key], value],
+      };
+    });
+  }
+
   function validateStep(target: Step) {
     const next: Record<string, string> = {};
 
     if (target === 1) {
+      if (!form.email.trim()) next.email = "Required";
+
       if (form.guestRole === "travel-rentals") {
         if (!form.checkIn.trim()) next.checkIn = "Required";
         if (!form.checkOut.trim()) next.checkOut = "Required";
         if (!form.destination.trim()) next.destination = "Required";
         if (!form.adults.trim() || Number(form.adults) < 1) next.adults = "Min 1";
-        if (!form.email.trim()) next.email = "Required";
       }
 
       if (form.guestRole === "tours-activities") {
         if (!form.destination.trim()) next.destination = "Required";
         if (!form.serviceCategory.trim()) next.serviceCategory = "Required";
-        if (!form.serviceDate.trim()) next.serviceDate = "Required";
+        if (!form.serviceDateTime.trim()) next.serviceDateTime = "Required";
         if (!form.adults.trim() || Number(form.adults) < 1) next.adults = "Min 1";
-        if (!form.email.trim()) next.email = "Required";
       }
 
       if (form.guestRole === "real-estate") {
         if (!form.realEstateMode.trim()) next.realEstateMode = "Required";
         if (!form.realEstateType.trim()) next.realEstateType = "Required";
         if (!form.regions.trim()) next.regions = "Required";
-        if (!form.email.trim()) next.email = "Required";
       }
     }
 
     if (target === 2) {
       if (form.websiteHp.trim()) next.websiteHp = "Spam check failed.";
+
+      if (form.guestRole === "travel-rentals") {
+        if (!form.distanceToBeach.trim()) next.distanceToBeach = "Required";
+        if (!form.distanceToInfrastructure.trim()) next.distanceToInfrastructure = "Required";
+      }
+
+      if (form.guestRole === "tours-activities") {
+        if (!form.serviceCategory.trim()) next.serviceCategory = "Required";
+      }
+
+      if (form.guestRole === "real-estate") {
+        if (form.propertyTypesMulti.length === 0) next.propertyTypesMulti = "Select at least one";
+      }
     }
 
     setErrors(next);
@@ -178,7 +254,7 @@ export function QuickRequestPanel() {
       <p className="mt-1 text-[11px] text-slate-600">{meta.subtitle}</p>
 
       <label className="mt-3 block text-[11px] font-semibold text-slate-700">
-        I'm a...
+        I&apos;m a...
         <select className={inputClass} value={form.guestRole} onChange={(e) => setField("guestRole", e.target.value as GuestRole)}>
           <option value="travel-rentals">Guest (Travel & Rentals)</option>
           <option value="tours-activities">Guest (Tours & Activities)</option>
@@ -198,7 +274,7 @@ export function QuickRequestPanel() {
                 <input type="date" className={inputClass} value={form.checkOut} onChange={(e) => setField("checkOut", e.target.value)} />
                 {errors.checkOut && <span className="text-[10px] text-red-600">{errors.checkOut}</span>}
               </label>
-              <label className="text-[10px] font-semibold text-slate-700">Destination / Region*
+              <label className="text-[10px] font-semibold text-slate-700 sm:col-span-2">Destination / Region*
                 <input className={inputClass} placeholder="e.g., Santorini" value={form.destination} onChange={(e) => setField("destination", e.target.value)} />
                 {errors.destination && <span className="text-[10px] text-red-600">{errors.destination}</span>}
               </label>
@@ -219,9 +295,9 @@ export function QuickRequestPanel() {
                 <input className={inputClass} placeholder="Airport Transfer, Boat Tour" value={form.serviceCategory} onChange={(e) => setField("serviceCategory", e.target.value)} />
                 {errors.serviceCategory && <span className="text-[10px] text-red-600">{errors.serviceCategory}</span>}
               </label>
-              <label className="text-[10px] font-semibold text-slate-700">Date*
-                <input type="date" className={inputClass} value={form.serviceDate} onChange={(e) => setField("serviceDate", e.target.value)} />
-                {errors.serviceDate && <span className="text-[10px] text-red-600">{errors.serviceDate}</span>}
+              <label className="text-[10px] font-semibold text-slate-700">Date & Time*
+                <input type="datetime-local" className={inputClass} value={form.serviceDateTime} onChange={(e) => setField("serviceDateTime", e.target.value)} />
+                {errors.serviceDateTime && <span className="text-[10px] text-red-600">{errors.serviceDateTime}</span>}
               </label>
               <label className="text-[10px] font-semibold text-slate-700">Adults*
                 <input type="number" min={1} className={inputClass} value={form.adults} onChange={(e) => setField("adults", e.target.value)} />
@@ -248,7 +324,7 @@ export function QuickRequestPanel() {
                   <option>Land</option>
                 </select>
               </label>
-              <label className="text-[10px] font-semibold text-slate-700">Regions*
+              <label className="text-[10px] font-semibold text-slate-700 sm:col-span-2">Regions*
                 <input className={inputClass} value={form.regions} onChange={(e) => setField("regions", e.target.value)} />
                 {errors.regions && <span className="text-[10px] text-red-600">{errors.regions}</span>}
               </label>
@@ -266,26 +342,187 @@ export function QuickRequestPanel() {
       )}
 
       {step === 2 && (
-        <div className="mt-2 grid gap-2 sm:grid-cols-2">
-          <label className="text-[10px] font-semibold text-slate-700">Children (3–14 age)
-            <input type="number" min={0} className={inputClass} value={form.children3to14} onChange={(e) => setField("children3to14", e.target.value)} />
-          </label>
-          <label className="text-[10px] font-semibold text-slate-700">Children (0–3 age)
-            <input type="number" min={0} className={inputClass} value={form.children0to3} onChange={(e) => setField("children0to3", e.target.value)} />
-          </label>
-          <label className="text-[10px] font-semibold text-slate-700">Distance to beach
-            <input className={inputClass} placeholder="Please Select" value={form.distanceToBeach} onChange={(e) => setField("distanceToBeach", e.target.value)} />
-          </label>
-          <label className="text-[10px] font-semibold text-slate-700">Distance to infrastructures
-            <input className={inputClass} placeholder="Please Select" value={form.distanceToInfrastructure} onChange={(e) => setField("distanceToInfrastructure", e.target.value)} />
-          </label>
-          <label className="text-[10px] font-semibold text-slate-700 sm:col-span-2">Extra notes
-            <input className={inputClass} value={form.notes} onChange={(e) => setField("notes", e.target.value)} />
-          </label>
+        <div className="mt-2 space-y-2">
+          {form.guestRole === "travel-rentals" && (
+            <div className="grid gap-2 sm:grid-cols-2">
+              <label className="text-[10px] font-semibold text-slate-700">Bedrooms
+                <select className={inputClass} value={form.bedrooms} onChange={(e) => setField("bedrooms", e.target.value)}>
+                  <option value="">Please Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4+">4+</option>
+                </select>
+              </label>
+              <label className="text-[10px] font-semibold text-slate-700">Adults*
+                <input type="number" min={1} className={inputClass} value={form.adults} onChange={(e) => setField("adults", e.target.value)} />
+              </label>
+              <label className="text-[10px] font-semibold text-slate-700">Children (3–14)
+                <select className={inputClass} value={form.children3to14} onChange={(e) => setField("children3to14", e.target.value)}>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+              </label>
+              <label className="text-[10px] font-semibold text-slate-700">Children (0–3)
+                <select className={inputClass} value={form.children0to3} onChange={(e) => setField("children0to3", e.target.value)}>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
+              </label>
+              <label className="text-[10px] font-semibold text-slate-700">Distance to beach (m)*
+                <select className={inputClass} value={form.distanceToBeach} onChange={(e) => setField("distanceToBeach", e.target.value)}>
+                  <option value="">Please Select</option>
+                  <option value="0-300">0-300</option>
+                  <option value="300-700">300-700</option>
+                  <option value="700-1500">700-1500</option>
+                  <option value="1500+">1500+</option>
+                </select>
+                {errors.distanceToBeach && <span className="text-[10px] text-red-600">{errors.distanceToBeach}</span>}
+              </label>
+              <label className="text-[10px] font-semibold text-slate-700">Distance to infrastructure (km)*
+                <select className={inputClass} value={form.distanceToInfrastructure} onChange={(e) => setField("distanceToInfrastructure", e.target.value)}>
+                  <option value="">Please Select</option>
+                  <option value="0-1">0-1</option>
+                  <option value="1-3">1-3</option>
+                  <option value="3-7">3-7</option>
+                  <option value="7+">7+</option>
+                </select>
+                {errors.distanceToInfrastructure && <span className="text-[10px] text-red-600">{errors.distanceToInfrastructure}</span>}
+              </label>
+            </div>
+          )}
+
+          {form.guestRole === "tours-activities" && (
+            <div className="grid gap-2 sm:grid-cols-2">
+              <label className="text-[10px] font-semibold text-slate-700">Destination / Region*
+                <input className={inputClass} value={form.destination} onChange={(e) => setField("destination", e.target.value)} />
+              </label>
+              <label className="text-[10px] font-semibold text-slate-700">Service Category*
+                <input className={inputClass} value={form.serviceCategory} onChange={(e) => setField("serviceCategory", e.target.value)} />
+              </label>
+              <label className="text-[10px] font-semibold text-slate-700">Subcategory (optional)
+                <input className={inputClass} placeholder="— Optional —" value={form.serviceSubcategory} onChange={(e) => setField("serviceSubcategory", e.target.value)} />
+              </label>
+              <label className="text-[10px] font-semibold text-slate-700">Date & Time*
+                <input type="datetime-local" className={inputClass} value={form.serviceDateTime} onChange={(e) => setField("serviceDateTime", e.target.value)} />
+              </label>
+              <label className="text-[10px] font-semibold text-slate-700">Adults*
+                <input type="number" min={1} className={inputClass} value={form.adults} onChange={(e) => setField("adults", e.target.value)} />
+              </label>
+              <label className="text-[10px] font-semibold text-slate-700">Pickup (optional)
+                <input className={inputClass} placeholder="Hotel or address" value={form.pickup} onChange={(e) => setField("pickup", e.target.value)} />
+              </label>
+              <label className="text-[10px] font-semibold text-slate-700">Dropoff (optional)
+                <input className={inputClass} placeholder="Hotel or address" value={form.dropoff} onChange={(e) => setField("dropoff", e.target.value)} />
+              </label>
+              <label className="text-[10px] font-semibold text-slate-700">Preferred time window (optional)
+                <select className={inputClass} value={form.preferredTimeWindow} onChange={(e) => setField("preferredTimeWindow", e.target.value)}>
+                  <option value="">No preference</option>
+                  <option value="morning">Morning</option>
+                  <option value="afternoon">Afternoon</option>
+                  <option value="evening">Evening</option>
+                </select>
+              </label>
+            </div>
+          )}
+
+          {form.guestRole === "real-estate" && (
+            <div className="space-y-2">
+              <div className="grid gap-2 sm:grid-cols-2">
+                <label className="text-[10px] font-semibold text-slate-700">Mode*
+                  <select className={inputClass} value={form.realEstateMode} onChange={(e) => setField("realEstateMode", e.target.value)}>
+                    <option value="buy">Buy</option>
+                    <option value="rent">Rent</option>
+                  </select>
+                </label>
+                <label className="text-[10px] font-semibold text-slate-700">Type*
+                  <select className={inputClass} value={form.realEstateType} onChange={(e) => setField("realEstateType", e.target.value)}>
+                    <option>Land</option>
+                    <option>Home</option>
+                    <option>Apartment</option>
+                    <option>Villa</option>
+                    <option>Commercial</option>
+                  </select>
+                </label>
+                <label className="text-[10px] font-semibold text-slate-700 sm:col-span-2">Regions*
+                  <input className={inputClass} value={form.regions} onChange={(e) => setField("regions", e.target.value)} />
+                </label>
+                <label className="text-[10px] font-semibold text-slate-700">Bedrooms (optional)
+                  <select className={inputClass} value={form.realEstateBedrooms} onChange={(e) => setField("realEstateBedrooms", e.target.value)}>
+                    <option value="any">Any</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4+">4+</option>
+                  </select>
+                </label>
+              </div>
+
+              <div>
+                <p className="text-[10px] font-semibold text-slate-700">Property Type (multi)</p>
+                <div className="mt-1 grid gap-1.5 sm:grid-cols-3">
+                  {propertyTypeOptions.map((opt) => (
+                    <button
+                      key={opt}
+                      type="button"
+                      onClick={() => toggleMulti("propertyTypesMulti", opt)}
+                      className={`h-8 rounded-md border text-[11px] font-semibold ${form.propertyTypesMulti.includes(opt) ? "border-slate-900 bg-slate-900 text-white" : "border-slate-300 bg-white text-slate-700"}`}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+                {errors.propertyTypesMulti && <p className="text-[10px] text-red-600">{errors.propertyTypesMulti}</p>}
+              </div>
+
+              <div className="grid gap-2 sm:grid-cols-2">
+                <label className="text-[10px] font-semibold text-slate-700">Min sqm
+                  <input className={inputClass} value={form.minSqm} onChange={(e) => setField("minSqm", e.target.value)} />
+                </label>
+                <label className="text-[10px] font-semibold text-slate-700">Max sqm
+                  <input className={inputClass} value={form.maxSqm} onChange={(e) => setField("maxSqm", e.target.value)} />
+                </label>
+              </div>
+
+              <div>
+                <p className="text-[10px] font-semibold text-slate-700">Features (multi)</p>
+                <div className="mt-1 grid gap-1.5 sm:grid-cols-3">
+                  {featureOptions.map((opt) => (
+                    <button
+                      key={opt}
+                      type="button"
+                      onClick={() => toggleMulti("featuresMulti", opt)}
+                      className={`h-8 rounded-md border text-[11px] font-semibold ${form.featuresMulti.includes(opt) ? "border-slate-900 bg-slate-900 text-white" : "border-slate-300 bg-white text-slate-700"}`}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <label className="text-[10px] font-semibold text-slate-700">Timeframe
+                <select className={inputClass} value={form.timeframe} onChange={(e) => setField("timeframe", e.target.value)}>
+                  <option value="">No preference</option>
+                  <option value="0-3m">0-3 months</option>
+                  <option value="3-6m">3-6 months</option>
+                  <option value="6m+">6+ months</option>
+                </select>
+              </label>
+
+              <label className="flex items-center gap-2 rounded-md border border-slate-300 bg-white px-2.5 py-2 text-[11px] text-slate-700">
+                <input type="checkbox" checked={form.legalSupport} onChange={(e) => setField("legalSupport", e.target.checked)} />
+                Need legal/mortgage support
+              </label>
+            </div>
+          )}
         </div>
       )}
 
-      <p className="mt-2 text-[11px] text-slate-500">We'll prefill the next step and match you instantly.</p>
+      <p className="mt-2 text-[11px] text-slate-500">We&apos;ll prefill the next step and match you instantly.</p>
 
       <div className="mt-2 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-2 text-[11px] text-slate-700">Captcha: Cloudflare Turnstile placeholder.</div>
 
