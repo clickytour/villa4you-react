@@ -26,7 +26,6 @@ export function PlanyoAvailabilitySection({
   seasonalRates: SeasonalRate[];
   unavailableDates: string[];
 }) {
-  const iframeSrc = `https://www.planyo.com/embed-calendar.php?resource_id=${resourceId}&calendar=${calendarId}`;
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [apiStatus, setApiStatus] = useState<"idle" | "ok" | "error">("idle");
@@ -51,7 +50,7 @@ export function PlanyoAvailabilitySection({
 
   useEffect(() => {
     fetch("/api/planyo/rest?method=api_test")
-      .then((r) => r.ok ? r.json() : Promise.reject())
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then(() => setApiStatus("ok"))
       .catch(() => setApiStatus("error"));
   }, []);
@@ -64,7 +63,7 @@ export function PlanyoAvailabilitySection({
 
     const url = `/api/planyo/availability?resource_id=${resourceId}&start_date=${encodeURIComponent(checkIn)}&end_date=${encodeURIComponent(checkOut)}`;
     fetch(url)
-      .then((r) => r.ok ? r.json() : Promise.reject())
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((res) => {
         const txt = JSON.stringify(res?.data || res || "").toLowerCase();
         if (txt.includes("false") || txt.includes("unavailable")) {
@@ -87,14 +86,18 @@ export function PlanyoAvailabilitySection({
       <link rel="stylesheet" href={`https://sandbox.planyo.com/schemes/?calendar=${calendarId}&sel=scheme_css`} />
 
       <p className="text-xs text-blue-700">Live availability & pricing (Core mirror + Planyo)</p>
-      <p className="mt-1 text-[11px] text-slate-600">Planyo API status: {apiStatus === "ok" ? "connected" : apiStatus === "error" ? "error" : "checking"}</p>
+      <p className="mt-1 text-[11px] text-slate-600">
+        Planyo API status: {apiStatus === "ok" ? "connected" : apiStatus === "error" ? "error" : "checking"}
+      </p>
 
       <div className="mt-2 rounded-lg border border-blue-200 bg-white p-3">
         <div className="grid gap-2 md:grid-cols-2">
           <input type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
           <input type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
         </div>
-        <p className="mt-2 text-sm text-slate-700">Estimated from <strong>{nightly} {currency}</strong> / night</p>
+        <p className="mt-2 text-sm text-slate-700">
+          Estimated from <strong>{nightly} {currency}</strong> / night
+        </p>
         {hasUnavailableInRange && <p className="mt-1 text-xs text-red-600">Selected range includes unavailable dates. Please adjust dates.</p>}
         {availabilityHint && <p className="mt-1 text-xs text-slate-600">{availabilityHint}</p>}
 
@@ -106,12 +109,6 @@ export function PlanyoAvailabilitySection({
           Make reservation
         </a>
       </div>
-
-      <iframe
-        src={iframeSrc}
-        className="mt-2 h-[420px] w-full rounded-lg border border-blue-200 bg-white"
-        title="Planyo availability and pricing"
-      />
     </section>
   );
 }
