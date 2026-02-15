@@ -63,6 +63,7 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
             basicFrom={property.pricing.basicFrom}
             seasonalRates={property.pricing.seasonalRates}
             unavailableDates={property.pricing.unavailableDates}
+            propertyTitle={property.title}
           />
         </aside>
       </section>

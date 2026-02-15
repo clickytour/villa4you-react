@@ -17,6 +17,7 @@ export function PlanyoAvailabilitySection({
   basicFrom,
   seasonalRates,
   unavailableDates,
+  propertyTitle,
 }: {
   calendarId: string;
   resourceId: string;
@@ -25,6 +26,7 @@ export function PlanyoAvailabilitySection({
   basicFrom: number;
   seasonalRates: SeasonalRate[];
   unavailableDates: string[];
+  propertyTitle?: string;
 }) {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
@@ -47,6 +49,18 @@ export function PlanyoAvailabilitySection({
       return t >= start && t <= end;
     });
   }, [checkIn, checkOut, unavailableDates]);
+
+  const nights = useMemo(() => {
+    if (!checkIn || !checkOut) return 0;
+    const start = toDate(checkIn).getTime();
+    const end = toDate(checkOut).getTime();
+    const diff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+    return diff > 0 ? diff : 0;
+  }, [checkIn, checkOut]);
+
+  const cleaningFee = 100;
+  const subtotal = nights * nightly;
+  const total = subtotal + cleaningFee;
 
   useEffect(() => {
     fetch("/api/planyo/rest?method=api_test")
@@ -92,18 +106,39 @@ export function PlanyoAvailabilitySection({
 
       <div className="mt-2 rounded-lg border border-blue-200 bg-white p-3">
         <div className="grid gap-2 md:grid-cols-2">
-          <input type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-          <input type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} className="rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+          <label className="text-[11px] text-slate-600">
+            Start date *
+            <input type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+          </label>
+          <label className="text-[11px] text-slate-600">
+            End date *
+            <input type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+          </label>
         </div>
-        <p className="mt-2 text-sm text-slate-700">
-          Estimated from <strong>{nightly} {currency}</strong> / night
-        </p>
-        {hasUnavailableInRange && <p className="mt-1 text-xs text-red-600">Selected range includes unavailable dates. Please adjust dates.</p>}
+
+        <div className="mt-3 space-y-2 text-sm text-slate-700">
+          <p className="font-semibold text-slate-900">{propertyTitle || "Selected Property"}</p>
+          <p>
+            {currency} {nightly.toFixed(2)} per night
+          </p>
+          <p className="text-lg font-semibold text-slate-900">{currency} {subtotal.toFixed(2)}</p>
+          <div className="border-t border-slate-200 pt-2">
+            <p>Final Cleaning</p>
+            <p className="font-medium">{currency} {cleaningFee.toFixed(2)}</p>
+          </div>
+          <div className="border-t border-slate-200 pt-2">
+            <p className="font-semibold text-slate-900">Total</p>
+            <p className="text-lg font-semibold text-slate-900">{currency} {total.toFixed(2)}</p>
+            {nights > 0 && <p className="text-xs text-slate-600">{nights} {nights === 1 ? "night" : "nights"} total</p>}
+          </div>
+        </div>
+
+        {hasUnavailableInRange && <p className="mt-2 text-xs text-red-600">Selected range includes unavailable dates. Please adjust dates.</p>}
         {availabilityHint && <p className="mt-1 text-xs text-slate-600">{availabilityHint}</p>}
 
         <a
           role="button"
-          className="mt-3 inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white"
+          className="mt-3 inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white whitespace-nowrap"
           href={`${actionUrl}?resource_id=${resourceId}&mode=reserve&planyo_lang=EN`}
         >
           Make reservation
