@@ -434,13 +434,14 @@ export function QuickRequestPanel() {
     if (target === 2) {
       if (form.websiteHp.trim()) next.websiteHp = "Spam check failed.";
 
+      if (!form.firstName.trim()) next.firstName = "Required";
+      if (!form.lastName.trim()) next.lastName = "Required";
+      if (!form.country.trim()) next.country = "Required";
+
       if (form.guestRole === "travel-rentals") {
         if (!form.bedrooms.trim()) next.bedrooms = "Required";
         if (!form.distanceToBeach.trim()) next.distanceToBeach = "Required";
         if (!form.distanceToInfrastructure.trim()) next.distanceToInfrastructure = "Required";
-        if (!form.firstName.trim()) next.firstName = "Required";
-        if (!form.lastName.trim()) next.lastName = "Required";
-        if (!form.country.trim()) next.country = "Required";
         const from = Number(form.budgetFrom || 0);
         const to = Number(form.budgetTo || 0);
         if (!form.budgetFrom.trim() || Number.isNaN(from) || from < 100) next.budgetFrom = "Min 100";
@@ -832,16 +833,16 @@ export function QuickRequestPanel() {
           )}
 
           <div className="grid gap-2 sm:grid-cols-2">
-            <label className="text-[10px] font-semibold text-slate-700">First Name{form.guestRole === "travel-rentals" ? "*" : ""}
+            <label className="text-[10px] font-semibold text-slate-700">First Name*
               <input className={inputClass} value={form.firstName} onChange={(e) => setField("firstName", e.target.value)} />
               {errors.firstName && <span className="text-[10px] text-red-600">{errors.firstName}</span>}
             </label>
-            <label className="text-[10px] font-semibold text-slate-700">Last Name{form.guestRole === "travel-rentals" ? "*" : ""}
+            <label className="text-[10px] font-semibold text-slate-700">Last Name*
               <input className={inputClass} value={form.lastName} onChange={(e) => setField("lastName", e.target.value)} />
               {errors.lastName && <span className="text-[10px] text-red-600">{errors.lastName}</span>}
             </label>
             {/* email/phone are captured in step 1 for all roles */}
-            <label className="text-[10px] font-semibold text-slate-700 sm:col-span-2">Country {form.guestRole === "travel-rentals" ? "*" : "(optional)"}
+            <label className="text-[10px] font-semibold text-slate-700 sm:col-span-2">Country*
               <input className={inputClass} placeholder="e.g., Greece" value={form.country} onChange={(e) => setField("country", e.target.value)} />
               {errors.country && <span className="text-[10px] text-red-600">{errors.country}</span>}
             </label>
