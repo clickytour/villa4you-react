@@ -127,6 +127,7 @@ const featureOptions = ["Sea View", "Pool", "Parking", "Garden", "New Build", "R
 
 export function QuickRequestPanel() {
   const [step, setStep] = useState<Step>(1);
+  const normalizedStep: Step = step === 1 ? 1 : 2;
   const [form, setForm] = useState<FormState>(initial);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -295,7 +296,7 @@ export function QuickRequestPanel() {
       <h2 className="text-[18px] font-semibold leading-none text-slate-900">{meta.title}</h2>
       <p className="mt-1 text-[11px] text-slate-600">{meta.subtitle}</p>
 
-      <p className="mt-2 text-[11px] font-semibold text-slate-600">Step {step} of 2</p>
+      <p className="mt-2 text-[11px] font-semibold text-slate-600">Step {normalizedStep} of 2</p>
 
       <label className="mt-2 block text-[11px] font-semibold text-slate-700">
         I&apos;m a...
@@ -306,7 +307,7 @@ export function QuickRequestPanel() {
         </select>
       </label>
 
-      {step === 1 && (
+      {normalizedStep === 1 && (
         <div className="mt-2 grid gap-2 sm:grid-cols-2">
           {form.guestRole === "travel-rentals" && (
             <>
@@ -385,7 +386,7 @@ export function QuickRequestPanel() {
         </div>
       )}
 
-      {step === 2 && (
+      {normalizedStep === 2 && (
         <div className="mt-2 space-y-2">
           {form.guestRole === "travel-rentals" && (
             <div className="grid gap-2 sm:grid-cols-2">
@@ -514,7 +515,7 @@ export function QuickRequestPanel() {
         </div>
       )}
 
-      {step === 2 && (
+      {normalizedStep === 2 && (
         <div className="mt-2 space-y-2">
           {form.guestRole === "travel-rentals" && (
             <label className="text-[10px] font-semibold text-slate-700">Budget (per night)
@@ -582,10 +583,10 @@ export function QuickRequestPanel() {
       {errors.websiteHp && <p className="mt-1 text-[10px] text-red-600">{errors.websiteHp}</p>}
 
       <div className="mt-3 flex items-center justify-end gap-2">
-        {step > 1 && (
+        {normalizedStep > 1 && (
           <button type="button" onClick={() => setStep(1)} className="h-9 rounded-md border border-slate-300 bg-white px-3 text-[13px] font-semibold text-slate-700">← Back</button>
         )}
-        {step === 1 ? (
+        {normalizedStep === 1 ? (
           <button type="button" onClick={() => validateStep(1) && setStep(2)} className="h-9 w-full rounded-md bg-[#1c2f66] px-3 text-[13px] font-semibold text-white">Next</button>
         ) : (
           <button type="button" onClick={submit} disabled={submitting} className="h-9 w-full rounded-md bg-[#1c2f66] px-3 text-[13px] font-semibold text-white disabled:opacity-60">{submitting ? "Sending..." : "Submit request"}</button>
