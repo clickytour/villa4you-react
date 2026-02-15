@@ -5,9 +5,13 @@ import { PlanyoAvailabilitySection } from "@/components/PlanyoAvailabilitySectio
 export function PropertyDetailsCanonicalSections({ property }: { property: CoreMirrorProperty }) {
   const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${property.location.lng - 0.02}%2C${property.location.lat - 0.01}%2C${property.location.lng + 0.02}%2C${property.location.lat + 0.01}&layer=mapnik&marker=${property.location.lat}%2C${property.location.lng}`;
 
-  const highSeasonRates = property.pricing.seasonalRates.filter((s) => s.label.toLowerCase().includes("high"));
-  const highSeasonMin = (highSeasonRates.length ? Math.min(...highSeasonRates.map((s) => s.nightly)) : Math.min(...property.pricing.seasonalRates.map((s) => s.nightly)));
-  const highSeasonMax = (highSeasonRates.length ? Math.max(...highSeasonRates.map((s) => s.nightly)) : Math.max(...property.pricing.seasonalRates.map((s) => s.nightly)));
+  const sortedSeasons = [...property.pricing.seasonalRates].sort((a, b) => a.from.localeCompare(b.from));
+  const highSeasonIndex = sortedSeasons.findIndex((s) => s.label.toLowerCase().includes("high"));
+  const highSeasonRates = highSeasonIndex >= 0 ? [sortedSeasons[highSeasonIndex]] : sortedSeasons;
+  const highSeasonMin = highSeasonRates.length ? Math.min(...highSeasonRates.map((s) => s.nightly)) : property.pricing.basicFrom;
+  const highSeasonMax = highSeasonRates.length ? Math.max(...highSeasonRates.map((s) => s.nightly)) : property.pricing.basicFrom;
+  const seasonBeforeHigh = highSeasonIndex > 0 ? sortedSeasons[highSeasonIndex - 1] : null;
+  const seasonAfterHigh = highSeasonIndex >= 0 && highSeasonIndex < sortedSeasons.length - 1 ? sortedSeasons[highSeasonIndex + 1] : null;
 
   return (
     <div className="mx-auto max-w-[1320px] px-4 py-8">
@@ -57,6 +61,16 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
             <p className="text-xs text-blue-800">
               High Season: {highSeasonMin} - {highSeasonMax} {property.pricing.currency} · min stay {property.pricing.minStayNights} nights
             </p>
+            {seasonBeforeHigh && (
+              <p className="mt-1 text-[11px] text-blue-700">
+                Before High ({seasonBeforeHigh.label}): {seasonBeforeHigh.nightly} {property.pricing.currency}
+              </p>
+            )}
+            {seasonAfterHigh && (
+              <p className="text-[11px] text-blue-700">
+                After High ({seasonAfterHigh.label}): {seasonAfterHigh.nightly} {property.pricing.currency}
+              </p>
+            )}
           </div>
 
           <PlanyoAvailabilitySection
