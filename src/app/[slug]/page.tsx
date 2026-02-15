@@ -21,6 +21,7 @@ import { PartnerServiceProvidersSections } from "@/components/PartnerServiceProv
 import { ServisApplySections } from "@/components/ServisApplySections";
 import { AgentsSections } from "@/components/AgentsSections";
 import { AgentsApplySections } from "@/components/AgentsApplySections";
+import { AllPagesSections } from "@/components/AllPagesSections";
 import { heroPagesBySlug } from "@/lib/landingHeroes";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://staging.villa4you.gr";
@@ -89,6 +90,14 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
     return (
       <div className="min-h-screen bg-[#f3f5f8]">
         <BlogSections />
+      </div>
+    );
+  }
+
+  if (slug === "all-pages") {
+    return (
+      <div className="min-h-screen bg-[#f3f5f8]">
+        <AllPagesSections />
       </div>
     );
   }
