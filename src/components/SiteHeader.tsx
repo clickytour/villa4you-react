@@ -57,7 +57,7 @@ export function SiteHeader() {
               All Pages (QA)
             </a>
             <a href="/free-evaluation" className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white">
-              List Your Property
+              Evaluate Your Property
             </a>
           </div>
         </div>
