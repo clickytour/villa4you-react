@@ -160,7 +160,7 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
       <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6">
         <h2 className="text-2xl font-semibold text-slate-900">Services Nearby</h2>
         <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {property.nearbyServices.map((service, idx) => (
+          {property.nearbyServices.slice(0, 3).map((service, idx) => (
             <article key={service.name} className="overflow-hidden rounded-xl border border-slate-300 bg-white">
               <img
                 src={
@@ -188,12 +188,49 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
             </article>
           ))}
         </div>
+
+        {property.nearbyServices.length > 3 && (
+          <details className="group mt-4">
+            <summary className="cursor-pointer list-none text-sm font-semibold text-slate-900">
+              View more services ({property.nearbyServices.length - 3})
+            </summary>
+            <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {property.nearbyServices.slice(3).map((service, idx) => (
+                <article key={`${service.name}-more`} className="overflow-hidden rounded-xl border border-slate-300 bg-white">
+                  <img
+                    src={
+                      idx % 2 === 0
+                        ? "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=1200&auto=format&fit=crop"
+                        : "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1200&auto=format&fit=crop"
+                    }
+                    alt={service.name}
+                    className="h-28 w-full object-cover"
+                  />
+                  <div className="p-3">
+                    <h3 className="text-sm font-semibold text-slate-900">{service.name}</h3>
+                    <p className="mt-1 text-sm text-slate-600">{service.detail}</p>
+                    <div className="mt-2 flex gap-2">
+                      <a href={service.href} className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-medium text-white">
+                        View service
+                      </a>
+                      {service.blogHref && (
+                        <a href={service.blogHref} className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-900">
+                          Related post
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </details>
+        )}
       </section>
 
       <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6">
         <h2 className="text-2xl font-semibold text-slate-900">Related Blog Posts</h2>
         <div className="mt-3 grid gap-4 md:grid-cols-3">
-          {property.blogPosts.map((post) => (
+          {property.blogPosts.slice(0, 3).map((post) => (
             <article key={post.title} className="overflow-hidden rounded-xl border border-slate-300 bg-white">
               <img src={post.image} alt={post.title} className="h-36 w-full object-cover" />
               <div className="p-3">
@@ -207,6 +244,29 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
             </article>
           ))}
         </div>
+
+        {property.blogPosts.length > 3 && (
+          <details className="group mt-4">
+            <summary className="cursor-pointer list-none text-sm font-semibold text-slate-900">
+              View more blog posts ({property.blogPosts.length - 3})
+            </summary>
+            <div className="mt-3 grid gap-4 md:grid-cols-3">
+              {property.blogPosts.slice(3).map((post) => (
+                <article key={`${post.title}-more`} className="overflow-hidden rounded-xl border border-slate-300 bg-white">
+                  <img src={post.image} alt={post.title} className="h-36 w-full object-cover" />
+                  <div className="p-3">
+                    <p className="text-xs text-slate-500">{post.date}</p>
+                    <h3 className="mt-1 text-base font-semibold leading-tight text-slate-900">{post.title}</h3>
+                    <p className="mt-2 text-sm text-slate-600">{post.excerpt}</p>
+                    <a href={post.href} className="mt-3 inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white">
+                      Read
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </details>
+        )}
       </section>
 
       <GuestRequestInlineForm contextType="property" contextId={property.id} contextSlug={property.slug} contextTitle={property.title} />
