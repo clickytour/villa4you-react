@@ -345,6 +345,12 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
               <div className="p-4">
                 <h3 className="text-base font-semibold text-slate-900">{item.title}</h3>
                 <p className="mt-1 text-sm text-slate-600">From {item.from} EUR / night</p>
+                <p className="mt-1 text-xs text-slate-500">Santorini · 6 guests · 3 bd / 3 ba · ★ 4.7</p>
+                <div className="mt-2 flex flex-wrap gap-1">
+                  {['Romantic', 'View', 'Luxury', 'Pool', 'WiFi', 'Hot Tub'].map((tag) => (
+                    <span key={`${item.title}-${tag}`} className="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] text-slate-600">{tag}</span>
+                  ))}
+                </div>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <a href={item.href} className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900">
                     View
@@ -373,6 +379,12 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
                   <div className="p-4">
                     <h3 className="text-base font-semibold text-slate-900">{item.title}</h3>
                     <p className="mt-1 text-sm text-slate-600">From {item.from} EUR / night</p>
+                    <p className="mt-1 text-xs text-slate-500">Santorini · 6 guests · 3 bd / 3 ba · ★ 4.7</p>
+                    <div className="mt-2 flex flex-wrap gap-1">
+                      {['Romantic', 'View', 'Luxury', 'Pool', 'WiFi', 'Hot Tub'].map((tag) => (
+                        <span key={`${item.title}-more-${tag}`} className="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] text-slate-600">{tag}</span>
+                      ))}
+                    </div>
                     <div className="mt-3 flex flex-wrap gap-2">
                       <a href={item.href} className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900">
                         View
