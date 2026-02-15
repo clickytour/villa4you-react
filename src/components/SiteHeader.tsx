@@ -56,9 +56,17 @@ export function SiteHeader() {
             <a href="/all-pages" className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700">
               All Pages (QA)
             </a>
-            <a href="/free-evaluation" className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white">
-              Evaluate Your Property
-            </a>
+            <details className="group relative">
+              <summary className="list-none cursor-pointer rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white">
+                Evaluate Your Property ▾
+              </summary>
+              <div className="absolute right-0 top-[110%] z-50 hidden min-w-[250px] rounded-xl border border-slate-200 bg-white p-2 shadow-lg group-open:block">
+                <a href="/free-evaluation" className="block rounded-lg px-2 py-1.5 text-sm text-slate-700 hover:bg-slate-50">List Property / Free Evaluation</a>
+                <a href="/pmc-apply" className="block rounded-lg px-2 py-1.5 text-sm text-slate-700 hover:bg-slate-50">Apply as PMC</a>
+                <a href="/service-apply" className="block rounded-lg px-2 py-1.5 text-sm text-slate-700 hover:bg-slate-50">List Your Service</a>
+                <a href="/agents-apply" className="block rounded-lg px-2 py-1.5 text-sm text-slate-700 hover:bg-slate-50">Join as Agent</a>
+              </div>
+            </details>
           </div>
         </div>
 
