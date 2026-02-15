@@ -9,6 +9,13 @@ function toDate(v: string) {
   return new Date(`${v}T00:00:00`);
 }
 
+function toIsoLocal(d: Date) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
 export function PlanyoAvailabilitySection({
   calendarId,
   resourceId,
@@ -34,6 +41,7 @@ export function PlanyoAvailabilitySection({
   const [checkOut, setCheckOut] = useState("");
   const [apiStatus, setApiStatus] = useState<"idle" | "ok" | "error">("idle");
   const [availabilityHint, setAvailabilityHint] = useState("");
+  const [minStayNotice, setMinStayNotice] = useState("");
 
   const nightly = useMemo(() => {
     if (!checkIn) return basicFrom;
@@ -61,6 +69,13 @@ export function PlanyoAvailabilitySection({
   }, [checkIn, checkOut]);
 
   const minStay = Math.max(1, minStayNights || 1);
+  const minCheckoutDate = useMemo(() => {
+    if (!checkIn) return "";
+    const d = toDate(checkIn);
+    d.setDate(d.getDate() + minStay);
+    return toIsoLocal(d);
+  }, [checkIn, minStay]);
+
   const cleaningFee = 100;
   const subtotal = nights * nightly;
   const total = subtotal + cleaningFee;
@@ -73,22 +88,12 @@ export function PlanyoAvailabilitySection({
   }, []);
 
   useEffect(() => {
-    if (!checkIn) return;
-    const start = toDate(checkIn);
-    const suggested = new Date(start);
-    suggested.setDate(suggested.getDate() + minStay);
-    const suggestedIso = suggested.toISOString().slice(0, 10);
+    if (!checkIn || !minCheckoutDate) return;
 
-    if (!checkOut || toDate(checkOut).getTime() <= start.getTime()) {
-      setCheckOut(suggestedIso);
-      return;
+    if (!checkOut || toDate(checkOut).getTime() < toDate(minCheckoutDate).getTime()) {
+      setCheckOut(minCheckoutDate);
     }
-
-    const currentNights = Math.ceil((toDate(checkOut).getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
-    if (currentNights < minStay) {
-      setCheckOut(suggestedIso);
-    }
-  }, [checkIn, checkOut, minStayNights]);
+  }, [checkIn, checkOut, minCheckoutDate]);
 
   useEffect(() => {
     if (!checkIn || !checkOut) {
@@ -133,7 +138,16 @@ export function PlanyoAvailabilitySection({
           </label>
           <label className="text-[11px] text-slate-600">
             End date *
-            <input type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+            <input type="date" value={checkOut} min={minCheckoutDate || undefined} onChange={(e) => {
+              const next = e.target.value;
+              if (checkIn && minCheckoutDate && next && toDate(next).getTime() < toDate(minCheckoutDate).getTime()) {
+                setCheckOut(minCheckoutDate);
+                setMinStayNotice(`Minimum stay is ${minStay} ${minStay === 1 ? "night" : "nights"}. End date was adjusted.`);
+              } else {
+                setCheckOut(next);
+                setMinStayNotice("");
+              }
+            }} className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
           </label>
         </div>
         <p className="mt-2 text-xs text-slate-600">Minimum stay: {minStay} {minStay === 1 ? "night" : "nights"}.</p>
@@ -161,6 +175,7 @@ export function PlanyoAvailabilitySection({
           </div>
         )}
 
+        {minStayNotice && <p className="mt-2 text-xs text-red-600">{minStayNotice}</p>}
         {hasUnavailableInRange && <p className="mt-2 text-xs text-red-600">Selected range includes unavailable dates. Please adjust dates.</p>}
         {availabilityHint && <p className="mt-1 text-xs text-slate-600">{availabilityHint}</p>}
 
