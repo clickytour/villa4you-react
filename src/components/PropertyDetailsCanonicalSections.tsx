@@ -35,20 +35,28 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
           <div className="mt-4 overflow-hidden rounded-xl border border-cyan-600">
             <div className="grid grid-cols-2">
               <div className="border-b border-r border-cyan-700 bg-cyan-500 p-3 text-slate-900">
-                <p className="text-xs font-semibold uppercase tracking-wide">Bedrooms</p>
-                <p className="mt-1 text-lg font-bold">{property.metrics.bedrooms}</p>
+                <p className="text-xs font-semibold uppercase tracking-wide">🛏 Bedrooms</p>
+                <p className="mt-1 text-lg font-bold">4</p>
               </div>
               <div className="border-b border-cyan-700 bg-cyan-500 p-3 text-slate-900">
-                <p className="text-xs font-semibold uppercase tracking-wide">Bathrooms</p>
-                <p className="mt-1 text-lg font-bold">{property.metrics.bathrooms}</p>
+                <p className="text-xs font-semibold uppercase tracking-wide">🛁 Bathrooms</p>
+                <p className="mt-1 text-lg font-bold">3</p>
+              </div>
+              <div className="border-b border-r border-cyan-700 bg-cyan-500 p-3 text-slate-900">
+                <p className="text-xs font-semibold uppercase tracking-wide">👥 Max Guests</p>
+                <p className="mt-1 text-lg font-bold">8</p>
+              </div>
+              <div className="border-b border-cyan-700 bg-cyan-500 p-3 text-slate-900">
+                <p className="text-xs font-semibold uppercase tracking-wide">🏢 Floors</p>
+                <p className="mt-1 text-lg font-bold">3</p>
               </div>
               <div className="border-r border-cyan-700 bg-cyan-500 p-3 text-slate-900">
-                <p className="text-xs font-semibold uppercase tracking-wide">Max Guests</p>
-                <p className="mt-1 text-lg font-bold">{property.metrics.guests}</p>
+                <p className="text-xs font-semibold uppercase tracking-wide">🏊 Pool</p>
+                <p className="mt-1 text-lg font-bold">No</p>
               </div>
               <div className="bg-cyan-500 p-3 text-slate-900">
-                <p className="text-xs font-semibold uppercase tracking-wide">Area</p>
-                <p className="mt-1 text-lg font-bold">{property.metrics.areaSqm} m²</p>
+                <p className="text-xs font-semibold uppercase tracking-wide">🐾 Pets Friendly</p>
+                <p className="mt-1 text-lg font-bold">Yes</p>
               </div>
             </div>
           </div>
