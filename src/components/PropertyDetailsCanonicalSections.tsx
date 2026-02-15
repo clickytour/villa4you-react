@@ -1,5 +1,6 @@
 import type { CoreMirrorProperty } from "@/lib/coreMirrorPropertyMock";
 import { GuestRequestInlineForm } from "@/components/GuestRequestInlineForm";
+import { PlanyoAvailabilitySection } from "@/components/PlanyoAvailabilitySection";
 
 export function PropertyDetailsCanonicalSections({ property }: { property: CoreMirrorProperty }) {
   return (
@@ -44,6 +45,8 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
           <a href="/for-guests" className="mt-4 inline-flex w-full items-center justify-center rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white">
             Check availability
           </a>
+
+          <PlanyoAvailabilitySection calendarId={property.planyo.calendarId} actionUrl={property.planyo.actionUrl} />
         </aside>
       </section>
 
