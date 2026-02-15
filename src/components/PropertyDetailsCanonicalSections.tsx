@@ -1,4 +1,5 @@
 import type { CoreMirrorProperty } from "@/lib/coreMirrorPropertyMock";
+import { GuestRequestInlineForm } from "@/components/GuestRequestInlineForm";
 
 export function PropertyDetailsCanonicalSections({ property }: { property: CoreMirrorProperty }) {
   return (
@@ -135,6 +136,13 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
           ))}
         </div>
       </section>
+
+      <GuestRequestInlineForm
+        contextType="property"
+        contextId={property.id}
+        contextSlug={property.slug}
+        contextTitle={property.title}
+      />
 
       <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
         <h2 className="text-xl font-semibold text-slate-900">FAQ (Core-mirror readiness)</h2>

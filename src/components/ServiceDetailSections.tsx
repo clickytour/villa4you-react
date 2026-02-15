@@ -1,5 +1,6 @@
 import type { CoreMirrorService } from "@/lib/coreMirrorServicesMock";
 import { serviceTaxonomy } from "@/lib/serviceTaxonomy";
+import { GuestRequestInlineForm } from "@/components/GuestRequestInlineForm";
 
 export function ServiceDetailSections({ service }: { service: CoreMirrorService }) {
   const category = serviceTaxonomy.find((c) => c.id === service.categoryId);
@@ -61,6 +62,15 @@ export function ServiceDetailSections({ service }: { service: CoreMirrorService 
             </div>
           </aside>
         </div>
+
+        <GuestRequestInlineForm
+          contextType="service"
+          contextId={service.slug}
+          contextSlug={service.slug}
+          contextTitle={service.name}
+          categoryName={category?.name}
+          subcategoryName={subcategory?.name}
+        />
       </article>
     </section>
   );
