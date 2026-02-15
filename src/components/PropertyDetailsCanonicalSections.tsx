@@ -285,8 +285,8 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
 
       <section className="mt-6">
         <h2 className="text-2xl font-semibold text-slate-900">Similar places nearby</h2>
-        <div className="mt-3 grid gap-4 md:grid-cols-2">
-          {property.related.map((item) => (
+        <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {property.related.slice(0, 3).map((item) => (
             <article key={item.title} className="overflow-hidden rounded-xl border border-slate-200 bg-white">
               <img src={item.image} alt={item.title} className="h-44 w-full object-cover" />
               <div className="p-4">
@@ -299,6 +299,28 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
             </article>
           ))}
         </div>
+
+        {property.related.length > 3 && (
+          <details className="group mt-4">
+            <summary className="cursor-pointer list-none text-sm font-semibold text-slate-900">
+              View more similar places ({property.related.length - 3})
+            </summary>
+            <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {property.related.slice(3).map((item) => (
+                <article key={`${item.title}-more`} className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+                  <img src={item.image} alt={item.title} className="h-44 w-full object-cover" />
+                  <div className="p-4">
+                    <h3 className="text-base font-semibold text-slate-900">{item.title}</h3>
+                    <p className="mt-1 text-sm text-slate-600">From {item.from} EUR / night</p>
+                    <a href={item.href} className="mt-3 inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900">
+                      View
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </details>
+        )}
       </section>
     </div>
   );
