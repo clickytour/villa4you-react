@@ -34,7 +34,7 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
             ))}
           </div>
 
-          <p className="mt-3 text-sm leading-6 text-slate-600">{property.summary}</p>
+          <p className="mt-3 text-sm leading-6 text-slate-600">{property.detailDescription}</p>
 
           <div className="mt-4 grid grid-cols-2 gap-2 text-sm text-slate-700">
             <div className="rounded-lg border border-slate-200 bg-slate-50 p-2">👥 {property.metrics.guests} guests</div>

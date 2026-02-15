@@ -16,10 +16,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   return {
     title: `${property.title} | Villa4You`,
-    description: `${property.summary} From ${property.pricing.seasonalFrom} ${property.pricing.currency} per night.`,
+    description: `${property.shortDescription} From ${property.pricing.seasonalFrom} ${property.pricing.currency} per night.`,
     openGraph: {
       title: `${property.title} | Villa4You`,
-      description: property.summary,
+      description: property.shortDescription,
       images: [property.gallery[0]],
       type: "website",
     },

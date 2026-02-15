@@ -14,7 +14,7 @@ export type CoreMirrorProperty = {
     lat: number;
     lng: number;
   };
-  summary: string;
+  // summary removed per core parity
   highlights: string[];
   metrics: {
     guests: number;
@@ -66,8 +66,7 @@ const properties: CoreMirrorProperty[] = [
       lat: 39.9886,
       lng: 23.6176,
     },
-    summary:
-      "Spacious 5-bedroom villa near Pefkohori with sea-view positioning, family-ready comfort, and group-friendly layout for summer stays.",
+    // summary removed per core parity
     highlights: [
       "Sea-view holiday villa",
       "Family and group friendly",
