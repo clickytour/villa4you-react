@@ -67,7 +67,7 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
             </p>
             {seasonBeforeHigh && (
               <p className="mt-1 text-[11px] text-blue-700">
-                Before Season ({seasonBeforeHigh.label}): {seasonBeforeHigh.nightly} {property.pricing.currency}
+                Medium Season ({seasonBeforeHigh.label}): {seasonBeforeHigh.nightly} {property.pricing.currency}
               </p>
             )}
             {highSeason && (
@@ -77,7 +77,7 @@ export function PropertyDetailsCanonicalSections({ property }: { property: CoreM
             )}
             {seasonAfterHigh && (
               <p className="text-[11px] text-blue-700">
-                After Season ({seasonAfterHigh.label}): {seasonAfterHigh.nightly} {property.pricing.currency}
+                Medium Season ({seasonAfterHigh.label}): {seasonAfterHigh.nightly} {property.pricing.currency}
               </p>
             )}
           </div>
