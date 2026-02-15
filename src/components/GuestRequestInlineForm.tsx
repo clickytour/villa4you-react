@@ -111,7 +111,7 @@ export function GuestRequestInlineForm(props: Props) {
   }
 
   return (
-    <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
+    <section id="guest-request-form" className="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
       <div className="grid gap-6 lg:grid-cols-[1.45fr_0.85fr]">
         <div>
           <h2 className="text-xl font-semibold text-slate-900">Guest Request</h2>

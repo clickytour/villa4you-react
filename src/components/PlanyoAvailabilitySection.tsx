@@ -42,6 +42,7 @@ export function PlanyoAvailabilitySection({
   const [apiStatus, setApiStatus] = useState<"idle" | "ok" | "error">("idle");
   const [availabilityHint, setAvailabilityHint] = useState("");
   const [minStayNotice, setMinStayNotice] = useState("");
+  const [showOptions, setShowOptions] = useState(false);
 
   const nightly = useMemo(() => {
     if (!checkIn) return basicFrom;
@@ -76,6 +77,46 @@ export function PlanyoAvailabilitySection({
     return toIsoLocal(d);
   }, [checkIn, minStay]);
 
+  const unavailableSet = useMemo(() => new Set(unavailableDates), [unavailableDates]);
+  const requestedNights = Math.max(minStay, nights || minStay);
+
+  function addDaysIso(iso: string, days: number) {
+    const d = toDate(iso);
+    d.setDate(d.getDate() + days);
+    return toIsoLocal(d);
+  }
+
+  function isRangeBlocked(startIso: string, endIso: string) {
+    const start = toDate(startIso).getTime();
+    const end = toDate(endIso).getTime();
+    return unavailableDates.some((d) => {
+      const t = toDate(d).getTime();
+      return t >= start && t <= end;
+    });
+  }
+
+  const nearestOptions = useMemo(() => {
+    if (!checkIn) return [] as { start: string; end: string; nights: number }[];
+    const options: { start: string; end: string; nights: number; distance: number }[] = [];
+
+    for (let offset = -21; offset <= 21; offset++) {
+      const start = addDaysIso(checkIn, offset);
+      const end = addDaysIso(start, requestedNights);
+      const validLength = requestedNights >= minStay;
+      const blocked = isRangeBlocked(start, end);
+      if (validLength && !blocked) {
+        options.push({ start, end, nights: requestedNights, distance: Math.abs(offset) });
+      }
+    }
+
+    return options
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, 5)
+      .map(({ start, end, nights }) => ({ start, end, nights }));
+  }, [checkIn, requestedNights, minStay, unavailableSet]);
+
+  const needsManualApproval = hasUnavailableInRange || availabilityHint.toLowerCase().includes("may be unavailable");
+
   const cleaningFee = 100;
   const subtotal = nights * nightly;
   const total = subtotal + cleaningFee;
@@ -96,6 +137,7 @@ export function PlanyoAvailabilitySection({
   }, [checkIn, checkOut, minCheckoutDate]);
 
   useEffect(() => {
+    setShowOptions(false);
     if (!checkIn || !checkOut) {
       setAvailabilityHint("");
       return;
@@ -179,7 +221,54 @@ export function PlanyoAvailabilitySection({
         {hasUnavailableInRange && <p className="mt-2 text-xs text-red-600">Selected range includes unavailable dates. Please adjust dates.</p>}
         {availabilityHint && <p className="mt-1 text-xs text-slate-600">{availabilityHint}</p>}
 
-        {checkIn && checkOut && (
+        {checkIn && checkOut && needsManualApproval ? (
+          <div className="mt-3">
+            <p className="text-xs text-slate-700">These dates need manual approval. Our operator can confirm exceptions quickly.</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <a
+                role="button"
+                className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white whitespace-nowrap"
+                href="#guest-request-form"
+              >
+                Send priority request
+              </a>
+              <button
+                type="button"
+                onClick={() => setShowOptions((v) => !v)}
+                className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-900 whitespace-nowrap"
+              >
+                See nearest valid options
+              </button>
+            </div>
+
+            {showOptions && (
+              <div className="mt-3 space-y-2 rounded-lg border border-slate-200 bg-slate-50 p-2">
+                {nearestOptions.length ? (
+                  nearestOptions.map((opt) => (
+                    <div key={`${opt.start}-${opt.end}`} className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-slate-200 bg-white px-2 py-1.5 text-xs">
+                      <span>
+                        {opt.start} → {opt.end} ({opt.nights} {opt.nights === 1 ? "night" : "nights"})
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCheckIn(opt.start);
+                          setCheckOut(opt.end);
+                          setShowOptions(false);
+                        }}
+                        className="inline-flex rounded-md bg-slate-900 px-2 py-1 text-[11px] font-semibold text-white whitespace-nowrap"
+                      >
+                        Use these dates
+                      </button>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-xs text-slate-600">No nearby options found in current range window. Send priority request for operator review.</p>
+                )}
+              </div>
+            )}
+          </div>
+        ) : checkIn && checkOut ? (
           <a
             role="button"
             className="mt-3 inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white whitespace-nowrap"
@@ -187,7 +276,7 @@ export function PlanyoAvailabilitySection({
           >
             Make reservation
           </a>
-        )}
+        ) : null}
       </div>
     </section>
   );
