@@ -442,7 +442,13 @@ export function PropertyDetailsCanonicalSections({ property, activeMode }: { pro
         </section>
       )}
 
-      <GuestRequestInlineForm contextType="property" contextId={property.id} contextSlug={property.slug} contextTitle={property.title} />
+      <GuestRequestInlineForm
+        contextType="property"
+        contextId={property.id}
+        contextSlug={property.slug}
+        contextTitle={property.title}
+        propertyMode={currentMode}
+      />
 
       <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6">
         <h2 className="text-2xl font-semibold text-slate-900">FAQ (Core-mirror readiness)</h2>
