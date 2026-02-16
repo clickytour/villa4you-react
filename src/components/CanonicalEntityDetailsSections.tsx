@@ -3,6 +3,11 @@ import { GuestRequestInlineForm } from "@/components/GuestRequestInlineForm";
 import { PlanyoAvailabilitySection } from "@/components/PlanyoAvailabilitySection";
 
 export function CanonicalEntityDetailsSections({ vm }: { vm: CanonicalDetailsViewModel }) {
+  const mode = vm.dealType[0];
+  const isVacation = mode === "short_term_rent";
+  const isSale = mode === "sale";
+  const isMonthly = mode === "monthly_rent";
+
   return (
     <div className="mx-auto max-w-[1280px] px-4 py-8">
       <div className="mb-4 text-sm text-slate-500">Property / {vm.entityType} / {vm.title}</div>
@@ -25,7 +30,7 @@ export function CanonicalEntityDetailsSections({ vm }: { vm: CanonicalDetailsVie
 
       <section className="mb-4 grid gap-3 md:grid-cols-3">
         <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">⭐ Verified listing profile</div>
-        <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">⚡ Fast response lead workflow</div>
+        <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">{isVacation ? "🛎 Live reservation flow" : isSale ? "📈 Investment-oriented presentation" : "📅 Long-stay oriented presentation"}</div>
         <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">🔒 Mode-specific inquiry routing</div>
       </section>
 
@@ -105,7 +110,7 @@ export function CanonicalEntityDetailsSections({ vm }: { vm: CanonicalDetailsVie
 
       {vm.description && (
         <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6">
-          <h2 className="text-2xl font-semibold text-slate-900">Description</h2>
+          <h2 className="text-2xl font-semibold text-slate-900">{isVacation ? "Property Description" : isSale ? "Investment Description" : "Long-Stay Description"}</h2>
           <p className="mt-2 text-sm leading-7 text-slate-700">{vm.description}</p>
         </section>
       )}

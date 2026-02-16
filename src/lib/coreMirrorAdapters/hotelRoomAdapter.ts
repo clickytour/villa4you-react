@@ -31,8 +31,11 @@ export function toHotelRoomDetailsVM(room: CoreMirrorHotelRoom, activeMode?: Dea
     facts: [
       { label: "Max guests", value: room.maxGuests },
       { label: "Quantity", value: room.quantity },
-      { label: "Nightly", value: `${room.rates.nightlyEur} EUR` },
-      { label: "Monthly", value: `${room.rates.monthlyEur} EUR` },
+      ...(mode === "short_term_rent"
+        ? [{ label: "Nightly", value: `${room.rates.nightlyEur} EUR` as const }]
+        : mode === "monthly_rent"
+        ? [{ label: "Monthly", value: `${room.rates.monthlyEur} EUR` as const }]
+        : []),
     ],
     amenities: room.amenities,
     distances: [{ label: "Hotel", value: room.hotelSlug }],

@@ -30,11 +30,12 @@ export function toHotelDetailsVM(hotel: CoreMirrorHotel, activeMode?: DealType):
     primaryImage: hotel.media.primaryImage,
     gallery: hotel.media.galleryImages,
     tags: [hotel.hotelType.replaceAll("_", " "), ...dealType.map((d) => d.replaceAll("_", " "))],
-    facts: [
-      { label: "From nightly", value: `${hotel.prices.fromNightlyEur} EUR` },
-      { label: "Monthly", value: `${hotel.prices.monthlyEur} EUR` },
-      { label: "Sale", value: `${hotel.prices.saleEur} EUR` },
-    ],
+    facts:
+      mode === "short_term_rent"
+        ? [{ label: "From nightly", value: `${hotel.prices.fromNightlyEur} EUR` }]
+        : mode === "monthly_rent"
+        ? [{ label: "Monthly", value: `${hotel.prices.monthlyEur} EUR` }]
+        : [{ label: "Sale", value: `${hotel.prices.saleEur} EUR` }],
     amenities: hotel.amenities,
     distances: hotel.distances,
     locationLabel: `${hotel.location.city}, ${hotel.location.region}, ${hotel.location.country}`,
@@ -44,7 +45,7 @@ export function toHotelDetailsVM(hotel: CoreMirrorHotel, activeMode?: DealType):
       active: m === mode,
     })),
     sectionCards: {
-      title: "Choose your room type",
+      title: mode === "short_term_rent" ? "Choose your room type" : mode === "monthly_rent" ? "Long-stay room units" : "Room units for investment review",
       items: getCoreMirrorHotelRoomsByHotelSlug(hotel.slug).map((r) => ({
         title: r.title,
         subtitle: `${r.roomType} · up to ${r.maxGuests} guests · from ${r.rates.nightlyEur} EUR/night`,
