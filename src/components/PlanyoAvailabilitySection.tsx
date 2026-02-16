@@ -84,7 +84,8 @@ export function PlanyoAvailabilitySection({
   }, [checkIn, minStay]);
 
   const unavailableSet = useMemo(() => new Set(unavailableDates), [unavailableDates]);
-  const requestedNights = Math.max(minStay, nights || minStay);
+  // Recovery suggestions follow business expectation: 08/03→21/03 should target 12 nights.
+  const requestedNights = Math.max(minStay, nights > 0 ? nights - 1 : minStay);
 
   function addDaysIso(iso: string, days: number) {
     const d = toDate(iso);
