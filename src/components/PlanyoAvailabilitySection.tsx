@@ -319,7 +319,12 @@ export function PlanyoAvailabilitySection({
         <div className="grid gap-2 md:grid-cols-2">
           <label className="text-[11px] text-slate-600">
             Start date *
-            <input type="date" value={checkIn} min={todayIso} onChange={(e) => {
+            <input type="date" value={checkIn} min={todayIso} onFocus={() => {
+              if (checkIn) {
+                setRequestedCheckIn("");
+                setCheckIn("");
+              }
+            }} onChange={(e) => {
               const next = e.target.value;
               if (!next) {
                 setRequestedCheckIn("");
@@ -330,6 +335,15 @@ export function PlanyoAvailabilitySection({
               // Keep intent aligned with the effective visible date (prevents off-by-one drift in recovery suggestions).
               setRequestedCheckIn(normalized);
               setCheckIn(normalized);
+
+              const d = toDate(normalized);
+              d.setDate(d.getDate() + minStay);
+              const autoCheckout = toIsoLocal(d);
+              if (!checkOut) {
+                setRequestedCheckOut(autoCheckout);
+                setCheckOut(autoCheckout);
+              }
+
               if (normalized !== next) {
                 setMinStayNotice(`Selected start date was unavailable. Moved to next available date: ${normalized}.`);
               } else {
@@ -339,7 +353,12 @@ export function PlanyoAvailabilitySection({
           </label>
           <label className="text-[11px] text-slate-600">
             End date *
-            <input type="date" value={checkOut} min={minCheckoutDate || undefined} onChange={(e) => {
+            <input type="date" value={checkOut} min={minCheckoutDate || undefined} onFocus={() => {
+              if (checkOut) {
+                setRequestedCheckOut("");
+                setCheckOut("");
+              }
+            }} onChange={(e) => {
               const next = e.target.value;
               if (checkIn && minCheckoutDate && next && toDate(next).getTime() < toDate(minCheckoutDate).getTime()) {
                 setRequestedCheckOut(minCheckoutDate);
