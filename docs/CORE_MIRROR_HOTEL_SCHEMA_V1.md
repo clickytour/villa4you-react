@@ -147,6 +147,50 @@ type CoreMirrorHotelV1 = {
     salePriceEur?: number;
     salePricePerSqmEur?: number;
   };
+
+  extras?: {
+    cleaningIncluded?: boolean;
+    securityDepositEur?: number;
+    taxes?: Array<{ taxType: string; feeBasis?: string; amountEur?: number }>;
+    optionalServices?: Array<{
+      serviceName: string;
+      feeBasis?: string;
+      amountEur?: number;
+      earliestOrder?: string;
+      latestOrder?: string;
+      isCustom?: boolean;
+    }>;
+  };
+
+  bookingRules?: {
+    advanceNoticeDays?: number;
+    preferredPolicy?: string;
+    additionalPolicies?: Array<{ policy: string; ratesIncreasePercent?: number }>;
+    bookingComCancellationPolicies?: string[];
+  };
+
+  houseRules?: {
+    suitableForKids?: "yes" | "no" | "conditional" | string;
+    eventsOrPartiesAllowed?: boolean;
+    petsAllowed?: boolean;
+    wheelchairAccess?: boolean;
+    smokingAllowed?: "yes" | "no" | "outside_only" | string;
+    cameraPresent?: "yes" | "no" | "disclosed" | string;
+    noiseMonitorsPresent?: boolean;
+    houseRulesText?: string;
+  };
+
+  instructions?: {
+    checkInTime?: string;
+    checkOutTime?: string;
+    checkInContactPerson?: string;
+    keyCollectionPoint?: string;
+    telephoneNumber?: string;
+    instructionsText?: string;
+    instructionsAttachmentUrl?: string;
+    closestAirports?: string[];
+    directionsPrivateText?: string;
+  };
 };
 ```
 
@@ -211,6 +255,10 @@ Confirmed sections:
 - Facilities
 - Distances
 - Availability (for sale + rent periods + blocked periods)
+- Extras (cleaning, deposit, taxes, optional services)
+- Booking rules (advance notice, preferred/additional cancellation policy, Booking.com overrides)
+- House rules (kids/events/pets/smoking/camera/noise monitors + rich-text rules)
+- Instructions (check-in/out, contact, key collection, phone, airports, private directions)
 
 ---
 
@@ -218,10 +266,6 @@ Confirmed sections:
 
 Need Hotel-specific screenshots for:
 - Basic rates / seasonal rates (if enabled for short-term hotel mode)
-- Extras
-- Booking rules
-- House rules
-- Instructions
 - Synchronisation
 
 Need separate Hotel Room flow to finalize child schema and parent-child canonical binding.
