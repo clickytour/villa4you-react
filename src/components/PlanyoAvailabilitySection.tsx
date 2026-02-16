@@ -95,7 +95,7 @@ export function PlanyoAvailabilitySection({
     return diff > 0 ? diff : 0;
   }, [requestedCheckIn, requestedCheckOut]);
 
-  // Recovery suggestions follow business expectation: 08/03→21/03 should target 12 nights.
+  // Recovery suggestions follow business expectation: 08/03→21/03 should target 12 nights (intent-based).
   const requestedNights = Math.max(minStay, requestedRangeNights > 0 ? requestedRangeNights - 1 : minStay);
 
   function addDaysIso(iso: string, days: number) {
