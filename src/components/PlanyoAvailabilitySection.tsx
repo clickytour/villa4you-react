@@ -238,7 +238,7 @@ export function PlanyoAvailabilitySection({
         <p className="mt-2 text-xs text-slate-600">Minimum stay: {minStay} {minStay === 1 ? "night" : "nights"}.</p>
         <p className="mt-1 text-xs text-slate-500">Consecutive-rental gap: 0 nights (same-day check-out/check-in allowed).</p>
 
-        {checkIn && checkOut ? (
+        {checkIn && checkOut && !needsManualApproval ? (
           <div className="mt-3 space-y-2 text-sm text-slate-700">
             <p className="font-semibold text-slate-900">{propertyTitle || "Selected Property"}</p>
             <p>
@@ -255,19 +255,18 @@ export function PlanyoAvailabilitySection({
               {nights > 0 && <p className="text-xs text-slate-600">{nights} {nights === 1 ? "night" : "nights"} total</p>}
             </div>
           </div>
-        ) : (
+        ) : !checkIn || !checkOut ? (
           <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-600">
             Fill Start date and End date to expand price breakdown.
           </div>
-        )}
+        ) : null}
 
-        {minStayNotice && <p className="mt-2 text-xs text-red-600">{minStayNotice}</p>}
-        {hasUnavailableInRange && <p className="mt-2 text-xs text-red-600">Selected range includes unavailable dates. Please adjust dates.</p>}
-        {availabilityHint && <p className="mt-1 text-xs text-slate-600">{availabilityHint}</p>}
+        {minStayNotice && <p className="mt-2 text-xs text-amber-700">{minStayNotice}</p>}
+        {availabilityHint && !needsManualApproval && <p className="mt-1 text-xs text-slate-600">{availabilityHint}</p>}
 
         {checkIn && checkOut && needsManualApproval ? (
-          <div className="mt-3">
-            <p className="text-xs text-slate-700">These dates need manual approval. Our operator can confirm exceptions quickly.</p>
+          <div className="mt-3 rounded-lg border border-blue-200 bg-blue-50 p-3">
+            <p className="text-base font-semibold text-blue-800">These dates need manual approval. Our operator can confirm exceptions quickly.</p>
             <div className="mt-2 flex flex-wrap gap-2">
               <a
                 role="button"
