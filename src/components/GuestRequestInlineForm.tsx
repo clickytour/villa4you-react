@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 type ContextType = "property" | "service";
 
@@ -16,6 +17,7 @@ type Props = {
 const WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/14582531/ueuzwpy/";
 
 export function GuestRequestInlineForm(props: Props) {
+  const searchParams = useSearchParams();
   const [sending, setSending] = useState(false);
   const [msg, setMsg] = useState("");
   const [form, setForm] = useState({
@@ -36,6 +38,18 @@ export function GuestRequestInlineForm(props: Props) {
     terms: false,
     hp: "",
   });
+
+  useEffect(() => {
+    if (props.contextType !== "property") return;
+    const checkIn = searchParams.get("checkIn") || "";
+    const checkOut = searchParams.get("checkOut") || "";
+    if (!checkIn && !checkOut) return;
+    setForm((prev) => ({
+      ...prev,
+      checkIn: prev.checkIn || checkIn,
+      checkOut: prev.checkOut || checkOut,
+    }));
+  }, [props.contextType, searchParams]);
 
   async function submit() {
     if (!form.firstName || !form.lastName || !form.email || !form.phone || !form.country || !form.terms) {

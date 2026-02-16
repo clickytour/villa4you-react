@@ -507,7 +507,7 @@ export function PlanyoAvailabilitySection({
               <a
                 role="button"
                 className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white whitespace-nowrap"
-                href="#guest-request-form"
+                href={`?checkIn=${encodeURIComponent(checkIn)}&checkOut=${encodeURIComponent(checkOut)}#guest-request-form`}
               >
                 Send priority request
               </a>
@@ -588,7 +588,7 @@ export function PlanyoAvailabilitySection({
                     <a
                       role="button"
                       className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white whitespace-nowrap"
-                      href="#guest-request-form"
+                      href={`?checkIn=${encodeURIComponent(checkIn)}&checkOut=${encodeURIComponent(checkOut)}#guest-request-form`}
                     >
                       Request this combination
                     </a>
