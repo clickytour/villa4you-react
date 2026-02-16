@@ -105,8 +105,11 @@ function SimpleDatePicker({
                 <button
                   key={c.iso}
                   type="button"
-                  disabled={c.disabled}
                   onClick={() => {
+                    if (c.disabled) {
+                      setOpen(false);
+                      return;
+                    }
                     onChange(c.iso);
                     setOpen(false);
                   }}
