@@ -12,7 +12,7 @@ Define a stable local mirror schema for canonical property pages (rental + real-
 ## 1) Canonical Entity: `CoreMirrorPropertyV1`
 
 ```ts
-type DealType = "short_term_rent" | "monthly_rent" | "sale";
+type DealType = "short_term_rent" | "sale";
 
 type PropertyClass =
   | "residential"
@@ -246,7 +246,7 @@ Everything else (hide section if empty).
    - beach: meters
    - all other distances: kilometers
 3. **Deal mode flags**:
-   - rental mode if `dealType` contains `short_term_rent` or `monthly_rent`
+   - rental mode if `dealType` contains `short_term_rent`
    - sale mode if `dealType` contains `sale`
 4. **Pricing fallback**:
    - show seasonal price when matching season exists
