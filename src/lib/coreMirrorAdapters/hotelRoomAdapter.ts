@@ -1,9 +1,23 @@
 import type { CoreMirrorHotelRoom } from "@/lib/coreMirrorHotelRoomMock";
 import { pickPrimaryCta, sanitizeDealTypes } from "@/lib/coreMirrorAdapters/dealTypeRules";
-import type { CanonicalDetailsViewModel } from "@/lib/coreMirrorAdapters/types";
+import type { CanonicalDetailsViewModel, DealType } from "@/lib/coreMirrorAdapters/types";
 
-export function toHotelRoomDetailsVM(room: CoreMirrorHotelRoom): CanonicalDetailsViewModel {
-  const dealType = sanitizeDealTypes("hotel-room", room.dealType);
+function modeLabel(mode: DealType) {
+  if (mode === "short_term_rent") return "Vacation";
+  if (mode === "sale") return "Sale";
+  return "Monthly rent";
+}
+
+function modeSlug(mode: DealType) {
+  if (mode === "short_term_rent") return "vacation";
+  if (mode === "sale") return "sale";
+  return "monthly";
+}
+
+export function toHotelRoomDetailsVM(room: CoreMirrorHotelRoom, activeMode?: DealType): CanonicalDetailsViewModel {
+  const modes = sanitizeDealTypes("hotel-room", room.dealType);
+  const mode = activeMode && modes.includes(activeMode) ? activeMode : modes[0];
+  const dealType = [mode];
   return {
     id: room.id,
     slug: room.slug,
@@ -23,6 +37,11 @@ export function toHotelRoomDetailsVM(room: CoreMirrorHotelRoom): CanonicalDetail
     amenities: room.amenities,
     distances: [{ label: "Hotel", value: room.hotelSlug }],
     locationLabel: `Part of ${room.hotelSlug}`,
+    modeTabs: modes.map((m) => ({
+      label: modeLabel(m),
+      href: `/property/hotel-room/${room.slug}/${modeSlug(m)}`,
+      active: m === mode,
+    })),
     cta: {
       primary: pickPrimaryCta(dealType),
       secondary: "View parent hotel",

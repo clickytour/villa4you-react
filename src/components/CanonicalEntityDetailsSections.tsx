@@ -5,6 +5,22 @@ export function CanonicalEntityDetailsSections({ vm }: { vm: CanonicalDetailsVie
     <div className="mx-auto max-w-[1280px] px-4 py-8">
       <div className="mb-4 text-sm text-slate-500">Property / {vm.entityType} / {vm.title}</div>
 
+      {vm.modeTabs && vm.modeTabs.length > 1 && (
+        <section className="mb-4 rounded-2xl border border-slate-200 bg-white p-3">
+          <div className="flex flex-wrap gap-2">
+            {vm.modeTabs.map((tab) => (
+              <a
+                key={tab.href}
+                href={tab.href}
+                className={`rounded-full border px-3 py-1.5 text-sm font-medium ${tab.active ? "border-slate-900 bg-slate-900 text-white" : "border-slate-300 bg-white text-slate-800"}`}
+              >
+                {tab.label}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
       <section className="grid gap-6 xl:grid-cols-[1.7fr_1fr]">
         <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm">
           <img src={vm.primaryImage} alt={vm.title} className="h-[470px] w-full object-cover" />

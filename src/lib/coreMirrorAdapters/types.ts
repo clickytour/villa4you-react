@@ -17,6 +17,7 @@ export type CanonicalDetailsViewModel = {
   amenities: string[];
   distances: Array<{ label: string; value: string }>;
   locationLabel?: string;
+  modeTabs?: Array<{ label: string; href: string; active?: boolean }>;
   cta: {
     primary: string;
     secondary?: string;
