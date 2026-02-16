@@ -271,6 +271,7 @@ export function PlanyoAvailabilitySection({
       <p className="mt-1 text-[11px] text-slate-600">
         Planyo API status: {apiStatus === "ok" ? "connected" : apiStatus === "error" ? "error" : "checking"}
       </p>
+      <p className="mt-0.5 text-[10px] text-slate-400">Build: {process.env.NEXT_PUBLIC_BUILD_MARKER?.slice(0, 7) || "local"}</p>
 
       <div className="mt-2 rounded-lg border border-blue-200 bg-white p-3">
         <div className="grid gap-2 md:grid-cols-2">
@@ -278,12 +279,14 @@ export function PlanyoAvailabilitySection({
             Start date *
             <input type="date" value={checkIn} onChange={(e) => {
               const next = e.target.value;
-              setRequestedCheckIn(next);
               if (!next) {
+                setRequestedCheckIn("");
                 setCheckIn("");
                 return;
               }
               const normalized = normalizeStartDate(next);
+              // Keep intent aligned with the effective visible date (prevents off-by-one drift in recovery suggestions).
+              setRequestedCheckIn(normalized);
               setCheckIn(normalized);
               if (normalized !== next) {
                 setMinStayNotice(`Selected start date was unavailable. Moved to next available date: ${normalized}.`);
@@ -296,11 +299,12 @@ export function PlanyoAvailabilitySection({
             End date *
             <input type="date" value={checkOut} min={minCheckoutDate || undefined} onChange={(e) => {
               const next = e.target.value;
-              setRequestedCheckOut(next);
               if (checkIn && minCheckoutDate && next && toDate(next).getTime() < toDate(minCheckoutDate).getTime()) {
+                setRequestedCheckOut(minCheckoutDate);
                 setCheckOut(minCheckoutDate);
                 setMinStayNotice(`Minimum stay is ${minStay} ${minStay === 1 ? "night" : "nights"}. End date was adjusted.`);
               } else {
+                setRequestedCheckOut(next);
                 setCheckOut(next);
                 setMinStayNotice("");
               }
