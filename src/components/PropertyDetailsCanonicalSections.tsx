@@ -291,9 +291,19 @@ export function PropertyDetailsCanonicalSections({ property, activeMode }: { pro
         </section>
       ) : null}
 
+      {(isSaleMode || isMonthlyMode) && (
+        <GuestRequestInlineForm
+          contextType="property"
+          contextId={property.id}
+          contextSlug={property.slug}
+          contextTitle={property.title}
+          propertyMode={currentMode}
+        />
+      )}
+
       <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-2xl font-semibold text-slate-900">Services Nearby</h2>
+          <h2 className="text-2xl font-semibold text-slate-900">{isVacationMode ? "Services Nearby" : isSaleMode ? "Transaction & Advisory Services" : "Monthly Rental Support Services"}</h2>
           <a href="/services" className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900 whitespace-nowrap">Explore all services</a>
         </div>
         <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -372,7 +382,7 @@ export function PropertyDetailsCanonicalSections({ property, activeMode }: { pro
 
       <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-2xl font-semibold text-slate-900">Related Blog Posts</h2>
+          <h2 className="text-2xl font-semibold text-slate-900">{isVacationMode ? "Related Blog Posts" : isSaleMode ? "Market & Investment Insights" : "Long-Stay Guides & Insights"}</h2>
           <a href="/blog" className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-900 whitespace-nowrap">Explore all posts</a>
         </div>
         <div className="mt-3 grid gap-4 md:grid-cols-3">
@@ -442,13 +452,15 @@ export function PropertyDetailsCanonicalSections({ property, activeMode }: { pro
         </section>
       )}
 
-      <GuestRequestInlineForm
-        contextType="property"
-        contextId={property.id}
-        contextSlug={property.slug}
-        contextTitle={property.title}
-        propertyMode={currentMode}
-      />
+      {isVacationMode && (
+        <GuestRequestInlineForm
+          contextType="property"
+          contextId={property.id}
+          contextSlug={property.slug}
+          contextTitle={property.title}
+          propertyMode={currentMode}
+        />
+      )}
 
       <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6">
         <h2 className="text-2xl font-semibold text-slate-900">FAQ (Core-mirror readiness)</h2>
