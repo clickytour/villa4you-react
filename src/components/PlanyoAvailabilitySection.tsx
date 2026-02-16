@@ -151,10 +151,15 @@ export function PlanyoAvailabilitySection({
   const requestedRangeNights = checkIn && checkOut ? calculateNights(checkIn, checkOut) : 0;
   const relatedPriceMin = nightly * 0.8;
   const relatedPriceMax = nightly * 1.2;
-  const filteredRelatedOptions = useMemo(() => {
+  const rankedRelatedOptions = useMemo(() => {
     if (!relatedOptions?.length) return [] as RelatedPropertyOption[];
-    return relatedOptions.filter((item) => item.from >= relatedPriceMin && item.from <= relatedPriceMax);
-  }, [relatedOptions, relatedPriceMin, relatedPriceMax]);
+    return [...relatedOptions].sort((a, b) => Math.abs(a.from - nightly) - Math.abs(b.from - nightly));
+  }, [relatedOptions, nightly]);
+  const filteredRelatedOptions = useMemo(() => {
+    if (!rankedRelatedOptions.length) return [] as RelatedPropertyOption[];
+    return rankedRelatedOptions.filter((item) => item.from >= relatedPriceMin && item.from <= relatedPriceMax);
+  }, [rankedRelatedOptions, relatedPriceMin, relatedPriceMax]);
+  const relatedDisplayOptions = filteredRelatedOptions.length ? filteredRelatedOptions : rankedRelatedOptions.slice(0, 3);
 
   const splitStaySuggestions = useMemo(() => {
     if (
@@ -169,7 +174,7 @@ export function PlanyoAvailabilitySection({
       nights: number;
     }>;
 
-    const candidates = filteredRelatedOptions.slice(0, BOOKING_RECOVERY_CONFIG.MAX_SPLIT_PROPERTIES);
+    const candidates = relatedDisplayOptions.slice(0, BOOKING_RECOVERY_CONFIG.MAX_SPLIT_PROPERTIES);
     if (candidates.length < 2) return [];
 
     // Selected-property-first split strategy: prioritize filling 3-5 night nearby gaps.
@@ -183,7 +188,7 @@ export function PlanyoAvailabilitySection({
       { property: candidates[0], start: checkIn, end: splitDate, nights: selectedNights },
       { property: candidates[1], start: splitDate, end: requestedEnd, nights: nearbyNights },
     ];
-  }, [shouldComputeSuggestions, checkIn, checkOut, requestedRangeNights, filteredRelatedOptions]);
+  }, [shouldComputeSuggestions, checkIn, checkOut, requestedRangeNights, relatedDisplayOptions]);
 
   const cleaningFee = 100;
   const subtotal = nights * nightly;
@@ -367,16 +372,20 @@ export function PlanyoAvailabilitySection({
                   )}
                 </div>
 
-                {!!filteredRelatedOptions.length && (
+                {!!relatedDisplayOptions.length && (
                   <div className="space-y-2">
                     <p className="text-xs font-semibold text-slate-700">Other properties for requested dates</p>
-                    {filteredRelatedOptions.slice(0, 3).map((item) => (
+                    {relatedDisplayOptions.slice(0, 3).map((item) => (
                       <a key={item.title} href={item.href} className="flex items-center justify-between rounded-md border border-slate-200 bg-white px-2 py-1.5 text-xs text-slate-700 hover:bg-slate-50">
                         <span>{item.title}</span>
                         <span>{requestedRangeNights} nights · Final price for selected dates shown on property page</span>
                       </a>
                     ))}
-                    <p className="text-[11px] text-slate-500">Filtered to same price band (±20%) for your selected season context.</p>
+                    <p className="text-[11px] text-slate-500">
+                      {filteredRelatedOptions.length
+                        ? "Filtered to same price band (±20%) for your selected season context."
+                        : "No properties in ±20% band; showing closest-price options for your requested dates."}
+                    </p>
                   </div>
                 )}
 
