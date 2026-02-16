@@ -40,7 +40,12 @@ export function PropertyDetailsCanonicalSections({ property, activeMode }: { pro
   const isSaleMode = currentMode === "sale";
   const isMonthlyMode = currentMode === "monthly_rent";
   const isRealEstate = property.type === "real-estate";
-  const modeQuery = (mode: DealMode) => (property.type === "real-estate" ? `?mode=${mode}` : "");
+  const modeHref = (mode: DealMode) => {
+    if (property.type !== "real-estate") return "#";
+    if (mode === "short_term_rent") return `/property/real-estate/${property.slug}/vacation`;
+    if (mode === "sale") return `/property/real-estate/${property.slug}/sale`;
+    return `/property/real-estate/${property.slug}/monthly`;
+  };
 
   return (
     <div className="mx-auto max-w-[1320px] px-4 py-8">
@@ -52,7 +57,7 @@ export function PropertyDetailsCanonicalSections({ property, activeMode }: { pro
             {availableModes.map((mode) => (
               <a
                 key={mode}
-                href={`/property/real-estate/${property.slug}${modeQuery(mode)}`}
+                href={modeHref(mode)}
                 className={`rounded-full border px-3 py-1.5 text-sm font-medium ${currentMode === mode ? "border-slate-900 bg-slate-900 text-white" : "border-slate-300 bg-white text-slate-800"}`}
               >
                 {modeLabel(mode)}
