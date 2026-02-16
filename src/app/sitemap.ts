@@ -26,6 +26,17 @@ const routes = [
   "/plans-offers",
   "/guest-help-faq",
   "/blog",
+
+  // Canonical mode routes (mock-mode baseline)
+  "/property/real-estate/kassandra-investment-villa/vacation",
+  "/property/real-estate/kassandra-investment-villa/sale",
+  "/property/real-estate/kassandra-investment-villa/monthly",
+  "/property/hotel/aegean-boutique-hotel/vacation",
+  "/property/hotel/aegean-boutique-hotel/sale",
+  "/property/hotel/aegean-boutique-hotel/monthly",
+  "/property/hotel-room/aegean-deluxe-suite/vacation",
+  "/property/hotel-room/aegean-deluxe-suite/sale",
+  "/property/hotel-room/aegean-deluxe-suite/monthly",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
