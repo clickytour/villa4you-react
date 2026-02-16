@@ -55,6 +55,8 @@ export function PlanyoAvailabilitySection({
 }) {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
+  const [requestedCheckIn, setRequestedCheckIn] = useState("");
+  const [requestedCheckOut, setRequestedCheckOut] = useState("");
   const [apiStatus, setApiStatus] = useState<"idle" | "ok" | "error">("idle");
   const [availabilityHint, setAvailabilityHint] = useState("");
   const [minStayNotice, setMinStayNotice] = useState("");
@@ -84,8 +86,17 @@ export function PlanyoAvailabilitySection({
   }, [checkIn, minStay]);
 
   const unavailableSet = useMemo(() => new Set(unavailableDates), [unavailableDates]);
+
+  const requestedRangeNights = useMemo(() => {
+    if (!requestedCheckIn || !requestedCheckOut) return 0;
+    const start = toDate(requestedCheckIn).getTime();
+    const end = toDate(requestedCheckOut).getTime();
+    const diff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+    return diff > 0 ? diff : 0;
+  }, [requestedCheckIn, requestedCheckOut]);
+
   // Recovery suggestions follow business expectation: 08/03→21/03 should target 12 nights.
-  const requestedNights = Math.max(minStay, nights > 0 ? nights - 1 : minStay);
+  const requestedNights = Math.max(minStay, requestedRangeNights > 0 ? requestedRangeNights - 1 : minStay);
 
   function addDaysIso(iso: string, days: number) {
     const d = toDate(iso);
@@ -267,6 +278,7 @@ export function PlanyoAvailabilitySection({
             Start date *
             <input type="date" value={checkIn} onChange={(e) => {
               const next = e.target.value;
+              setRequestedCheckIn(next);
               if (!next) {
                 setCheckIn("");
                 return;
@@ -284,6 +296,7 @@ export function PlanyoAvailabilitySection({
             End date *
             <input type="date" value={checkOut} min={minCheckoutDate || undefined} onChange={(e) => {
               const next = e.target.value;
+              setRequestedCheckOut(next);
               if (checkIn && minCheckoutDate && next && toDate(next).getTime() < toDate(minCheckoutDate).getTime()) {
                 setCheckOut(minCheckoutDate);
                 setMinStayNotice(`Minimum stay is ${minStay} ${minStay === 1 ? "night" : "nights"}. End date was adjusted.`);
