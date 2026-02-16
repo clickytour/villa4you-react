@@ -1,16 +1,15 @@
 import { notFound } from "next/navigation";
-import { CanonicalEntityDetailsSections } from "@/components/CanonicalEntityDetailsSections";
-import { toRealEstateDetailsVM } from "@/lib/coreMirrorAdapters";
-import { getCoreMirrorRealEstateBySlug } from "@/lib/coreMirrorRealEstateMock";
+import { PropertyDetailsCanonicalSections } from "@/components/PropertyDetailsCanonicalSections";
+import { getRealEstatePropertyForCanonicalPage } from "@/lib/coreMirrorRealEstateBridge";
 
 export default async function RealEstatePropertyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const property = getCoreMirrorRealEstateBySlug(slug);
+  const property = getRealEstatePropertyForCanonicalPage(slug);
   if (!property) notFound();
 
   return (
     <div className="min-h-screen bg-[#f3f5f8]">
-      <CanonicalEntityDetailsSections vm={toRealEstateDetailsVM(property)} />
+      <PropertyDetailsCanonicalSections property={property} />
     </div>
   );
 }
