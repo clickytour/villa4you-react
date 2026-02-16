@@ -2,7 +2,6 @@ const pendingChecklist = [
   "Replace 'Estimated total' with season-correct final property price for requested dates (server-driven).",
   "Enforce related-property price band with configurable tolerance (default ±20%, allow 15–20%).",
   "Validate split strategy for requested ranges 8–20 nights and min-stay 3–10 nights.",
-  "Ensure selected-property baseline stays on approved true-availability logic (example 08/03→20/03, 12 nights).",
   "Build a separate 'Master Strategy' test mode/page so experiments do not change approved baseline behavior.",
   "Enforce other-property segment minimum >= 7 nights in combined proposal (and support stricter rules when required).",
   "Show combined proposal total nights always equal to requested calendar range.",
@@ -15,6 +14,7 @@ const doneChecklist = [
   "Other-properties section title updated to 'Other properties for requested dates'.",
   "Fallback logic added: if no options in ±20% band, show closest-price options instead of hiding blocks.",
   "Combined proposal now preserves requested total-night range.",
+  "Selected-property baseline approved: for 08/03→22/03 request, selected suggestion returns 08/03→20/03 (12 nights).",
 ];
 
 export default function BookingRecoveryQaPage() {
@@ -62,6 +62,9 @@ export default function BookingRecoveryQaPage() {
             </a>
             <a className="rounded-md border border-slate-300 bg-white px-2 py-1 text-slate-700" href="/properties/demo">
               Open demo property page
+            </a>
+            <a className="rounded-md border border-slate-300 bg-white px-2 py-1 text-slate-700" href="/qa/booking-recovery/master-strategy">
+              Open Master Strategy (experimental)
             </a>
           </div>
         </section>
