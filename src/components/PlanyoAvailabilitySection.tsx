@@ -149,13 +149,19 @@ export function PlanyoAvailabilitySection({
   const selectedExactOption = exactOptions[0] ?? null;
   const requestedEndIso = checkIn ? addDaysIso(checkIn, requestedNights) : "";
   const requestedRangeNights = checkIn && checkOut ? calculateNights(checkIn, checkOut) : 0;
+  const relatedPriceMin = nightly * 0.8;
+  const relatedPriceMax = nightly * 1.2;
+  const filteredRelatedOptions = useMemo(() => {
+    if (!relatedOptions?.length) return [] as RelatedPropertyOption[];
+    return relatedOptions.filter((item) => item.from >= relatedPriceMin && item.from <= relatedPriceMax);
+  }, [relatedOptions, relatedPriceMin, relatedPriceMax]);
 
   const splitStaySuggestions = useMemo(() => {
     if (
       !shouldComputeSuggestions
       || !checkIn
       || !checkOut
-      || requestedNights < BOOKING_RECOVERY_CONFIG.LONG_STAY_NIGHTS
+      || requestedRangeNights < BOOKING_RECOVERY_CONFIG.LONG_STAY_NIGHTS
     ) return [] as Array<{
       property: RelatedPropertyOption;
       start: string;
@@ -163,21 +169,21 @@ export function PlanyoAvailabilitySection({
       nights: number;
     }>;
 
-    const candidates = (relatedOptions || []).slice(0, BOOKING_RECOVERY_CONFIG.MAX_SPLIT_PROPERTIES);
+    const candidates = filteredRelatedOptions.slice(0, BOOKING_RECOVERY_CONFIG.MAX_SPLIT_PROPERTIES);
     if (candidates.length < 2) return [];
 
-    // Selected-property-first split strategy: prioritize 7+5, then 8+5, then 6+6.
+    // Selected-property-first split strategy: prioritize filling 3-5 night nearby gaps.
     const preferredNearbyGapNights = [5, 4, 3, 6];
-    const nearbyNights = preferredNearbyGapNights.find((n) => n > 0 && n < requestedNights) ?? Math.floor(requestedNights / 2);
-    const selectedNights = requestedNights - nearbyNights;
+    const nearbyNights = preferredNearbyGapNights.find((n) => n > 0 && n < requestedRangeNights) ?? Math.floor(requestedRangeNights / 2);
+    const selectedNights = requestedRangeNights - nearbyNights;
     const splitDate = addDaysIso(checkIn, selectedNights);
-    const requestedEnd = addDaysIso(checkIn, requestedNights);
+    const requestedEnd = addDaysIso(checkIn, requestedRangeNights);
 
     return [
       { property: candidates[0], start: checkIn, end: splitDate, nights: selectedNights },
       { property: candidates[1], start: splitDate, end: requestedEnd, nights: nearbyNights },
     ];
-  }, [shouldComputeSuggestions, checkIn, requestedNights, relatedOptions]);
+  }, [shouldComputeSuggestions, checkIn, checkOut, requestedRangeNights, filteredRelatedOptions]);
 
   const cleaningFee = 100;
   const subtotal = nights * nightly;
@@ -361,15 +367,16 @@ export function PlanyoAvailabilitySection({
                   )}
                 </div>
 
-                {!!relatedOptions?.length && (
+                {!!filteredRelatedOptions.length && (
                   <div className="space-y-2">
-                    <p className="text-xs font-semibold text-slate-700">Other properties for the same exact dates</p>
-                    {relatedOptions.slice(0, 3).map((item) => (
+                    <p className="text-xs font-semibold text-slate-700">Other properties for requested dates</p>
+                    {filteredRelatedOptions.slice(0, 3).map((item) => (
                       <a key={item.title} href={item.href} className="flex items-center justify-between rounded-md border border-slate-200 bg-white px-2 py-1.5 text-xs text-slate-700 hover:bg-slate-50">
                         <span>{item.title}</span>
-                        <span>{requestedRangeNights} nights · From {item.from} EUR / night</span>
+                        <span>{requestedRangeNights} nights · Final price for selected dates shown on property page</span>
                       </a>
                     ))}
+                    <p className="text-[11px] text-slate-500">Filtered to same price band (±20%) for your selected season context.</p>
                   </div>
                 )}
 
@@ -377,6 +384,7 @@ export function PlanyoAvailabilitySection({
                   <div className="space-y-2 rounded-md border border-blue-200 bg-white p-2">
                     <p className="text-xs font-semibold text-blue-800">Combined 2-property proposal (same area)</p>
                     <p className="text-xs text-slate-600">For this combination, our operator will create the reservation manually for you.</p>
+                    <p className="text-[11px] text-slate-500">Total combined stay: {requestedRangeNights} nights (matching your requested dates).</p>
                     {splitStaySuggestions.map((s, idx) => (
                       <div key={`${s.property.title}-${idx}`} className="rounded-md border border-slate-200 bg-slate-50 px-2 py-1.5 text-xs text-slate-700">
                         <p className="font-semibold text-slate-900">{idx === 0 ? `${propertyTitle || "Selected Property"} (selected)` : s.property.title}</p>
