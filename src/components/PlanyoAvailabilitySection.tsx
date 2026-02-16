@@ -152,7 +152,13 @@ export function PlanyoAvailabilitySection({
       .slice(0, limit);
   }
 
-  const exactOptions = useMemo(() => buildNearestOptions(requestedNights), [checkIn, requestedNights, blockedNightsSet]);
+  const needsManualApproval = hasUnavailableInRange || availabilityHint.toLowerCase().includes("may be unavailable");
+  const shouldComputeSuggestions = !!checkIn && !!checkOut && needsManualApproval && showOptions;
+
+  const exactOptions = useMemo(() => {
+    if (!shouldComputeSuggestions) return [] as SuggestedOption[];
+    return buildNearestOptions(requestedNights);
+  }, [shouldComputeSuggestions, checkIn, requestedNights, blockedNightsSet]);
 
   const shorterTargetNights = useMemo(() => {
     if (requestedNights <= minStay) return null;
@@ -191,8 +197,6 @@ export function PlanyoAvailabilitySection({
       { property: candidates[1], start: splitDate, end: checkOut, nights: secondNights },
     ];
   }, [checkIn, checkOut, requestedNights, largeShift, relatedOptions]);
-
-  const needsManualApproval = hasUnavailableInRange || availabilityHint.toLowerCase().includes("may be unavailable");
 
   const cleaningFee = 100;
   const subtotal = nights * nightly;
