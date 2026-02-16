@@ -18,6 +18,11 @@ export type CanonicalDetailsViewModel = {
   distances: Array<{ label: string; value: string }>;
   locationLabel?: string;
   modeTabs?: Array<{ label: string; href: string; active?: boolean }>;
+  sectionCards?: {
+    title: string;
+    items: Array<{ title: string; subtitle?: string; href: string }>;
+  };
+  parentLink?: { label: string; href: string };
   cta: {
     primary: string;
     secondary?: string;

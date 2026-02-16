@@ -13,7 +13,7 @@ export type CoreMirrorHotelRoom = {
   amenities: string[];
 };
 
-const rooms: CoreMirrorHotelRoom[] = [
+export const coreMirrorHotelRooms: CoreMirrorHotelRoom[] = [
   {
     id: "hr-701",
     slug: "aegean-deluxe-suite",
@@ -36,5 +36,9 @@ const rooms: CoreMirrorHotelRoom[] = [
 ];
 
 export function getCoreMirrorHotelRoomBySlug(slug: string): CoreMirrorHotelRoom | null {
-  return rooms.find((r) => r.slug === slug) ?? null;
+  return coreMirrorHotelRooms.find((r) => r.slug === slug) ?? null;
+}
+
+export function getCoreMirrorHotelRoomsByHotelSlug(hotelSlug: string): CoreMirrorHotelRoom[] {
+  return coreMirrorHotelRooms.filter((r) => r.hotelSlug === hotelSlug);
 }

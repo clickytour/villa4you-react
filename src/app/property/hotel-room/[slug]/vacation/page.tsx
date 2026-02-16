@@ -6,7 +6,7 @@ import { getCoreMirrorHotelRoomBySlug } from "@/lib/coreMirrorHotelRoomMock";
 export default async function HotelRoomVacationModePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const room = getCoreMirrorHotelRoomBySlug(slug);
-  if (!room) notFound();
+  if (!room || !room.dealType.includes("short_term_rent")) notFound();
 
   return (
     <div className="min-h-screen bg-[#f3f5f8]">

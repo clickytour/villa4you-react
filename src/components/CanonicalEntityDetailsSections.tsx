@@ -1,4 +1,5 @@
 import type { CanonicalDetailsViewModel } from "@/lib/coreMirrorAdapters";
+import { GuestRequestInlineForm } from "@/components/GuestRequestInlineForm";
 
 export function CanonicalEntityDetailsSections({ vm }: { vm: CanonicalDetailsViewModel }) {
   return (
@@ -20,6 +21,12 @@ export function CanonicalEntityDetailsSections({ vm }: { vm: CanonicalDetailsVie
           </div>
         </section>
       )}
+
+      <section className="mb-4 grid gap-3 md:grid-cols-3">
+        <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">⭐ Verified listing profile</div>
+        <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">⚡ Fast response lead workflow</div>
+        <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">🔒 Mode-specific inquiry routing</div>
+      </section>
 
       <section className="grid gap-6 xl:grid-cols-[1.7fr_1fr]">
         <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm">
@@ -53,9 +60,12 @@ export function CanonicalEntityDetailsSections({ vm }: { vm: CanonicalDetailsVie
           </div>
 
           <div className="mt-5 flex flex-wrap gap-2">
-            <button className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white">{vm.cta.primary}</button>
+            <a href="#guest-request-form" className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white">{vm.cta.primary}</a>
             {vm.cta.secondary && (
-              <button className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900">{vm.cta.secondary}</button>
+              <a href="#guest-request-form" className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900">{vm.cta.secondary}</a>
+            )}
+            {vm.parentLink && (
+              <a href={vm.parentLink.href} className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900">{vm.parentLink.label}</a>
             )}
           </div>
         </aside>
@@ -87,6 +97,28 @@ export function CanonicalEntityDetailsSections({ vm }: { vm: CanonicalDetailsVie
           </div>
         </article>
       </section>
+
+      {vm.sectionCards && vm.sectionCards.items.length > 0 && (
+        <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6">
+          <h2 className="text-2xl font-semibold text-slate-900">{vm.sectionCards.title}</h2>
+          <div className="mt-3 grid gap-3 md:grid-cols-2">
+            {vm.sectionCards.items.map((item) => (
+              <a key={item.href} href={item.href} className="rounded-xl border border-slate-200 bg-slate-50 p-3 hover:bg-white">
+                <p className="text-sm font-semibold text-slate-900">{item.title}</p>
+                {item.subtitle && <p className="text-xs text-slate-600 mt-1">{item.subtitle}</p>}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <GuestRequestInlineForm
+        contextType="property"
+        contextId={vm.id}
+        contextSlug={vm.slug}
+        contextTitle={vm.title}
+        propertyMode={vm.dealType[0]}
+      />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import type { CoreMirrorHotel } from "@/lib/coreMirrorHotelMock";
+import { getCoreMirrorHotelRoomsByHotelSlug } from "@/lib/coreMirrorHotelRoomMock";
 import { pickPrimaryCta, sanitizeDealTypes } from "@/lib/coreMirrorAdapters/dealTypeRules";
 import type { CanonicalDetailsViewModel, DealType } from "@/lib/coreMirrorAdapters/types";
 
@@ -42,6 +43,14 @@ export function toHotelDetailsVM(hotel: CoreMirrorHotel, activeMode?: DealType):
       href: `/property/hotel/${hotel.slug}/${modeSlug(m)}`,
       active: m === mode,
     })),
+    sectionCards: {
+      title: "Room inventory",
+      items: getCoreMirrorHotelRoomsByHotelSlug(hotel.slug).map((r) => ({
+        title: r.title,
+        subtitle: `${r.roomType} · up to ${r.maxGuests} guests`,
+        href: `/property/hotel-room/${r.slug}/${modeSlug(mode)}`, 
+      })),
+    },
     cta: {
       primary: pickPrimaryCta(dealType),
       secondary: "Open room inventory",
