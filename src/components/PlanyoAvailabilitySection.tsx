@@ -148,6 +148,7 @@ export function PlanyoAvailabilitySection({
 
   const selectedExactOption = exactOptions[0] ?? null;
   const requestedEndIso = checkIn ? addDaysIso(checkIn, requestedNights) : "";
+  const requestedRangeNights = checkIn && checkOut ? calculateNights(checkIn, checkOut) : 0;
 
   const splitStaySuggestions = useMemo(() => {
     if (
@@ -366,7 +367,7 @@ export function PlanyoAvailabilitySection({
                     {relatedOptions.slice(0, 3).map((item) => (
                       <a key={item.title} href={item.href} className="flex items-center justify-between rounded-md border border-slate-200 bg-white px-2 py-1.5 text-xs text-slate-700 hover:bg-slate-50">
                         <span>{item.title}</span>
-                        <span>{requestedNights} nights · From {item.from} EUR / night</span>
+                        <span>{requestedRangeNights} nights · From {item.from} EUR / night</span>
                       </a>
                     ))}
                   </div>
