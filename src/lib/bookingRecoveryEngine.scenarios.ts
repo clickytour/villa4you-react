@@ -19,9 +19,9 @@ function makeBlockedSet(unavailableDates: string[]) {
 }
 
 function run() {
-  // S1 exact-intent rule 08/03 -> 21/03 => 12 nights.
+  // S1 exact-intent rule keeps full requested range length.
   const requestedNights = getRequestedNightsIntent("2026-03-08", "2026-03-21", 7);
-  assert.equal(requestedNights, 12, "S1 failed: expected 12-night intent");
+  assert.equal(requestedNights, 13, "S1 failed: expected 13-night exact-date intent");
 
   // S2 blocked-range logic should mark consecutive blocked range but allow checkout boundary.
   const blocked = makeBlockedSet(["2026-03-08", "2026-03-09", "2026-03-10"]);
