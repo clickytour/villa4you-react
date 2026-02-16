@@ -29,32 +29,28 @@ function toInputDisplayDate(iso: string) {
   return `${d}/${m}/${y}`;
 }
 
-function SimpleDatePicker({
-  value,
+function AirbnbRangePicker({
+  checkIn,
+  checkOut,
+  minStart,
+  minStay,
+  blockedStartDates,
   onChange,
-  min,
 }: {
-  value: string;
-  onChange: (iso: string) => void;
-  min?: string;
+  checkIn: string;
+  checkOut: string;
+  minStart: string;
+  minStay: number;
+  blockedStartDates: Set<string>;
+  onChange: (nextCheckIn: string, nextCheckOut: string) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const minDate = useMemo(() => (min ? toDate(min) : null), [min]);
+  const [activeField, setActiveField] = useState<"start" | "end">("start");
+  const wrapRef = useRef<HTMLDivElement | null>(null);
   const [viewMonth, setViewMonth] = useState<Date>(() => {
-    const base = value ? toDate(value) : (min ? toDate(min) : new Date());
+    const base = checkIn ? toDate(checkIn) : toDate(minStart);
     return new Date(base.getFullYear(), base.getMonth(), 1);
   });
-  const wrapRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!open) return;
-    const base = value ? toDate(value) : (min ? toDate(min) : new Date());
-    setViewMonth(new Date(base.getFullYear(), base.getMonth(), 1));
-  }, [open, value, min]);
-
-  useEffect(() => {
-    if (value) setOpen(false);
-  }, [value]);
 
   useEffect(() => {
     if (!open) return;
@@ -66,63 +62,114 @@ function SimpleDatePicker({
     return () => document.removeEventListener("mousedown", onDocClick);
   }, [open]);
 
-  const year = viewMonth.getFullYear();
-  const month = viewMonth.getMonth();
-  const firstWeekday = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const minStartMs = new Date(toDate(minStart).getFullYear(), toDate(minStart).getMonth(), toDate(minStart).getDate()).getTime();
+  const minEndIso = checkIn ? addDaysIso(checkIn, minStay) : "";
+  const minEndMs = minEndIso
+    ? new Date(toDate(minEndIso).getFullYear(), toDate(minEndIso).getMonth(), toDate(minEndIso).getDate()).getTime()
+    : minStartMs;
 
-  const cells: Array<{ iso: string; day: number; disabled: boolean } | null> = [];
-  for (let i = 0; i < firstWeekday; i += 1) cells.push(null);
-  for (let d = 1; d <= daysInMonth; d += 1) {
-    const dt = new Date(year, month, d);
-    const iso = toIsoLocal(dt);
-    const disabled = !!minDate && dt.getTime() < new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate()).getTime();
-    cells.push({ iso, day: d, disabled });
+  function renderMonth(offset: number) {
+    const monthDate = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + offset, 1);
+    const year = monthDate.getFullYear();
+    const month = monthDate.getMonth();
+    const firstWeekday = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const cells: Array<{ iso: string; day: number; disabled: boolean } | null> = [];
+
+    for (let i = 0; i < firstWeekday; i += 1) cells.push(null);
+    for (let d = 1; d <= daysInMonth; d += 1) {
+      const dt = new Date(year, month, d);
+      const iso = toIsoLocal(dt);
+      const dayMs = new Date(year, month, d).getTime();
+      const disabled = activeField === "start"
+        ? dayMs < minStartMs || blockedStartDates.has(iso)
+        : dayMs < minEndMs;
+      cells.push({ iso, day: d, disabled });
+    }
+
+    return (
+      <div className="w-64" key={`${year}-${month}`}>
+        <p className="mb-2 text-center text-sm font-semibold text-slate-800">{monthDate.toLocaleString("en-US", { month: "long", year: "numeric" })}</p>
+        <div className="mb-1 grid grid-cols-7 text-center text-[11px] text-slate-500">
+          {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => <span key={`${d}-${i}`}>{d}</span>)}
+        </div>
+        <div className="grid grid-cols-7 gap-1">
+          {cells.map((c, idx) => {
+            if (!c) return <span key={`blank-${idx}`} className="h-8" />;
+            const isStart = checkIn === c.iso;
+            const isEnd = checkOut === c.iso;
+            const inRange = !!checkIn && !!checkOut && c.iso > checkIn && c.iso < checkOut;
+            return (
+              <button
+                key={c.iso}
+                type="button"
+                onClick={() => {
+                  if (c.disabled) {
+                    setOpen(false);
+                    return;
+                  }
+                  if (activeField === "start") {
+                    const autoEnd = addDaysIso(c.iso, minStay);
+                    onChange(c.iso, autoEnd);
+                    setActiveField("end");
+                    setOpen(false);
+                    return;
+                  }
+                  onChange(checkIn || c.iso, c.iso);
+                  setOpen(false);
+                }}
+                className={`h-8 rounded text-sm ${isStart || isEnd ? "bg-blue-600 text-white" : inRange ? "bg-blue-100 text-blue-900" : "bg-white text-slate-900"} ${c.disabled ? "cursor-not-allowed opacity-30" : "hover:bg-slate-100"}`}
+              >
+                {c.day}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div ref={wrapRef} className="relative mt-1">
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-left text-sm text-slate-900"
-      >
-        {toInputDisplayDate(value)}
-      </button>
+    <div ref={wrapRef} className="md:col-span-2">
+      <div className="grid gap-2 md:grid-cols-2">
+        <label className="text-[11px] text-slate-600">
+          Start date *
+          <button
+            type="button"
+            onClick={() => {
+              setActiveField("start");
+              setOpen(true);
+            }}
+            className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-left text-sm text-slate-900"
+          >
+            {toInputDisplayDate(checkIn)}
+          </button>
+        </label>
+        <label className="text-[11px] text-slate-600">
+          End date *
+          <button
+            type="button"
+            onClick={() => {
+              setActiveField("end");
+              setOpen(true);
+            }}
+            className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-left text-sm text-slate-900"
+          >
+            {toInputDisplayDate(checkOut)}
+          </button>
+        </label>
+      </div>
 
       {open && (
-        <div className="absolute z-20 mt-1 w-72 rounded-lg border border-slate-200 bg-white p-2 shadow-xl">
-          <div className="mb-2 flex items-center justify-between text-sm">
-            <button type="button" onClick={() => setViewMonth(new Date(year, month - 1, 1))} className="rounded border px-2 py-0.5">←</button>
-            <span className="font-semibold">{viewMonth.toLocaleString("en-US", { month: "long", year: "numeric" })}</span>
-            <button type="button" onClick={() => setViewMonth(new Date(year, month + 1, 1))} className="rounded border px-2 py-0.5">→</button>
+        <div className="absolute z-30 mt-2 rounded-xl border border-slate-200 bg-white p-3 shadow-xl">
+          <div className="mb-2 flex items-center justify-between">
+            <button type="button" onClick={() => setViewMonth(new Date(viewMonth.getFullYear(), viewMonth.getMonth() - 1, 1))} className="rounded border px-2 py-1">←</button>
+            <p className="text-xs font-medium text-slate-600">Select {activeField === "start" ? "check-in" : "check-out"}</p>
+            <button type="button" onClick={() => setViewMonth(new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1))} className="rounded border px-2 py-1">→</button>
           </div>
-
-          <div className="mb-1 grid grid-cols-7 text-center text-[11px] text-slate-500">
-            {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d) => <span key={d}>{d}</span>)}
-          </div>
-          <div className="grid grid-cols-7 gap-1">
-            {cells.map((c, idx) => {
-              if (!c) return <span key={`blank-${idx}`} className="h-8" />;
-              const isSelected = value === c.iso;
-              return (
-                <button
-                  key={c.iso}
-                  type="button"
-                  onClick={() => {
-                    if (c.disabled) {
-                      setOpen(false);
-                      return;
-                    }
-                    onChange(c.iso);
-                    setOpen(false);
-                  }}
-                  className={`h-8 rounded text-sm ${isSelected ? "bg-blue-600 text-white" : "bg-white text-slate-900"} ${c.disabled ? "cursor-not-allowed opacity-30" : "hover:bg-slate-100"}`}
-                >
-                  {c.day}
-                </button>
-              );
-            })}
+          <div className="flex gap-3">
+            {renderMonth(0)}
+            <div className="hidden md:block">{renderMonth(1)}</div>
           </div>
         </div>
       )}
@@ -424,56 +471,32 @@ export function PlanyoAvailabilitySection({
       <p className="mt-0.5 text-[10px] text-slate-400">Build: {process.env.NEXT_PUBLIC_BUILD_MARKER?.slice(0, 7) || "local"}</p>
 
       <div className="mt-2 rounded-lg border border-blue-200 bg-white p-3">
-        <div className="grid gap-2 md:grid-cols-2">
-          <label className="text-[11px] text-slate-600">
-            Start date *
-            <SimpleDatePicker
-              value={checkIn}
-              min={todayIso}
-              onChange={(next) => {
-                if (!next) {
-                  setRequestedCheckIn("");
-                  setCheckIn("");
-                  return;
-                }
-                const normalized = normalizeStartDate(next);
-                setRequestedCheckIn(normalized);
-                setCheckIn(normalized);
+        <div className="relative">
+          <AirbnbRangePicker
+            checkIn={checkIn}
+            checkOut={checkOut}
+            minStart={todayIso}
+            minStay={minStay}
+            blockedStartDates={blockedNightsSet}
+            onChange={(nextCheckIn, nextCheckOut) => {
+              const normalized = normalizeStartDate(nextCheckIn);
+              setRequestedCheckIn(normalized);
+              setCheckIn(normalized);
 
-                const d = toDate(normalized);
-                d.setDate(d.getDate() + minStay);
-                const autoCheckout = toIsoLocal(d);
-                if (!checkOut) {
-                  setRequestedCheckOut(autoCheckout);
-                  setCheckOut(autoCheckout);
-                }
+              if (normalized !== nextCheckIn) {
+                setMinStayNotice(`Selected start date was unavailable. Moved to next available date: ${normalized}.`);
+              } else {
+                setMinStayNotice("");
+              }
 
-                if (normalized !== next) {
-                  setMinStayNotice(`Selected start date was unavailable. Moved to next available date: ${normalized}.`);
-                } else {
-                  setMinStayNotice("");
-                }
-              }}
-            />
-          </label>
-          <label className="text-[11px] text-slate-600">
-            End date *
-            <SimpleDatePicker
-              value={checkOut}
-              min={minCheckoutDate || undefined}
-              onChange={(next) => {
-                if (checkIn && minCheckoutDate && next && toDate(next).getTime() < toDate(minCheckoutDate).getTime()) {
-                  setRequestedCheckOut(minCheckoutDate);
-                  setCheckOut(minCheckoutDate);
-                  setMinStayNotice(`Minimum stay is ${minStay} ${minStay === 1 ? "night" : "nights"}. End date was adjusted.`);
-                } else {
-                  setRequestedCheckOut(next);
-                  setCheckOut(next);
-                  setMinStayNotice("");
-                }
-              }}
-            />
-          </label>
+              if (nextCheckOut) {
+                const minEnd = addDaysIso(normalized, minStay);
+                const finalEnd = toDate(nextCheckOut).getTime() < toDate(minEnd).getTime() ? minEnd : nextCheckOut;
+                setRequestedCheckOut(finalEnd);
+                setCheckOut(finalEnd);
+              }
+            }}
+          />
         </div>
         <p className="mt-2 text-xs text-slate-600">Minimum stay: {minStay} {minStay === 1 ? "night" : "nights"}.</p>
         <p className="mt-1 text-xs text-slate-500">Consecutive-rental gap: 0 nights (same-day check-out/check-in allowed).</p>
