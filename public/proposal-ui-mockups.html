@@ -3,178 +3,197 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Proposal UI Mockups</title>
+  <title>Concept 1 Refined — Proposal Collection</title>
   <style>
     :root {
       --bg: #f6f7fb;
-      --card: #ffffff;
+      --card: #fff;
       --text: #1f2430;
       --muted: #6f7787;
       --line: #e6e8ef;
       --brand: #ff6b2c;
-      --ok: #117a3d;
-      --warn: #9a6700;
     }
     * { box-sizing: border-box; }
-    body { margin:0; font-family: Inter, Segoe UI, Arial, sans-serif; background: var(--bg); color: var(--text); }
+    body { margin:0; font-family: Inter, Segoe UI, Arial, sans-serif; background:var(--bg); color:var(--text); }
+
     .toolbar {
-      position: sticky; top:0; z-index: 10; background:#10131a; color:#fff; padding:12px 16px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;
+      position: sticky; top:0; z-index: 5;
+      background:#0f1420; color:#fff; padding:12px 14px;
+      display:flex; gap:12px; flex-wrap:wrap; align-items:center;
     }
-    .toolbar select { padding:6px 8px; border-radius:8px; border:1px solid #2b3040; background:#171c27; color:#fff; }
-    .app { max-width: 1150px; margin: 20px auto; padding: 0 16px 24px; }
+    .toolbar select { padding:7px 8px; border-radius:8px; border:1px solid #2c3448; background:#161d2d; color:#fff; }
+    .toolbar .hint { color:#b9c1d4; font-size:12px; }
+
+    .app { max-width:980px; margin:18px auto; padding:0 14px 24px; }
     .shell { border:1px solid var(--line); border-radius:16px; overflow:hidden; background:#fff; }
     .top {
-      display:flex; justify-content:space-between; align-items:center; padding:14px 18px; border-bottom:1px solid var(--line); background: linear-gradient(180deg,#fff,#fbfcff);
+      display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
+      border-bottom:1px solid var(--line); padding:14px 16px;
+      background:linear-gradient(180deg,#fff,#fcfdff);
     }
-    .brand .logo { font-weight:800; letter-spacing:.3px; }
-    .brand .logo span { color: var(--brand); }
+    .logo { font-weight:800; letter-spacing:.2px; }
+    .logo span { color:var(--brand); }
     .wl .logo { display:none; }
-    .muted { color: var(--muted); font-size:13px; }
-    .locked-note { font-size:12px; color:#8a2c00; background:#fff1ea; border:1px solid #ffd5c2; padding:4px 8px; border-radius:999px; }
-    .content { padding: 16px; }
-    .concept { display:none; }
-    .concept.active { display:block; }
+    .muted { color:var(--muted); font-size:13px; }
+    .badge { font-size:12px; padding:4px 8px; border:1px solid #ffd9ca; background:#fff3ee; color:#8f2e00; border-radius:999px; }
 
-    /* Concept 1 */
-    .stack { display:grid; gap:12px; }
-    .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; }
-    .card h4 { margin:0 0 8px; }
-    .grid2 { display:grid; grid-template-columns: 1fr auto; gap:10px; align-items:center; }
-    .actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
-    .btn { border:1px solid var(--line); background:#fff; padding:7px 10px; border-radius:10px; font-size:13px; }
+    .content { padding:14px; }
+    .collection-hero {
+      border:1px solid var(--line); border-radius:12px; background:#fbfcff; padding:12px; margin-bottom:12px;
+    }
+    .collection-hero h3 { margin:0 0 6px; font-size:18px; }
+    .pill-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+    .pill { font-size:12px; border:1px solid var(--line); border-radius:999px; padding:4px 8px; background:#fff; }
+
+    .stack { display:grid; gap:10px; }
+    .card { border:1px solid var(--line); border-radius:12px; background:var(--card); padding:12px; }
+    .head { display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center; }
+    .head h4 { margin:0; font-size:16px; }
+    .price { font-weight:700; }
+    .actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .btn { border:1px solid var(--line); background:#fff; border-radius:10px; padding:7px 10px; font-size:13px; }
     .btn.primary { background:#111827; color:#fff; border-color:#111827; }
 
-    /* Concept 2 */
-    .split { display:grid; grid-template-columns: 260px 1fr; gap:14px; }
-    .rail, .pane { border:1px solid var(--line); border-radius:12px; background:#fff; padding:12px; }
-    .compare { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-
-    /* Concept 3 */
-    .stepper { display:flex; gap:8px; margin-bottom:12px; }
-    .step { padding:7px 10px; border-radius:999px; border:1px solid var(--line); font-size:12px; }
-    .step.on { background:#111827; color:#fff; border-color:#111827; }
-
-    .footer-dock { position: sticky; bottom: 10px; margin-top: 14px; background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px; display:flex; justify-content:space-between; align-items:center; }
+    .dock {
+      position: sticky; bottom:10px; margin-top:12px;
+      border:1px solid var(--line); background:#fff; border-radius:12px; padding:10px;
+      display:flex; justify-content:space-between; gap:8px; align-items:center;
+    }
   </style>
 </head>
 <body>
   <div class="toolbar">
-    <label>Concept:
-      <select id="conceptSel">
-        <option value="c1">1 - Card Stack Focus</option>
-        <option value="c2">2 - Split Compare Workspace</option>
-        <option value="c3">3 - Guided Stepper Journey</option>
-      </select>
+    <label>Shared link (proposal collection):
+      <select id="collectionSel"></select>
     </label>
     <label>Variant:
       <select id="variantSel">
         <option value="brand">Branded Villa4you</option>
-        <option value="wl">White-label (Locked Nav)</option>
+        <option value="wl">No-logo (white-label locked nav)</option>
       </select>
     </label>
-    <span class="muted">No listing names shown. URL-safe refs only.</span>
+    <span class="hint">Each link opens only its own curated cards. No listing names, ID-only references.</span>
   </div>
 
   <div class="app">
     <div id="shell" class="shell brand">
       <div class="top">
-        <div class="brand">
+        <div>
           <div class="logo">Villa<span>4</span>you</div>
-          <div class="muted">Your tailored proposal • Ref PR-26A7</div>
+          <div class="muted" id="subtitle">Your tailored proposal collection</div>
         </div>
-        <div id="lock" class="muted">Secure proposal session</div>
+        <div class="badge" id="navState">Secure proposal session</div>
       </div>
 
       <div class="content">
-        <!-- Concept 1 -->
-        <section id="c1" class="concept active">
-          <h3>Card Stack Focus</h3>
-          <p class="muted">Fast decision flow with direct feedback actions.</p>
-          <div class="stack">
-            <div class="card">
-              <div class="grid2"><h4>Option A <span class="muted">• UNIT-93QX</span></h4><strong>€1,940</strong></div>
-              <div class="muted">7 nights • 8 guests • Pool • 4.6 guest score</div>
-              <div class="actions">
-                <button class="btn">👍 Like</button><button class="btn">👎 Dislike</button><button class="btn">📞 Call me back</button><button class="btn primary">✅ Book</button>
-              </div>
-            </div>
-            <div class="card">
-              <div class="grid2"><h4>Option B <span class="muted">• UNIT-7MPL</span></h4><strong>€2,120</strong></div>
-              <div class="muted">7 nights • 8 guests • Sea view • Flexible check-in</div>
-              <div class="actions">
-                <button class="btn">👍 Like</button><button class="btn">👎 Dislike</button><button class="btn">📞 Call me back</button><button class="btn primary">✅ Book</button>
-              </div>
-            </div>
-          </div>
-          <div class="footer-dock"><span>Tracked events: impression • feedback • CTA</span><button class="btn primary">Continue with preferred option</button></div>
+        <section class="collection-hero">
+          <h3 id="collectionTitle">Collection</h3>
+          <div class="muted" id="collectionMeta"></div>
+          <div class="pill-row" id="pillRow"></div>
         </section>
 
-        <!-- Concept 2 -->
-        <section id="c2" class="concept">
-          <h3>Split Compare Workspace</h3>
-          <p class="muted">Filter + side-by-side comparison for analytical users.</p>
-          <div class="split">
-            <div class="rail">
-              <strong>Result set</strong>
-              <div class="muted">PR-26A7 / 3 options</div>
-              <hr />
-              <div>• Option A (UNIT-93QX)</div>
-              <div>• Option B (UNIT-7MPL)</div>
-              <div>• Option C (UNIT-X11D)</div>
-              <hr />
-              <div class="muted">Filters: budget / amenities / distance</div>
-            </div>
-            <div class="pane">
-              <div class="compare">
-                <div class="card"><h4>Option A</h4><div class="muted">€1,940 • Pool • 4.6 score</div><div class="actions"><button class="btn">👍</button><button class="btn">👎</button><button class="btn">📞</button><button class="btn primary">✅</button></div></div>
-                <div class="card"><h4>Option B</h4><div class="muted">€2,120 • Sea view • 4.7 score</div><div class="actions"><button class="btn">👍</button><button class="btn">👎</button><button class="btn">📞</button><button class="btn primary">✅</button></div></div>
-              </div>
-              <div class="footer-dock"><span>Decision dock</span><button class="btn primary">Book selected option</button></div>
-            </div>
-          </div>
-        </section>
+        <section class="stack" id="stack"></section>
 
-        <!-- Concept 3 -->
-        <section id="c3" class="concept">
-          <h3>Guided Stepper Journey</h3>
-          <p class="muted">Structured flow for measurable conversion stages.</p>
-          <div class="stepper">
-            <div class="step on">1. Review options</div>
-            <div class="step">2. Give feedback</div>
-            <div class="step">3. Confirm next action</div>
-          </div>
-          <div class="card">
-            <h4>Option A <span class="muted">• UNIT-93QX</span></h4>
-            <div class="muted">Recommended for your dates and guest count</div>
-            <div class="actions"><button class="btn">👍 Like this</button><button class="btn">👎 Not for me</button><button class="btn">📞 Call me back</button><button class="btn primary">✅ Book now</button></div>
-          </div>
-          <div class="footer-dock"><span>Step analytics: completion + drop-off</span><button class="btn primary">Next step</button></div>
-        </section>
+        <div class="dock">
+          <span class="muted" id="dockText">Events: collection_view • card_impression • feedback_selected • cta_book</span>
+          <button class="btn primary">Continue with preferred option</button>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    const conceptSel = document.getElementById('conceptSel');
+    const collections = [
+      {
+        link: '/p/PR-26A7/c/COL-8N2K',
+        proposalRef: 'PR-26A7',
+        collectionRef: 'COL-8N2K',
+        guestRequestRef: 'GR-441',
+        cards: [
+          {label:'Option A', unit:'UNIT-93QX', offer:'OFR-7K2M', price:'€1,940', meta:'7 nights • 8 guests • Pool • 4.6 guest score'},
+          {label:'Option B', unit:'UNIT-7MPL', offer:'OFR-3R1D', price:'€2,120', meta:'7 nights • 8 guests • Sea view • Flexible check-in'},
+          {label:'Option C', unit:'UNIT-X11D', offer:'OFR-9L4P', price:'€2,060', meta:'7 nights • 8 guests • Family layout • Strong value'}
+        ]
+      },
+      {
+        link: '/p/PR-51D3/c/COL-2T9V',
+        proposalRef: 'PR-51D3',
+        collectionRef: 'COL-2T9V',
+        guestRequestRef: 'GR-602',
+        cards: [
+          {label:'Option A', unit:'UNIT-K2A1', offer:'OFR-1N8H', price:'€2,680', meta:'10 nights • 6 guests • Quiet area • 4.8 guest score'},
+          {label:'Option B', unit:'UNIT-M8Q4', offer:'OFR-5U3C', price:'€2,740', meta:'10 nights • 6 guests • Sunset terrace • Late checkout'}
+        ]
+      }
+    ];
+
+    const collectionSel = document.getElementById('collectionSel');
     const variantSel = document.getElementById('variantSel');
     const shell = document.getElementById('shell');
-    const lock = document.getElementById('lock');
+
+    const collectionTitle = document.getElementById('collectionTitle');
+    const collectionMeta = document.getElementById('collectionMeta');
+    const pillRow = document.getElementById('pillRow');
+    const stack = document.getElementById('stack');
+    const subtitle = document.getElementById('subtitle');
+    const navState = document.getElementById('navState');
+    const dockText = document.getElementById('dockText');
+
+    collections.forEach((c, i) => {
+      const o = document.createElement('option');
+      o.value = String(i);
+      o.textContent = c.link;
+      collectionSel.appendChild(o);
+    });
+
+    function renderCards(cards) {
+      stack.innerHTML = '';
+      cards.forEach(card => {
+        const el = document.createElement('article');
+        el.className = 'card';
+        el.innerHTML = `
+          <div class="head">
+            <h4>${card.label} <span class="muted">• ${card.unit}</span></h4>
+            <div class="price">${card.price}</div>
+          </div>
+          <div class="muted">Offer ref: ${card.offer} • ${card.meta}</div>
+          <div class="actions">
+            <button class="btn">👍 Like</button>
+            <button class="btn">👎 Dislike</button>
+            <button class="btn">📞 Call me back</button>
+            <button class="btn primary">✅ Book</button>
+          </div>
+        `;
+        stack.appendChild(el);
+      });
+    }
 
     function render() {
-      document.querySelectorAll('.concept').forEach(el => el.classList.remove('active'));
-      document.getElementById(conceptSel.value).classList.add('active');
+      const c = collections[Number(collectionSel.value || 0)];
+
+      collectionTitle.textContent = `Proposal collection ${c.collectionRef}`;
+      collectionMeta.textContent = `Proposal ${c.proposalRef} • Guest request ${c.guestRequestRef} • ${c.cards.length} curated options`;
+      subtitle.textContent = `Shared link opens this collection only: ${c.link}`;
+
+      pillRow.innerHTML = `
+        <span class="pill">Link scope: single collection</span>
+        <span class="pill">No listing names exposed</span>
+        <span class="pill">ID-only refs (proposal / unit / offer)</span>
+      `;
+
+      dockText.textContent = `Events: collection_view(${c.collectionRef}) • card_impression • feedback_selected(like|dislike|callback|book)`;
+      renderCards(c.cards);
 
       if (variantSel.value === 'wl') {
         shell.classList.add('wl');
-        shell.classList.remove('brand');
-        lock.innerHTML = '<span class="locked-note">Navigation locked (white-label mode)</span>';
+        navState.textContent = 'Navigation locked • No-logo mode';
       } else {
-        shell.classList.add('brand');
         shell.classList.remove('wl');
-        lock.textContent = 'Secure proposal session';
+        navState.textContent = 'Secure proposal session';
       }
     }
-    conceptSel.addEventListener('change', render);
+
+    collectionSel.addEventListener('change', render);
     variantSel.addEventListener('change', render);
     render();
   </script>
