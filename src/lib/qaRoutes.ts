@@ -22,9 +22,9 @@ const staticRoutes: QARoute[] = [
   { href: "/search?vertical=stays&mode=vacation", label: "Search Deep-Link: Stays Vacation", group: "Company & Utility", status: "Pending QA" },
   { href: "/search?vertical=blog", label: "Search Deep-Link: Blog", group: "Company & Utility", status: "Pending QA" },
   { href: "/search?vertical=services&q=concierge", label: "Search Deep-Link: Services Concierge", group: "Company & Utility", status: "Pending QA" },
-  { href: "/proposal-ui-mockups.html?variant=brand&col=0&lock=1", label: "Proposal Mockup #1: Collection Cards (Brand)", group: "Company & Utility", status: "Pending QA" },
-  { href: "/proposal-ui-mockups.html?variant=wl&col=1&lock=1", label: "Proposal Mockup #2: Bundle View (No-logo)", group: "Company & Utility", status: "Pending QA" },
-  { href: "/proposal-package-details-mockup.html?variant=brand&col=1&lock=1", label: "Proposal Mockup #3: Package Details Redirect Page (Brand)", group: "Company & Utility", status: "Pending QA" },
+  { href: "/proposal-ui-mockups.html?variant=brand&col=0&lock=1", label: "Proposal Mockup #1: Collection Cards (Brand)", group: "Templates", status: "Pending QA" },
+  { href: "/proposal-ui-mockups.html?variant=wl&col=1&lock=1", label: "Proposal Mockup #2: Bundle View (No-logo)", group: "Templates", status: "Pending QA" },
+  { href: "/proposal-package-details-mockup.html?variant=brand&col=1&lock=1", label: "Proposal Mockup #3: Package Details Redirect Page (Brand)", group: "Templates", status: "Pending QA" },
 
   { href: "/pmc-apply", label: "PMC Apply", group: "Collaborate", status: "Pending QA" },
   { href: "/service-apply", label: "Service Apply", group: "Collaborate", status: "Pending QA" },
