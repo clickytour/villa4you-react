@@ -226,6 +226,7 @@
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn">📞 Request callback</button>
+          <button class="btn">Open package details</button>
           <button class="btn primary">✅ Proceed with selected option</button>
         </div>
       `;
@@ -241,7 +242,7 @@
         <h4>${bundleData.title}</h4>
         <div class="muted" style="margin-top:6px">Bundle total: ${bundleData.totalPrice}</div>
         <div class="bundle-grid">
-          ${bundleData.items.map(i => `<div class="bundle-item"><div class="kicker">${i.type}</div><div style="font-weight:600">${i.label}</div><div class="muted">${i.ref} • ${i.detail}</div></div>`).join('')}
+          ${bundleData.items.map(i => `<div class="bundle-item"><div class="kicker">${i.type}</div><div style="font-weight:600">${i.label}</div><div class="muted">${i.ref} • ${i.detail}</div><div style="margin-top:8px"><button class="btn">View details page</button></div></div>`).join('')}
         </div>
       `;
     }
