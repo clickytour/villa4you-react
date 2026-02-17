@@ -1,7 +1,7 @@
 export type MediaVideoRender =
-  | { kind: "iframe"; src: string; title: string }
-  | { kind: "video"; src: string; title: string }
-  | { kind: "link"; href: string; title: string };
+  | { kind: "iframe"; src: string; title: string; provider: "YouTube" | "Vimeo" }
+  | { kind: "video"; src: string; title: string; provider: "MP4" }
+  | { kind: "link"; href: string; title: string; provider: "External" };
 
 export function isHttpsUrl(value?: string): value is string {
   if (!value) return false;
@@ -43,16 +43,16 @@ export function normalizeVideoForRender(videoUrl?: string): MediaVideoRender | n
 
   const url = new URL(videoUrl);
   const yt = youtubeEmbedFrom(url);
-  if (yt) return { kind: "iframe", src: yt, title: "Video presentation" };
+  if (yt) return { kind: "iframe", src: yt, title: "Video presentation", provider: "YouTube" };
 
   const vimeo = vimeoEmbedFrom(url);
-  if (vimeo) return { kind: "iframe", src: vimeo, title: "Video presentation" };
+  if (vimeo) return { kind: "iframe", src: vimeo, title: "Video presentation", provider: "Vimeo" };
 
   if (url.pathname.toLowerCase().endsWith(".mp4")) {
-    return { kind: "video", src: url.toString(), title: "Video presentation" };
+    return { kind: "video", src: url.toString(), title: "Video presentation", provider: "MP4" };
   }
 
-  return { kind: "link", href: url.toString(), title: "Open video presentation" };
+  return { kind: "link", href: url.toString(), title: "Open video presentation", provider: "External" };
 }
 
 export function normalizeContentUrls(entries?: Array<{ site: string; url: string }>) {

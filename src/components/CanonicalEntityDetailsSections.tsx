@@ -147,7 +147,10 @@ export function CanonicalEntityDetailsSections({ vm }: { vm: CanonicalDetailsVie
                     </div>
                   )}
                 </div>
-                <div className="border-t border-slate-200 px-3 py-2 text-sm text-slate-700">Video presentation</div>
+                <div className="border-t border-slate-200 px-3 py-2 text-sm text-slate-700 flex items-center justify-between">
+                  <span>Video presentation</span>
+                  <span className="rounded-full border border-slate-300 bg-white px-2 py-0.5 text-[11px] font-medium text-slate-700">{videoRender.provider}</span>
+                </div>
               </article>
             )}
             <article className="rounded-xl border border-slate-200 bg-slate-50 p-4">
