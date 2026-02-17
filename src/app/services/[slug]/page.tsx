@@ -8,12 +8,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const service = getCoreMirrorServiceBySlug(slug);
   if (!service) return { title: "Service | Villa4You" };
   return {
-    title: `${service.name} | Villa4You Services`,
-    description: service.excerpt,
+    title: `${service.basicDetails.businessName} | Villa4You Services`,
+    description: service.basicDetails.shortDescription,
     openGraph: {
-      title: `${service.name} | Villa4You Services`,
-      description: service.excerpt,
-      images: [service.image],
+      title: `${service.basicDetails.businessName} | Villa4You Services`,
+      description: service.basicDetails.shortDescription,
+      images: [service.media.primaryPhoto],
       type: "website",
     },
   };
