@@ -41,6 +41,12 @@
     .collection-hero {
       border:1px solid var(--line); border-radius:12px; background:#fbfcff; padding:12px; margin-bottom:12px;
     }
+    .bundle {
+      border:1px solid var(--line); border-radius:12px; background:#fff; padding:12px; margin-bottom:12px;
+    }
+    .bundle h4 { margin:0; font-size:18px; }
+    .bundle-grid { margin-top:10px; display:grid; gap:8px; grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .bundle-item { border:1px solid var(--line); border-radius:10px; padding:8px; background:#fcfdff; }
     .collection-hero h3 { margin:0 0 6px; font-size:18px; }
     .pill-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
     .pill { font-size:12px; border:1px solid var(--line); border-radius:999px; padding:4px 8px; background:#fff; }
@@ -67,7 +73,7 @@
       border:1px solid var(--line); background:#fff; border-radius:12px; padding:10px;
       display:flex; justify-content:space-between; gap:8px; align-items:center;
     }
-    @media (max-width: 960px){ .stack{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width: 960px){ .stack{ grid-template-columns:repeat(2,minmax(0,1fr)); } .bundle-grid{grid-template-columns:1fr;} }
     @media (max-width: 640px){ .stack{ grid-template-columns:1fr; } }
   </style>
 </head>
@@ -102,6 +108,7 @@
           <div class="pill-row" id="pillRow"></div>
         </section>
 
+        <section class="bundle" id="bundle"></section>
         <section class="stack" id="stack"></section>
 
         <div class="dock">
@@ -123,7 +130,16 @@
           {label:'Option A', propertyName:'Villa Glarokavos Sea View', unit:'UNIT-93QX', offer:'OFR-7K2M', price:'€1,940', meta:'7 nights • 8 guests • Pool • 4.6 guest score', image:'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?q=80&w=1200&auto=format&fit=crop', kind:'Villa', region:'Pefkohori, Halkidiki', bedrooms:4, bathrooms:3},
           {label:'Option B', propertyName:'Blue Coast Maisonette', unit:'UNIT-7MPL', offer:'OFR-3R1D', price:'€2,120', meta:'7 nights • 8 guests • Sea view • Flexible check-in', image:'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1200&auto=format&fit=crop', kind:'Maisonette', region:'Hanioti, Halkidiki', bedrooms:5, bathrooms:4},
           {label:'Option C', propertyName:'Kallithea Family Apartment', unit:'UNIT-X11D', offer:'OFR-9L4P', price:'€2,060', meta:'7 nights • 8 guests • Family layout • Strong value', image:'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1200&auto=format&fit=crop', kind:'Apartment', region:'Kallithea, Halkidiki', bedrooms:3, bathrooms:2}
-        ]
+        ],
+        bundle: {
+          title: 'Combination package (large group)',
+          totalPrice: '€2,420',
+          items: [
+            { type:'Property', ref:'UNIT-93QX', label:'Stay option', detail:'Pefkohori, Halkidiki' },
+            { type:'Transfer', ref:'TRF-102', label:'Airport transfer', detail:'SKG ⇄ Property' },
+            { type:'Boat Rental', ref:'BRT-77', label:'Half-day boat', detail:'8 guests capacity' }
+          ]
+        }
       },
       {
         link: '/p/PR-51D3/c/COL-2T9V',
@@ -133,7 +149,15 @@
         cards: [
           {label:'Option A', propertyName:'Chania Hillside Villa', unit:'UNIT-K2A1', offer:'OFR-1N8H', price:'€2,680', meta:'10 nights • 6 guests • Quiet area • 4.8 guest score', image:'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1200&auto=format&fit=crop', kind:'Villa', region:'Chania, Crete', bedrooms:4, bathrooms:3},
           {label:'Option B', propertyName:'Rethymno Sunset Suite', unit:'UNIT-M8Q4', offer:'OFR-5U3C', price:'€2,740', meta:'10 nights • 6 guests • Sunset terrace • Late checkout', image:'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?q=80&w=1200&auto=format&fit=crop', kind:'Suite', region:'Rethymno, Crete', bedrooms:3, bathrooms:2}
-        ]
+        ],
+        bundle: {
+          title: 'Multi-property bundle (group split)',
+          totalPrice: '€4,980',
+          items: [
+            { type:'Property', ref:'UNIT-K2A1', label:'Main group stay', detail:'Chania, Crete' },
+            { type:'Property', ref:'UNIT-M8Q4', label:'Secondary stay', detail:'Rethymno, Crete' }
+          ]
+        }
       }
     ];
 
@@ -148,6 +172,7 @@
     const collectionMeta = document.getElementById('collectionMeta');
     const pillRow = document.getElementById('pillRow');
     const stack = document.getElementById('stack');
+    const bundle = document.getElementById('bundle');
     const subtitle = document.getElementById('subtitle');
     const navState = document.getElementById('navState');
     const dockText = document.getElementById('dockText');
@@ -171,6 +196,21 @@
     if (lockControls) {
       variantSel.disabled = true;
       collectionSel.disabled = true;
+    }
+
+    function renderBundle(bundleData) {
+      if (!bundleData) {
+        bundle.style.display = 'none';
+        return;
+      }
+      bundle.style.display = 'block';
+      bundle.innerHTML = `
+        <h4>${bundleData.title}</h4>
+        <div class="muted" style="margin-top:6px">Bundle total: ${bundleData.totalPrice}</div>
+        <div class="bundle-grid">
+          ${bundleData.items.map(i => `<div class="bundle-item"><div class="kicker">${i.type}</div><div style="font-weight:600">${i.label}</div><div class="muted">${i.ref} • ${i.detail}</div><div style="margin-top:6px;display:flex;gap:6px"><button class="btn">👍</button><button class="btn">👎</button></div></div>`).join('')}
+        </div>
+      `;
     }
 
     function renderCards(cards) {
@@ -224,7 +264,8 @@
         <span class="pill">ID-only refs (proposal / unit / offer)</span>
       `;
 
-      dockText.textContent = `Events: collection_view(${c.collectionRef}) • card_impression • feedback_selected(like|dislike) • cta_selected(view_details|reserve|book)`;
+      dockText.textContent = `Events: collection_view(${c.collectionRef}) • bundle_feedback_selected • card_impression • feedback_selected(like|dislike) • cta_selected(view_details|reserve|book)`;
+      renderBundle(c.bundle);
       renderCards(c.cards);
 
       if (variantSel.value === 'wl') {
