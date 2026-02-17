@@ -49,6 +49,7 @@ export type CoreMirrorProperty = {
   planyo: { calendarId: string; resourceId: string; actionUrl: string };
   videoUrl: string;
   tour3dUrl?: string;
+  contentUrls?: { site: string; url: string }[];
   nearbyServices: { name: string; detail: string; href: string; blogHref?: string }[];
   realEstateMeta?: {
     salePriceEur?: number;
@@ -181,6 +182,10 @@ const properties: CoreMirrorProperty[] = [
     },
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     tour3dUrl: "https://my.matterport.com/show/?m=SxQL3iGyoDo",
+    contentUrls: [
+      { site: "YouTube", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
+      { site: "Matterport", url: "https://my.matterport.com/show/?m=SxQL3iGyoDo" },
+    ],
     nearbyServices: [
       {
         name: "Airport Transfer",

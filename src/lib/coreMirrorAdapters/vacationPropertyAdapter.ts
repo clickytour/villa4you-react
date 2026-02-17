@@ -27,6 +27,7 @@ export function toVacationDetailsVM(property: CoreMirrorProperty): CanonicalDeta
     media: {
       videoUrl: property.videoUrl,
       tour3dUrl: property.tour3dUrl,
+      contentUrls: property.contentUrls,
     },
     cta: {
       primary: pickPrimaryCta(dealType),
