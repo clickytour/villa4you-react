@@ -17,8 +17,8 @@ export type CoreMirrorRealEstateProperty = {
   prices: { saleEur: number; monthlyEur: number; perSqmEur: number; roiPercent: number };
   amenities: string[];
   distances: Array<{ label: string; value: string }>;
-  nearbyServices?: Array<{ name: string; detail: string; href: string; coverageKm?: number }>;
-  blogPosts?: Array<{ title: string; href: string; date?: string; excerpt?: string; image?: string }>;
+  nearbyServices?: Array<{ name: string; detail: string; href: string; coverageKm?: number; image?: string; ctaLabel?: string }>;
+  blogPosts?: Array<{ title: string; href: string; date?: string; excerpt?: string; image?: string; ctaLabel?: string }>;
 };
 
 const realEstateProperties: CoreMirrorRealEstateProperty[] = [
@@ -49,12 +49,38 @@ const realEstateProperties: CoreMirrorRealEstateProperty[] = [
       { label: "Supermarket", value: "1.3 km" },
     ],
     nearbyServices: [
-      { name: "Property Management", detail: "Operational support for rentals", href: "/services/private-chef-villa-service", coverageKm: 50 },
-      { name: "Legal & Notary Support", detail: "Transaction process assistance", href: "/services/airport-transfer-halkidiki", coverageKm: 80 },
+      {
+        name: "Property Management",
+        detail: "Operational support for rentals",
+        href: "/services/private-chef-villa-service",
+        coverageKm: 50,
+        image: "https://images.unsplash.com/photo-1556155092-490a1ba16284?q=80&w=1200&auto=format&fit=crop",
+        ctaLabel: "View management service",
+      },
+      {
+        name: "Legal & Notary Support",
+        detail: "Transaction process assistance",
+        href: "/services/airport-transfer-halkidiki",
+        coverageKm: 80,
+        image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200&auto=format&fit=crop",
+        ctaLabel: "Request legal consult",
+      },
     ],
     blogPosts: [
-      { title: "Real-estate due diligence checklist", href: "/blog/seasonal-rates-explained", date: "2026-02-05" },
-      { title: "How to evaluate ROI in vacation markets", href: "/blog/best-coastal-towns-halkidiki", date: "2026-02-10" },
+      {
+        title: "Real-estate due diligence checklist",
+        href: "/blog/seasonal-rates-explained",
+        date: "2026-02-05",
+        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop",
+        ctaLabel: "Read checklist",
+      },
+      {
+        title: "How to evaluate ROI in vacation markets",
+        href: "/blog/best-coastal-towns-halkidiki",
+        date: "2026-02-10",
+        image: "https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1200&auto=format&fit=crop",
+        ctaLabel: "Open ROI guide",
+      },
     ],
   },
 ];

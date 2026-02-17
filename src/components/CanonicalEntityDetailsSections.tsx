@@ -212,15 +212,23 @@ export function CanonicalEntityDetailsSections({ vm }: { vm: CanonicalDetailsVie
       {vm.relatedServices && vm.relatedServices.length > 0 && (
         <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6">
           <h2 className="text-2xl font-semibold text-slate-900">Services nearby</h2>
-          <div className="mt-3 grid gap-3 md:grid-cols-2">
+          <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {vm.relatedServices.map((service) => (
-              <a key={`${service.name}-${service.href}`} href={service.href} className="rounded-xl border border-slate-200 bg-slate-50 p-3 hover:bg-white">
-                <p className="text-sm font-semibold text-slate-900">{service.name}</p>
-                <p className="mt-1 text-xs text-slate-600">{service.detail}</p>
-                {typeof service.coverageKm === "number" && (
-                  <p className="mt-1 text-xs text-slate-700">Service area coverage: {service.coverageKm} km</p>
-                )}
-              </a>
+              <article key={`${service.name}-${service.href}`} className="overflow-hidden rounded-xl border border-slate-200 bg-white flex h-full flex-col">
+                {service.image && <img src={service.image} alt={service.name} className="h-32 w-full object-cover" />}
+                <div className="p-3 flex h-full flex-col">
+                  <p className="text-sm font-semibold text-slate-900">{service.name}</p>
+                  <p className="mt-1 text-xs text-slate-600">{service.detail}</p>
+                  {typeof service.coverageKm === "number" && (
+                    <p className="mt-1 text-xs text-slate-700">Coverage: {service.coverageKm} km</p>
+                  )}
+                  <div className="mt-auto pt-3">
+                    <a href={service.href} className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-medium text-white whitespace-nowrap">
+                      {service.ctaLabel || "View service"}
+                    </a>
+                  </div>
+                </div>
+              </article>
             ))}
           </div>
         </section>
@@ -229,13 +237,21 @@ export function CanonicalEntityDetailsSections({ vm }: { vm: CanonicalDetailsVie
       {vm.relatedBlogPosts && vm.relatedBlogPosts.length > 0 && (
         <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6">
           <h2 className="text-2xl font-semibold text-slate-900">Related blog posts</h2>
-          <div className="mt-3 grid gap-3 md:grid-cols-2">
+          <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {vm.relatedBlogPosts.map((post) => (
-              <a key={post.href} href={post.href} className="rounded-xl border border-slate-200 bg-slate-50 p-3 hover:bg-white">
-                <p className="text-sm font-semibold text-slate-900">{post.title}</p>
-                {post.date && <p className="mt-1 text-xs text-slate-600">{post.date}</p>}
-                {post.excerpt && <p className="mt-1 text-xs text-slate-600">{post.excerpt}</p>}
-              </a>
+              <article key={post.href} className="overflow-hidden rounded-xl border border-slate-200 bg-white flex h-full flex-col">
+                {post.image && <img src={post.image} alt={post.title} className="h-32 w-full object-cover" />}
+                <div className="p-3 flex h-full flex-col">
+                  <p className="text-sm font-semibold text-slate-900">{post.title}</p>
+                  {post.date && <p className="mt-1 text-xs text-slate-600">{post.date}</p>}
+                  {post.excerpt && <p className="mt-1 text-xs text-slate-600">{post.excerpt}</p>}
+                  <div className="mt-auto pt-3">
+                    <a href={post.href} className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-medium text-white whitespace-nowrap">
+                      {post.ctaLabel || "Read post"}
+                    </a>
+                  </div>
+                </div>
+              </article>
             ))}
           </div>
         </section>

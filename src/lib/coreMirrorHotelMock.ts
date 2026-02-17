@@ -17,8 +17,8 @@ export type CoreMirrorHotel = {
   prices: { fromNightlyEur: number; monthlyEur: number; saleEur: number };
   amenities: string[];
   distances: Array<{ label: string; value: string }>;
-  nearbyServices?: Array<{ name: string; detail: string; href: string; coverageKm?: number }>;
-  blogPosts?: Array<{ title: string; href: string; date?: string; excerpt?: string; image?: string }>;
+  nearbyServices?: Array<{ name: string; detail: string; href: string; coverageKm?: number; image?: string; ctaLabel?: string }>;
+  blogPosts?: Array<{ title: string; href: string; date?: string; excerpt?: string; image?: string; ctaLabel?: string }>;
 };
 
 const hotels: CoreMirrorHotel[] = [
@@ -52,12 +52,38 @@ const hotels: CoreMirrorHotel[] = [
       { label: "Marina", value: "2.1 km" },
     ],
     nearbyServices: [
-      { name: "Airport Transfer", detail: "Direct transfer from SKG", href: "/services/airport-transfer-halkidiki", coverageKm: 120 },
-      { name: "Private Chef", detail: "In-room dining experiences", href: "/services/private-chef-villa-service", coverageKm: 35 },
+      {
+        name: "Airport Transfer",
+        detail: "Direct transfer from SKG",
+        href: "/services/airport-transfer-halkidiki",
+        coverageKm: 120,
+        image: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?q=80&w=1200&auto=format&fit=crop",
+        ctaLabel: "View service",
+      },
+      {
+        name: "Private Chef",
+        detail: "In-room dining experiences",
+        href: "/services/private-chef-villa-service",
+        coverageKm: 35,
+        image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1200&auto=format&fit=crop",
+        ctaLabel: "Book chef",
+      },
     ],
     blogPosts: [
-      { title: "Top hotel services guests request in Halkidiki", href: "/blog/best-coastal-towns-halkidiki", date: "2026-02-10" },
-      { title: "How service coverage improves stay conversion", href: "/blog/seasonal-rates-explained", date: "2026-02-05" },
+      {
+        title: "Top hotel services guests request in Halkidiki",
+        href: "/blog/best-coastal-towns-halkidiki",
+        date: "2026-02-10",
+        image: "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?q=80&w=1200&auto=format&fit=crop",
+        ctaLabel: "Read article",
+      },
+      {
+        title: "How service coverage improves stay conversion",
+        href: "/blog/seasonal-rates-explained",
+        date: "2026-02-05",
+        image: "https://images.unsplash.com/photo-1431540015161-0bf868a2d407?q=80&w=1200&auto=format&fit=crop",
+        ctaLabel: "Open insights",
+      },
     ],
   },
 ];

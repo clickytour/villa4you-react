@@ -17,8 +17,8 @@ export type CoreMirrorHotelRoom = {
   rates: { nightlyEur: number; monthlyEur: number };
   maxGuests: number;
   amenities: string[];
-  nearbyServices?: Array<{ name: string; detail: string; href: string; coverageKm?: number }>;
-  blogPosts?: Array<{ title: string; href: string; date?: string; excerpt?: string; image?: string }>;
+  nearbyServices?: Array<{ name: string; detail: string; href: string; coverageKm?: number; image?: string; ctaLabel?: string }>;
+  blogPosts?: Array<{ title: string; href: string; date?: string; excerpt?: string; image?: string; ctaLabel?: string }>;
 };
 
 export const coreMirrorHotelRooms: CoreMirrorHotelRoom[] = [
@@ -44,12 +44,38 @@ export const coreMirrorHotelRooms: CoreMirrorHotelRoom[] = [
     maxGuests: 3,
     amenities: ["Wi-Fi", "AC", "Espresso machine", "Balcony"],
     nearbyServices: [
-      { name: "Laundry & Press", detail: "Same-day service", href: "/services/private-chef-villa-service", coverageKm: 15 },
-      { name: "Private Transfer", detail: "Airport and marina transfer", href: "/services/airport-transfer-halkidiki", coverageKm: 120 },
+      {
+        name: "Laundry & Press",
+        detail: "Same-day service",
+        href: "/services/private-chef-villa-service",
+        coverageKm: 15,
+        image: "https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?q=80&w=1200&auto=format&fit=crop",
+        ctaLabel: "View laundry service",
+      },
+      {
+        name: "Private Transfer",
+        detail: "Airport and marina transfer",
+        href: "/services/airport-transfer-halkidiki",
+        coverageKm: 120,
+        image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=1200&auto=format&fit=crop",
+        ctaLabel: "Book transfer",
+      },
     ],
     blogPosts: [
-      { title: "Suite booking tips for peak season", href: "/blog/family-seaside-vacation-checklist", date: "2026-02-08" },
-      { title: "How to choose room add-on services", href: "/blog/seasonal-rates-explained", date: "2026-02-05" },
+      {
+        title: "Suite booking tips for peak season",
+        href: "/blog/family-seaside-vacation-checklist",
+        date: "2026-02-08",
+        image: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=1200&auto=format&fit=crop",
+        ctaLabel: "Read tips",
+      },
+      {
+        title: "How to choose room add-on services",
+        href: "/blog/seasonal-rates-explained",
+        date: "2026-02-05",
+        image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=1200&auto=format&fit=crop",
+        ctaLabel: "Open article",
+      },
     ],
   },
 ];
