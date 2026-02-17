@@ -48,8 +48,20 @@ export function toHotelDetailsVM(hotel: CoreMirrorHotel, activeMode?: DealType):
       title: mode === "short_term_rent" ? "Choose your room type" : mode === "monthly_rent" ? "Long-stay room units" : "Room units for investment review",
       items: getCoreMirrorHotelRoomsByHotelSlug(hotel.slug).map((r) => ({
         title: r.title,
-        subtitle: `${r.roomType} · up to ${r.maxGuests} guests · from ${r.rates.nightlyEur} EUR/night`,
+        subtitle: `${r.roomType} · up to ${r.maxGuests} guests`,
         href: `/property/hotel-room/${r.slug}/${modeSlug(mode)}`,
+        imageUrl: r.media.primaryImage,
+        priceLabel:
+          mode === "short_term_rent"
+            ? `From ${r.rates.nightlyEur} EUR / night`
+            : mode === "monthly_rent"
+            ? `From ${r.rates.monthlyEur} EUR / month`
+            : `Unit available for sale inquiry`,
+        ctaPrimary: mode === "sale" ? "View unit for sale" : mode === "monthly_rent" ? "View monthly terms" : "View room",
+        ctaSecondary: {
+          label: mode === "sale" ? "Request investment info" : "Contact advisor",
+          href: `/property/hotel/${hotel.slug}/${modeSlug(mode)}#guest-request-form`,
+        },
       })),
     },
     bookingWidget:

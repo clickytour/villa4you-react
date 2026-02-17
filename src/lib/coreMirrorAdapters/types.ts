@@ -20,7 +20,15 @@ export type CanonicalDetailsViewModel = {
   modeTabs?: Array<{ label: string; href: string; active?: boolean }>;
   sectionCards?: {
     title: string;
-    items: Array<{ title: string; subtitle?: string; href: string }>;
+    items: Array<{
+      title: string;
+      subtitle?: string;
+      href: string;
+      imageUrl?: string;
+      priceLabel?: string;
+      ctaPrimary?: string;
+      ctaSecondary?: { label: string; href: string };
+    }>;
   };
   bookingWidget?: {
     calendarId: string;

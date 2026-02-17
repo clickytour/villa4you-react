@@ -97,12 +97,26 @@ export function CanonicalEntityDetailsSections({ vm }: { vm: CanonicalDetailsVie
       {vm.entityType === "hotel" && vm.sectionCards && vm.sectionCards.items.length > 0 && (
         <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6">
           <h2 className="text-2xl font-semibold text-slate-900">{vm.sectionCards.title}</h2>
-          <div className="mt-3 grid gap-3 md:grid-cols-2">
+          <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {vm.sectionCards.items.map((item) => (
-              <a key={item.href} href={item.href} className="rounded-xl border border-slate-200 bg-slate-50 p-3 hover:bg-white">
-                <p className="text-sm font-semibold text-slate-900">{item.title}</p>
-                {item.subtitle && <p className="text-xs text-slate-600 mt-1">{item.subtitle}</p>}
-              </a>
+              <article key={item.href} className="overflow-hidden rounded-xl border border-slate-200 bg-white flex h-full flex-col">
+                {item.imageUrl && <img src={item.imageUrl} alt={item.title} className="h-36 w-full object-cover" />}
+                <div className="p-3 flex h-full flex-col">
+                  <h3 className="text-sm font-semibold text-slate-900">{item.title}</h3>
+                  {item.subtitle && <p className="mt-1 text-xs text-slate-600">{item.subtitle}</p>}
+                  {item.priceLabel && <p className="mt-2 text-sm font-medium text-slate-800">{item.priceLabel}</p>}
+                  <div className="mt-auto pt-3 flex flex-nowrap gap-2">
+                    <a href={item.href} className="inline-flex rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-medium text-white whitespace-nowrap">
+                      {item.ctaPrimary || "View room"}
+                    </a>
+                    {item.ctaSecondary && (
+                      <a href={item.ctaSecondary.href} className="inline-flex rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-900 whitespace-nowrap">
+                        {item.ctaSecondary.label}
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </article>
             ))}
           </div>
         </section>
