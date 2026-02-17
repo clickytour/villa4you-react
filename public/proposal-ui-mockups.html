@@ -141,7 +141,7 @@
           title: 'Combination package (large group)',
           totalPrice: '€2,420',
           items: [
-            { type:'Property', ref:'UNIT-93QX', label:'Stay option', detail:'Pefkohori, Halkidiki', price:'€1,940' },
+            { type:'Property', ref:'UNIT-93QX', label:'Stay option', propertyName:'Villa Glarokavos Sea View', detail:'Pefkohori, Halkidiki', price:'€1,940' },
             { type:'Transfer', ref:'TRF-102', label:'Airport transfer', detail:'SKG ⇄ Property', price:'€180' },
             { type:'Boat Rental', ref:'BRT-77', label:'Half-day boat', detail:'8 guests capacity', price:'€300' }
           ]
@@ -242,7 +242,7 @@
         <h4>${bundleData.title}</h4>
         <div class="muted" style="margin-top:6px">Bundle total: ${bundleData.totalPrice}</div>
         <div class="bundle-grid">
-          ${bundleData.items.map(i => `<div class="bundle-item"><div class="kicker">${i.type}</div><div style="font-weight:600">${i.label}</div><div class="muted">${i.ref} • ${i.detail}</div><div style="margin-top:4px;font-weight:700">${i.price}</div><div style="margin-top:8px"><button class="btn">View details page</button></div></div>`).join('')}
+          ${bundleData.items.map(i => `<div class="bundle-item"><div class="kicker">${i.type}</div><div style="font-weight:600">${variantSel.value === 'brand' && i.type === 'Property' && i.propertyName ? i.propertyName : i.label}</div><div class="muted">${i.ref} • ${i.detail}</div><div style="margin-top:4px;font-weight:700">${i.price}</div><div style="margin-top:8px"><button class="btn">View details page</button></div></div>`).join('')}
         </div>
       `;
     }
