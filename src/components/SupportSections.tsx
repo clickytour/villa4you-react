@@ -1,3 +1,5 @@
+import { trackSearchHandoffClick } from "@/lib/searchAnalytics";
+
 const supportCards = [
   { title: "Guest FAQ", desc: "Check-in/out, payments, policies, concierge" },
   { title: "Owner FAQ", desc: "Payouts, reporting, onboarding, tech" },
@@ -26,7 +28,7 @@ export function SupportSections() {
               placeholder="Search (e.g., cancellation, check-in, deposits)..."
             />
           </div>
-          <a href="/search?vertical=all" className="inline-flex items-center rounded-xl bg-slate-900 px-6 py-3 text-base font-medium text-white">Open global search</a>
+          <a href="/search?vertical=all" onClick={() => trackSearchHandoffClick({ vertical: "all", source_page: "support", handoff_surface: "support_hero_open_global_search", target_url: "/search?vertical=all" })} className="inline-flex items-center rounded-xl bg-slate-900 px-6 py-3 text-base font-medium text-white">Open global search</a>
         </div>
 
         <div className="mt-5 grid gap-3 md:grid-cols-3">
@@ -34,6 +36,7 @@ export function SupportSections() {
             <a
               key={card.title}
               href={`/search?vertical=all&q=${encodeURIComponent(card.title)}`}
+              onClick={() => trackSearchHandoffClick({ query: card.title, vertical: "all", source_page: "support", handoff_surface: "support_card", target_url: `/search?vertical=all&q=${encodeURIComponent(card.title)}` })}
               className="rounded-xl border border-slate-300 bg-white p-4 text-left transition hover:border-slate-500 hover:shadow-sm"
             >
               <p className="text-[30px] font-semibold leading-none text-slate-900">{card.title}</p>
@@ -76,7 +79,7 @@ export function SupportSections() {
           ))}
 
           <div className="flex flex-wrap gap-3 pt-1">
-            <a href="/search?vertical=all" className="inline-flex items-center rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Open global search</a>
+            <a href="/search?vertical=all" onClick={() => trackSearchHandoffClick({ vertical: "all", source_page: "support", handoff_surface: "support_footer_open_global_search", target_url: "/search?vertical=all" })} className="inline-flex items-center rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Open global search</a>
             <a href="/support" className="inline-flex items-center rounded-xl border border-slate-800 bg-white px-5 py-2.5 text-base font-medium text-slate-900">Contact Support</a>
           </div>
         </div>

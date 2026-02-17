@@ -1,3 +1,5 @@
+import { trackSearchHandoffClick } from "@/lib/searchAnalytics";
+
 const demoPosts = [
   {
     title: "Santorini: best areas for villa stays",
@@ -78,7 +80,7 @@ export function BlogSections() {
         </div>
 
         <div className="mt-3">
-          <a href="/search?vertical=blog" className="inline-flex items-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-900">Open in global search</a>
+          <a href="/search?vertical=blog" onClick={() => trackSearchHandoffClick({ vertical: "blog", source_page: "blog", handoff_surface: "blog_open_global_search", target_url: "/search?vertical=blog" })} className="inline-flex items-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-900">Open in global search</a>
         </div>
 
         <div className="mt-6 grid gap-4 lg:grid-cols-[3fr_1.15fr]">
@@ -90,7 +92,7 @@ export function BlogSections() {
                   <p className="text-xs text-slate-500">{post.meta}</p>
                   <h3 className="mt-1 text-[30px] font-semibold leading-none text-slate-900">{post.title}</h3>
                   <p className="mt-2 text-[21px] text-slate-600">{post.excerpt}</p>
-                  <a href={`/search?vertical=blog&q=${encodeURIComponent(post.title)}`} className="mt-3 inline-flex rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white">Read</a>
+                  <a href={`/search?vertical=blog&q=${encodeURIComponent(post.title)}`} onClick={() => trackSearchHandoffClick({ query: post.title, vertical: "blog", source_page: "blog", handoff_surface: "blog_post_read", target_url: `/search?vertical=blog&q=${encodeURIComponent(post.title)}` })} className="mt-3 inline-flex rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white">Read</a>
                 </div>
               </article>
             ))}
@@ -100,13 +102,13 @@ export function BlogSections() {
             <div className="rounded-xl border border-slate-300 bg-white p-5">
               <h3 className="text-[42px] font-semibold leading-none text-slate-900">Subscribe for new posts</h3>
               <p className="mt-2 text-[21px] text-slate-600">Get tips & offers — 1–2 emails/month.</p>
-              <a href="/search?vertical=all&q=newsletter" className="mt-4 inline-flex rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Join the newsletter</a>
+              <a href="/search?vertical=all&q=newsletter" onClick={() => trackSearchHandoffClick({ query: "newsletter", vertical: "all", source_page: "blog", handoff_surface: "blog_newsletter_cta", target_url: "/search?vertical=all&q=newsletter" })} className="mt-4 inline-flex rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Join the newsletter</a>
             </div>
 
             <div className="rounded-xl border border-slate-300 bg-white p-5">
               <h3 className="text-[42px] font-semibold leading-none text-slate-900">Owners: Free evaluation</h3>
               <p className="mt-2 text-[21px] text-slate-600">We’ll review your villa and growth goals.</p>
-              <a href="/search?vertical=services&q=free+evaluation" className="mt-4 inline-flex rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Start now</a>
+              <a href="/search?vertical=services&q=free+evaluation" onClick={() => trackSearchHandoffClick({ query: "free evaluation", vertical: "services", source_page: "blog", handoff_surface: "blog_free_evaluation_cta", target_url: "/search?vertical=services&q=free+evaluation" })} className="mt-4 inline-flex rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Start now</a>
             </div>
           </aside>
         </div>
