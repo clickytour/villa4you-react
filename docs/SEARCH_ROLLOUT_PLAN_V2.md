@@ -20,7 +20,7 @@ Status: Unified rollout plan including **existing** search-result functionality 
 - ✅ QA route index (`/all-pages`) now includes dedicated `/search` deep-link entries.
 
 ### Pending (non-Core)
-- ⏳ Final documentation pass for analytics/event naming conventions (if required).
+- ✅ Analytics/event naming baseline documented in `docs/SEARCH_ANALYTICS_EVENT_NAMING_V1.md`.
 
 ### Pending (Core integration track)
 - ⏳ Switch search source from mirror simulation to Core-backed mirror/API adapter.
