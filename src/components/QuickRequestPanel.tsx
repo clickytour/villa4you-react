@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { serviceTaxonomy } from "@/lib/serviceTaxonomy";
+import { trackSearchHandoffClick } from "@/lib/searchAnalytics";
 
 type Step = 1 | 2 | 3;
 type GuestRole = "travel-rentals" | "tours-activities" | "real-estate";
@@ -316,7 +317,7 @@ export function QuickRequestPanel() {
     <>
       <h2 className="text-[18px] font-semibold leading-none text-slate-900">{meta.title}</h2>
       <p className="mt-1 text-[11px] text-slate-600">{meta.subtitle}</p>
-      <a href="/search?vertical=all" className="mt-1 inline-flex text-[11px] font-medium text-slate-900 underline underline-offset-2">Open global search</a>
+      <a href="/search?vertical=all" onClick={() => trackSearchHandoffClick({ vertical: "all", source_page: "quick_request", handoff_surface: "quick_request_global_search", target_url: "/search?vertical=all" })} className="mt-1 inline-flex text-[11px] font-medium text-slate-900 underline underline-offset-2">Open global search</a>
 
       <p className="mt-2 text-[11px] font-semibold text-slate-600">Step {currentStep} of {maxStep}</p>
 

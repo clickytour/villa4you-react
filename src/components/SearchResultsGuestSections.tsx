@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { filterSearchSimulationRecords, getSearchSimulationRecords, type SearchMode, type SearchVertical } from "@/lib/searchSimulation";
+import { trackSearchPageView, trackSearchResultClick } from "@/lib/searchAnalytics";
 
 const verticalOptions: Array<{ id: SearchVertical; label: string }> = [
   { id: "all", label: "All" },
@@ -87,6 +88,20 @@ export function SearchResultsGuestSections({
     [records, q, vertical, mode, location]
   );
 
+  useEffect(() => {
+    trackSearchPageView({
+      query: q,
+      vertical,
+      mode,
+      location,
+      results_count: filtered.length,
+      source_page: "search",
+      landing_url: typeof window !== "undefined" ? window.location.href : undefined,
+    });
+    // page-view only
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <section className="mx-auto max-w-[1280px] px-4 pb-4">
@@ -138,7 +153,7 @@ export function SearchResultsGuestSections({
       <section className="mx-auto max-w-[1280px] px-4 pb-6">
         <p className="text-[20px] text-slate-700">{filtered.length} results match your query</p>
         <div className="mt-4 grid gap-4 md:grid-cols-3">
-          {filtered.map((item) => (
+          {filtered.map((item, index) => (
             <article key={item.id} className="flex h-full flex-col overflow-hidden rounded-xl border border-slate-300 bg-white">
               {item.image && <img src={item.image} alt={item.title} className="h-[220px] w-full object-cover" />}
               <div className="flex-1 p-3">
@@ -153,7 +168,27 @@ export function SearchResultsGuestSections({
                 </div>
               </div>
               <div className="border-t border-slate-300 p-3">
-                <a href={item.href} className="inline-flex rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white">Open result</a>
+                <a
+                  href={item.href}
+                  onClick={() =>
+                    trackSearchResultClick({
+                      query: q,
+                      vertical,
+                      mode,
+                      location,
+                      results_count: filtered.length,
+                      source_page: "search",
+                      result_id: item.id,
+                      result_vertical: item.vertical,
+                      result_mode: item.mode,
+                      position: index + 1,
+                      target_href: item.href,
+                    })
+                  }
+                  className="inline-flex rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white"
+                >
+                  Open result
+                </a>
               </div>
             </article>
           ))}

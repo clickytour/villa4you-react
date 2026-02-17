@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { trackSearchHandoffClick } from "@/lib/searchAnalytics";
 
 const regions = ["All Greece", "Halkidiki", "Mykonos", "Crete"] as const;
 const stayTypes = ["All", "Villas", "Apartments", "Hotels", "Family"] as const;
@@ -76,7 +77,7 @@ export function ExploreMapSections() {
 
         <div className="mx-auto mt-6 flex w-full max-w-[840px] flex-col gap-3 rounded-2xl border border-white/20 bg-white/10 p-3 backdrop-blur sm:flex-row">
           <input className="h-12 w-full rounded-xl border border-white/20 bg-white px-4 text-slate-900 placeholder:text-slate-400 sm:flex-1" placeholder="Search area, beach, landmark..." />
-          <a href="/search?vertical=stays&mode=vacation" className="inline-flex h-12 items-center rounded-xl bg-emerald-500 px-6 text-base font-semibold text-slate-900 hover:bg-emerald-400">Search on map</a>
+          <a href="/search?vertical=stays&mode=vacation" onClick={() => trackSearchHandoffClick({ vertical: "stays", mode: "vacation", source_page: "explore_map", handoff_surface: "hero_search_on_map", target_url: "/search?vertical=stays&mode=vacation" })} className="inline-flex h-12 items-center rounded-xl bg-emerald-500 px-6 text-base font-semibold text-slate-900 hover:bg-emerald-400">Search on map</a>
         </div>
       </div>
 
@@ -161,7 +162,7 @@ export function ExploreMapSections() {
       <section className="mt-6 rounded-2xl border border-slate-300 bg-white p-5 md:p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-[42px] font-semibold leading-none text-slate-900">Map Results</h2>
-          <a href="/search?vertical=stays&mode=vacation" className="inline-flex items-center rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white">Open full map experience</a>
+          <a href="/search?vertical=stays&mode=vacation" onClick={() => trackSearchHandoffClick({ vertical: "stays", mode: "vacation", source_page: "explore_map", handoff_surface: "map_results_open_full_experience", target_url: "/search?vertical=stays&mode=vacation" })} className="inline-flex items-center rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white">Open full map experience</a>
         </div>
 
         <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -219,8 +220,8 @@ export function ExploreMapSections() {
         <h2 className="text-[42px] font-semibold leading-none text-slate-900">Need help choosing the right area?</h2>
         <p className="mx-auto mt-2 max-w-[900px] text-[21px] leading-none text-slate-600">Tell us your trip style and we’ll suggest high-converting options by map zone, beach access and budget.</p>
         <div className="mt-4 flex flex-wrap justify-center gap-2">
-          <a href="/search?vertical=services&q=concierge" className="rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Talk to concierge</a>
-          <a href="/search?vertical=all&q=support" className="rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-base font-medium text-slate-800">Open support form</a>
+          <a href="/search?vertical=services&q=concierge" onClick={() => trackSearchHandoffClick({ query: "concierge", vertical: "services", source_page: "explore_map", handoff_surface: "concierge_cta", target_url: "/search?vertical=services&q=concierge" })} className="rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Talk to concierge</a>
+          <a href="/search?vertical=all&q=support" onClick={() => trackSearchHandoffClick({ query: "support", vertical: "all", source_page: "explore_map", handoff_surface: "support_cta", target_url: "/search?vertical=all&q=support" })} className="rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-base font-medium text-slate-800">Open support form</a>
         </div>
       </section>
     </section>

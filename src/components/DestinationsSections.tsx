@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { trackSearchHandoffClick } from "@/lib/searchAnalytics";
 
 const quickRegions = ["Halkidiki", "Mykonos", "Crete"];
 const quickPicks = ["Kassandra", "Sithonia", "Athos"] as const;
@@ -157,7 +158,7 @@ export function DestinationsSections() {
             className="h-12 w-full rounded-xl border border-white/20 bg-white px-4 text-base text-slate-900 placeholder:text-slate-400 sm:flex-1"
             placeholder="Search regions, towns, complexes, beaches..."
           />
-          <a href="/search?vertical=stays&mode=vacation" className="inline-flex h-12 items-center rounded-xl bg-emerald-500 px-7 text-base font-semibold text-slate-900 hover:bg-emerald-400">Search</a>
+          <a href="/search?vertical=stays&mode=vacation" onClick={() => trackSearchHandoffClick({ vertical: "stays", mode: "vacation", source_page: "destinations", handoff_surface: "hero_search", target_url: "/search?vertical=stays&mode=vacation" })} className="inline-flex h-12 items-center rounded-xl bg-emerald-500 px-7 text-base font-semibold text-slate-900 hover:bg-emerald-400">Search</a>
         </div>
 
         <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
@@ -237,8 +238,8 @@ export function DestinationsSections() {
                 <p className="mt-3 text-[21px] font-semibold leading-none text-slate-900">{stay.price}</p>
 
                 <div className="mt-auto flex flex-nowrap items-center gap-2 pt-4">
-                  <a href={`/search?vertical=stays&mode=vacation&q=${encodeURIComponent(stay.title)}&location=${encodeURIComponent(stay.area)}`} className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 whitespace-nowrap">View details</a>
-                  <a href={`/search?vertical=stays&mode=vacation&location=${encodeURIComponent(stay.area)}`} className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white whitespace-nowrap">Check dates</a>
+                  <a href={`/search?vertical=stays&mode=vacation&q=${encodeURIComponent(stay.title)}&location=${encodeURIComponent(stay.area)}`} onClick={() => trackSearchHandoffClick({ query: stay.title, vertical: "stays", mode: "vacation", location: stay.area, source_page: "destinations", handoff_surface: "stay_card_view_details", target_url: `/search?vertical=stays&mode=vacation&q=${encodeURIComponent(stay.title)}&location=${encodeURIComponent(stay.area)}` })} className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 whitespace-nowrap">View details</a>
+                  <a href={`/search?vertical=stays&mode=vacation&location=${encodeURIComponent(stay.area)}`} onClick={() => trackSearchHandoffClick({ vertical: "stays", mode: "vacation", location: stay.area, source_page: "destinations", handoff_surface: "stay_card_check_dates", target_url: `/search?vertical=stays&mode=vacation&location=${encodeURIComponent(stay.area)}` })} className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white whitespace-nowrap">Check dates</a>
                 </div>
               </div>
             </article>
@@ -299,8 +300,8 @@ export function DestinationsSections() {
                 <p className="mt-3 text-[21px] font-semibold leading-none text-slate-900">{stay.price}</p>
 
                 <div className="mt-auto flex flex-nowrap items-center gap-2 pt-4">
-                  <a href={`/search?vertical=stays&mode=vacation&q=${encodeURIComponent(stay.title)}&location=${encodeURIComponent(stay.area)}`} className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 whitespace-nowrap">View details</a>
-                  <a href={`/search?vertical=stays&mode=vacation&location=${encodeURIComponent(stay.area)}`} className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white whitespace-nowrap">Check dates</a>
+                  <a href={`/search?vertical=stays&mode=vacation&q=${encodeURIComponent(stay.title)}&location=${encodeURIComponent(stay.area)}`} onClick={() => trackSearchHandoffClick({ query: stay.title, vertical: "stays", mode: "vacation", location: stay.area, source_page: "destinations", handoff_surface: "town_stay_card_view_details", target_url: `/search?vertical=stays&mode=vacation&q=${encodeURIComponent(stay.title)}&location=${encodeURIComponent(stay.area)}` })} className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 whitespace-nowrap">View details</a>
+                  <a href={`/search?vertical=stays&mode=vacation&location=${encodeURIComponent(stay.area)}`} onClick={() => trackSearchHandoffClick({ vertical: "stays", mode: "vacation", location: stay.area, source_page: "destinations", handoff_surface: "town_stay_card_check_dates", target_url: `/search?vertical=stays&mode=vacation&location=${encodeURIComponent(stay.area)}` })} className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white whitespace-nowrap">Check dates</a>
                 </div>
               </div>
             </article>
@@ -314,7 +315,7 @@ export function DestinationsSections() {
             <h2 className="text-[42px] font-semibold leading-none text-slate-900">Prefer to explore on a map?</h2>
             <p className="mt-2 text-[21px] leading-none text-slate-600">See every villa, hotel and complex by location, with filters for beach distance, pool and more.</p>
           </div>
-          <a href="/search?vertical=stays&mode=vacation" className="inline-flex items-center rounded-xl bg-sky-500 px-6 py-3 text-base font-semibold text-white hover:bg-sky-600">Open Map Search</a>
+          <a href="/search?vertical=stays&mode=vacation" onClick={() => trackSearchHandoffClick({ vertical: "stays", mode: "vacation", source_page: "destinations", handoff_surface: "open_map_search", target_url: "/search?vertical=stays&mode=vacation" })} className="inline-flex items-center rounded-xl bg-sky-500 px-6 py-3 text-base font-semibold text-white hover:bg-sky-600">Open Map Search</a>
         </div>
       </section>
     </section>
