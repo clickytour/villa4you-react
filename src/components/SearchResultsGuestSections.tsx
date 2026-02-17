@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { filterSearchSimulationRecords, getSearchSimulationRecords, type SearchMode, type SearchVertical } from "@/lib/searchSimulation";
 
 const verticalOptions: Array<{ id: SearchVertical; label: string }> = [
@@ -32,8 +32,15 @@ export function SearchResultsGuestSections({
   const [vertical, setVertical] = useState<SearchVertical>(initialVertical);
   const [mode, setMode] = useState<SearchMode>(initialMode);
   const [location, setLocation] = useState(initialLocation);
+  const shouldPushNextRef = useRef(false);
+  const skipUrlSyncRef = useRef(false);
 
   useEffect(() => {
+    if (skipUrlSyncRef.current) {
+      skipUrlSyncRef.current = false;
+      return;
+    }
+
     const params = new URLSearchParams();
     if (q) params.set("q", q);
     if (vertical !== "all") params.set("vertical", vertical);
@@ -42,15 +49,31 @@ export function SearchResultsGuestSections({
 
     const query = params.toString();
     const url = query ? `/search?${query}` : "/search";
+    const currentUrl = `${window.location.pathname}${window.location.search}`;
+    if (currentUrl === url) return;
+
+    if (shouldPushNextRef.current) {
+      window.history.pushState(null, "", url);
+      shouldPushNextRef.current = false;
+      return;
+    }
+
     window.history.replaceState(null, "", url);
   }, [q, vertical, mode, location]);
 
   useEffect(() => {
     const onPopState = () => {
       const params = new URLSearchParams(window.location.search);
+      const verticalRaw = params.get("vertical");
+      const modeRaw = params.get("mode");
+      const verticalIsValid = verticalRaw === "all" || verticalRaw === "stays" || verticalRaw === "services" || verticalRaw === "blog";
+      const modeIsValid = modeRaw === "all" || modeRaw === "vacation" || modeRaw === "sale" || modeRaw === "monthly";
+
+      skipUrlSyncRef.current = true;
+      shouldPushNextRef.current = false;
       setQ(params.get("q") ?? "");
-      setVertical((params.get("vertical") as SearchVertical) ?? "all");
-      setMode((params.get("mode") as SearchMode) ?? "all");
+      setVertical(verticalIsValid ? (verticalRaw as SearchVertical) : "all");
+      setMode(modeIsValid ? (modeRaw as SearchMode) : "all");
       setLocation(params.get("location") ?? "");
     };
 
@@ -74,11 +97,11 @@ export function SearchResultsGuestSections({
           <div className="mt-4 grid gap-3 md:grid-cols-4">
             <label className="text-sm text-slate-700">
               Search intent
-              <input className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Try: Halkidiki, transfer, ROI" />
+              <input className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") shouldPushNextRef.current = true; }} placeholder="Try: Halkidiki, transfer, ROI" />
             </label>
             <label className="text-sm text-slate-700">
               Vertical
-              <select className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" value={vertical} onChange={(e) => setVertical(e.target.value as SearchVertical)}>
+              <select className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" value={vertical} onChange={(e) => { shouldPushNextRef.current = true; setVertical(e.target.value as SearchVertical); }}>
                 {verticalOptions.map((v) => (
                   <option key={v.id} value={v.id}>{v.label}</option>
                 ))}
@@ -86,7 +109,7 @@ export function SearchResultsGuestSections({
             </label>
             <label className="text-sm text-slate-700">
               Mode
-              <select className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" value={mode} onChange={(e) => setMode(e.target.value as SearchMode)}>
+              <select className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" value={mode} onChange={(e) => { shouldPushNextRef.current = true; setMode(e.target.value as SearchMode); }}>
                 {modeOptions.map((m) => (
                   <option key={m.id} value={m.id}>{m.label}</option>
                 ))}
@@ -94,7 +117,7 @@ export function SearchResultsGuestSections({
             </label>
             <label className="text-sm text-slate-700">
               Location
-              <input className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="e.g., Halkidiki" />
+              <input className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" value={location} onChange={(e) => setLocation(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") shouldPushNextRef.current = true; }} placeholder="e.g., Halkidiki" />
             </label>
           </div>
 
@@ -102,7 +125,7 @@ export function SearchResultsGuestSections({
             {verticalOptions.map((v) => (
               <button
                 key={v.id}
-                onClick={() => setVertical(v.id)}
+                onClick={() => { shouldPushNextRef.current = true; setVertical(v.id); }}
                 className={`rounded-full border px-3 py-1 text-sm ${vertical === v.id ? "border-slate-900 bg-slate-900 text-white" : "border-slate-300 bg-white text-slate-700"}`}
               >
                 {v.label}
