@@ -2,6 +2,29 @@
 
 Status: Unified rollout plan including **existing** search-result functionality across the site.
 
+## Implementation status (updated 2026-02-17)
+
+### Completed (excluding Core live integration)
+- ✅ Canonical global route `/search` is live and included in sitemap/header links.
+- ✅ Existing touchpoints wired to unified query contract:
+  - Destinations
+  - Explore Map
+  - Blog
+  - Support
+  - Quick Request
+- ✅ URL-state contract active on `/search` (`q`, `vertical`, `mode`, `location`).
+- ✅ Hybrid history behavior implemented:
+  - `pushState` for major changes (vertical/mode/chip, Enter submit)
+  - `replaceState` for typing refinements
+- ✅ Canonical metadata hardening completed for key property mode routes.
+- ✅ QA route index (`/all-pages`) now includes dedicated `/search` deep-link entries.
+
+### Pending (non-Core)
+- ⏳ Final documentation pass for analytics/event naming conventions (if required).
+
+### Pending (Core integration track)
+- ⏳ Switch search source from mirror simulation to Core-backed mirror/API adapter.
+
 ## 1) Existing search/result touchpoints (inventory)
 
 | Touchpoint | Current route/component | Status | Decision |
