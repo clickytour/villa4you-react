@@ -76,6 +76,12 @@
       display:flex; justify-content:space-between; gap:8px; align-items:center;
     }
     .summary { border:1px solid var(--line); border-radius:12px; background:#fff; padding:10px; margin-bottom:12px; display:grid; grid-template-columns:1fr auto; gap:10px; align-items:center; }
+    .modal-backdrop { position:fixed; inset:0; background:rgba(10,14,24,.6); display:none; z-index:30; padding:14px; }
+    .modal-backdrop.open { display:block; }
+    .modal { max-width:820px; margin:0 auto; background:#fff; border-radius:14px; border:1px solid var(--line); overflow:hidden; }
+    .modal-head { display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-bottom:1px solid var(--line); }
+    .modal-body { padding:12px 14px; }
+    .pkg-row { border:1px solid var(--line); border-radius:10px; padding:10px; margin-bottom:8px; background:#fcfdff; display:grid; grid-template-columns:1fr auto; gap:8px; }
     @media (max-width: 960px){ .stack{ grid-template-columns:repeat(2,minmax(0,1fr)); } .bundle-grid{grid-template-columns:1fr;} }
     @media (max-width: 640px){ .stack{ grid-template-columns:1fr; } }
   </style>
@@ -125,6 +131,16 @@
     </div>
   </div>
 
+  <div id="packageModal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal">
+      <div class="modal-head">
+        <strong id="packageTitle">Package details</strong>
+        <button class="btn" id="closePackage">Close</button>
+      </div>
+      <div class="modal-body" id="packageBody"></div>
+    </div>
+  </div>
+
   <script>
     const collections = [
       {
@@ -141,7 +157,7 @@
           title: 'Combination package (large group)',
           totalPrice: '€2,420',
           items: [
-            { type:'Property', ref:'UNIT-93QX', label:'Stay option', propertyName:'Villa Glarokavos Sea View', detail:'Pefkohori, Halkidiki', price:'€1,940' },
+            { type:'Property', ref:'UNIT-93QX', label:'Stay option', propertyName:'Villa Glarokavos Sea View', shortText:'Sea-view villa ideal for families and groups.', detail:'Pefkohori, Halkidiki', price:'€1,940' },
             { type:'Transfer', ref:'TRF-102', label:'Airport transfer', detail:'SKG ⇄ Property', price:'€180' },
             { type:'Boat Rental', ref:'BRT-77', label:'Half-day boat', detail:'8 guests capacity', price:'€300' }
           ]
@@ -160,10 +176,10 @@
           title: 'Large-group bundle (2–4 properties)',
           totalPrice: '€9,420',
           items: [
-            { type:'Property', ref:'UNIT-K2A1', label:'Property 1', detail:'Chania, Crete', price:'€2,680' },
-            { type:'Property', ref:'UNIT-M8Q4', label:'Property 2', detail:'Rethymno, Crete', price:'€2,740' },
-            { type:'Property', ref:'UNIT-P4L7', label:'Property 3', detail:'Heraklion, Crete', price:'€2,100' },
-            { type:'Property', ref:'UNIT-Z9B2', label:'Property 4', detail:'Agios Nikolaos, Crete', price:'€1,900' }
+            { type:'Property', ref:'UNIT-K2A1', label:'Property 1', propertyName:'Chania Hillside Villa', shortText:'Private hillside villa with quiet surroundings.', detail:'Chania, Crete', price:'€2,680' },
+            { type:'Property', ref:'UNIT-M8Q4', label:'Property 2', propertyName:'Rethymno Sunset Suite', shortText:'Premium suite with sunset terrace views.', detail:'Rethymno, Crete', price:'€2,740' },
+            { type:'Property', ref:'UNIT-P4L7', label:'Property 3', propertyName:'Heraklion Urban Villa', shortText:'Modern villa with easy city + beach access.', detail:'Heraklion, Crete', price:'€2,100' },
+            { type:'Property', ref:'UNIT-Z9B2', label:'Property 4', propertyName:'Agios Nikolaos Bay House', shortText:'Relaxed stay near the bay, ideal for groups.', detail:'Agios Nikolaos, Crete', price:'€1,900' }
           ]
         }
       }
@@ -187,6 +203,10 @@
     const subtitle = document.getElementById('subtitle');
     const navState = document.getElementById('navState');
     const dockText = document.getElementById('dockText');
+    const packageModal = document.getElementById('packageModal');
+    const packageTitle = document.getElementById('packageTitle');
+    const packageBody = document.getElementById('packageBody');
+    const closePackage = document.getElementById('closePackage');
 
     collections.forEach((c, i) => {
       const o = document.createElement('option');
@@ -226,7 +246,7 @@
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn">📞 Request callback</button>
-          <button class="btn">Open package details</button>
+          <button class="btn open-package">Open package details</button>
           <button class="btn primary">✅ Proceed with selected option</button>
         </div>
       `;
@@ -242,7 +262,7 @@
         <h4>${bundleData.title}</h4>
         <div class="muted" style="margin-top:6px">Bundle total: ${bundleData.totalPrice}</div>
         <div class="bundle-grid">
-          ${bundleData.items.map(i => `<div class="bundle-item"><div class="kicker">${i.type}</div><div style="font-weight:600">${variantSel.value === 'brand' && i.type === 'Property' && i.propertyName ? i.propertyName : i.label}</div><div class="muted">${i.ref} • ${i.detail}</div><div style="margin-top:4px;font-weight:700">${i.price}</div><div style="margin-top:8px"><button class="btn">View details page</button></div></div>`).join('')}
+          ${bundleData.items.map(i => `<div class="bundle-item"><div class="kicker">${i.type}</div><div style="font-weight:600">${variantSel.value === 'brand' && i.type === 'Property' && i.propertyName ? i.propertyName : i.label}</div>${variantSel.value === 'brand' && i.type === 'Property' && i.shortText ? `<div class="muted" style="margin-top:4px">${i.shortText}</div>` : ''}<div class="muted">${i.ref} • ${i.detail}</div><div style="margin-top:4px;font-weight:700">${i.price}</div><div style="margin-top:8px"><button class="btn open-package">View details page</button></div></div>`).join('')}
         </div>
       `;
     }
@@ -256,6 +276,25 @@
           <button class="btn">📞 Call me back</button>
         </div>
       `;
+    }
+
+    function openPackageDetails() {
+      const c = collections[Number(collectionSel.value || 0)];
+      const bundleData = c.bundle;
+      if (!bundleData) return;
+      packageTitle.textContent = `${bundleData.title} — ${c.collectionRef}`;
+      packageBody.innerHTML = `
+        <div class="muted" style="margin-bottom:8px">Shared link: ${c.link}</div>
+        ${bundleData.items.map(i => `<div class="pkg-row"><div><div class="kicker">${i.type}</div><div style="font-weight:600">${variantSel.value === 'brand' && i.type === 'Property' && i.propertyName ? i.propertyName : i.label}</div>${variantSel.value === 'brand' && i.type === 'Property' && i.shortText ? `<div class="muted" style="margin-top:4px">${i.shortText}</div>` : ''}<div class="muted">${i.ref} • ${i.detail}</div></div><div style="font-weight:700">${i.price}</div></div>`).join('')}
+        <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--line);display:flex;justify-content:space-between"><strong>Bundle total</strong><strong>${bundleData.totalPrice}</strong></div>
+      `;
+      packageModal.classList.add('open');
+      packageModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closePackageDetails() {
+      packageModal.classList.remove('open');
+      packageModal.setAttribute('aria-hidden', 'true');
     }
 
     function renderCards(cards) {
@@ -319,6 +358,15 @@
 
     collectionSel.addEventListener('change', render);
     variantSel.addEventListener('change', render);
+    document.addEventListener('click', (e) => {
+      if (e.target.classList && e.target.classList.contains('open-package')) {
+        openPackageDetails();
+      }
+      if (e.target === packageModal) {
+        closePackageDetails();
+      }
+    });
+    closePackage.addEventListener('click', closePackageDetails);
     render();
   </script>
 </body>
