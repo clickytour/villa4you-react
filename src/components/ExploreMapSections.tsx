@@ -174,8 +174,8 @@ export function ExploreMapSections() {
                 <p className="mt-2 text-sm text-slate-600">Beach {card.beachMeters}m · {card.pool ? "Pool" : "No pool"}</p>
                 <p className="mt-3 text-[21px] font-semibold leading-none text-slate-900">{card.price}</p>
                 <div className="mt-auto flex flex-nowrap items-center gap-2 pt-4">
-                  <button className="whitespace-nowrap rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800">View details</button>
-                  <button className="whitespace-nowrap rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white">Check dates</button>
+                  <a href={`/search?vertical=stays&mode=vacation&q=${encodeURIComponent(card.title)}&location=${encodeURIComponent(card.region)}`} className="whitespace-nowrap rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800">View details</a>
+                  <a href={`/search?vertical=stays&mode=vacation&location=${encodeURIComponent(card.region)}`} className="whitespace-nowrap rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white">Check dates</a>
                 </div>
               </div>
             </article>
@@ -219,8 +219,8 @@ export function ExploreMapSections() {
         <h2 className="text-[42px] font-semibold leading-none text-slate-900">Need help choosing the right area?</h2>
         <p className="mx-auto mt-2 max-w-[900px] text-[21px] leading-none text-slate-600">Tell us your trip style and we’ll suggest high-converting options by map zone, beach access and budget.</p>
         <div className="mt-4 flex flex-wrap justify-center gap-2">
-          <button className="rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Talk to concierge</button>
-          <button className="rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-base font-medium text-slate-800">Open support form</button>
+          <a href="/search?vertical=services&q=concierge" className="rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Talk to concierge</a>
+          <a href="/search?vertical=all&q=support" className="rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-base font-medium text-slate-800">Open support form</a>
         </div>
       </section>
     </section>

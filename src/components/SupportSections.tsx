@@ -31,14 +31,14 @@ export function SupportSections() {
 
         <div className="mt-5 grid gap-3 md:grid-cols-3">
           {supportCards.map((card) => (
-            <button
+            <a
               key={card.title}
-              type="button"
+              href={`/search?vertical=all&q=${encodeURIComponent(card.title)}`}
               className="rounded-xl border border-slate-300 bg-white p-4 text-left transition hover:border-slate-500 hover:shadow-sm"
             >
               <p className="text-[30px] font-semibold leading-none text-slate-900">{card.title}</p>
               <p className="mt-2 text-[21px] text-slate-600">{card.desc}</p>
-            </button>
+            </a>
           ))}
         </div>
 

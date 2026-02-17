@@ -237,8 +237,8 @@ export function DestinationsSections() {
                 <p className="mt-3 text-[21px] font-semibold leading-none text-slate-900">{stay.price}</p>
 
                 <div className="mt-auto flex flex-nowrap items-center gap-2 pt-4">
-                  <button className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 whitespace-nowrap">View details</button>
-                  <button className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white whitespace-nowrap">Check dates</button>
+                  <a href={`/search?vertical=stays&mode=vacation&q=${encodeURIComponent(stay.title)}&location=${encodeURIComponent(stay.area)}`} className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 whitespace-nowrap">View details</a>
+                  <a href={`/search?vertical=stays&mode=vacation&location=${encodeURIComponent(stay.area)}`} className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white whitespace-nowrap">Check dates</a>
                 </div>
               </div>
             </article>
@@ -299,8 +299,8 @@ export function DestinationsSections() {
                 <p className="mt-3 text-[21px] font-semibold leading-none text-slate-900">{stay.price}</p>
 
                 <div className="mt-auto flex flex-nowrap items-center gap-2 pt-4">
-                  <button className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 whitespace-nowrap">View details</button>
-                  <button className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white whitespace-nowrap">Check dates</button>
+                  <a href={`/search?vertical=stays&mode=vacation&q=${encodeURIComponent(stay.title)}&location=${encodeURIComponent(stay.area)}`} className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 whitespace-nowrap">View details</a>
+                  <a href={`/search?vertical=stays&mode=vacation&location=${encodeURIComponent(stay.area)}`} className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white whitespace-nowrap">Check dates</a>
                 </div>
               </div>
             </article>

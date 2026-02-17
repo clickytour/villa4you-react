@@ -90,7 +90,7 @@ export function BlogSections() {
                   <p className="text-xs text-slate-500">{post.meta}</p>
                   <h3 className="mt-1 text-[30px] font-semibold leading-none text-slate-900">{post.title}</h3>
                   <p className="mt-2 text-[21px] text-slate-600">{post.excerpt}</p>
-                  <button className="mt-3 rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white">Read</button>
+                  <a href={`/search?vertical=blog&q=${encodeURIComponent(post.title)}`} className="mt-3 inline-flex rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white">Read</a>
                 </div>
               </article>
             ))}
@@ -100,13 +100,13 @@ export function BlogSections() {
             <div className="rounded-xl border border-slate-300 bg-white p-5">
               <h3 className="text-[42px] font-semibold leading-none text-slate-900">Subscribe for new posts</h3>
               <p className="mt-2 text-[21px] text-slate-600">Get tips & offers — 1–2 emails/month.</p>
-              <button className="mt-4 rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Join the newsletter</button>
+              <a href="/search?vertical=all&q=newsletter" className="mt-4 inline-flex rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Join the newsletter</a>
             </div>
 
             <div className="rounded-xl border border-slate-300 bg-white p-5">
               <h3 className="text-[42px] font-semibold leading-none text-slate-900">Owners: Free evaluation</h3>
               <p className="mt-2 text-[21px] text-slate-600">We’ll review your villa and growth goals.</p>
-              <button className="mt-4 rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Start now</button>
+              <a href="/search?vertical=services&q=free+evaluation" className="mt-4 inline-flex rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Start now</a>
             </div>
           </aside>
         </div>

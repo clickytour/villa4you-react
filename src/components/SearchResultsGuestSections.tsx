@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { filterSearchSimulationRecords, getSearchSimulationRecords, type SearchMode, type SearchVertical } from "@/lib/searchSimulation";
 
 const verticalOptions: Array<{ id: SearchVertical; label: string }> = [
@@ -32,6 +32,31 @@ export function SearchResultsGuestSections({
   const [vertical, setVertical] = useState<SearchVertical>(initialVertical);
   const [mode, setMode] = useState<SearchMode>(initialMode);
   const [location, setLocation] = useState(initialLocation);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (q) params.set("q", q);
+    if (vertical !== "all") params.set("vertical", vertical);
+    if (mode !== "all") params.set("mode", mode);
+    if (location) params.set("location", location);
+
+    const query = params.toString();
+    const url = query ? `/search?${query}` : "/search";
+    window.history.replaceState(null, "", url);
+  }, [q, vertical, mode, location]);
+
+  useEffect(() => {
+    const onPopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      setQ(params.get("q") ?? "");
+      setVertical((params.get("vertical") as SearchVertical) ?? "all");
+      setMode((params.get("mode") as SearchMode) ?? "all");
+      setLocation(params.get("location") ?? "");
+    };
+
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
 
   const records = useMemo(() => getSearchSimulationRecords(), []);
   const filtered = useMemo(
