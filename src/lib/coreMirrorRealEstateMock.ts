@@ -17,8 +17,8 @@ export type CoreMirrorRealEstateProperty = {
   prices: { saleEur: number; monthlyEur: number; perSqmEur: number; roiPercent: number };
   amenities: string[];
   distances: Array<{ label: string; value: string }>;
-  nearbyServices?: Array<{ name: string; detail: string; href: string; coverageKm?: number; image?: string; ctaLabel?: string }>;
-  blogPosts?: Array<{ title: string; href: string; date?: string; excerpt?: string; image?: string; ctaLabel?: string }>;
+  nearbyServices?: Array<{ name: string; detail: string; href: string; coverageKm?: number; image?: string; ctaLabel?: string; modes?: Array<"short_term_rent" | "monthly_rent" | "sale"> }>;
+  blogPosts?: Array<{ title: string; href: string; date?: string; excerpt?: string; image?: string; ctaLabel?: string; modes?: Array<"short_term_rent" | "monthly_rent" | "sale"> }>;
 };
 
 const realEstateProperties: CoreMirrorRealEstateProperty[] = [
@@ -56,6 +56,7 @@ const realEstateProperties: CoreMirrorRealEstateProperty[] = [
         coverageKm: 50,
         image: "https://images.unsplash.com/photo-1556155092-490a1ba16284?q=80&w=1200&auto=format&fit=crop",
         ctaLabel: "View management service",
+        modes: ["short_term_rent", "monthly_rent"],
       },
       {
         name: "Legal & Notary Support",
@@ -64,6 +65,7 @@ const realEstateProperties: CoreMirrorRealEstateProperty[] = [
         coverageKm: 80,
         image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200&auto=format&fit=crop",
         ctaLabel: "Request legal consult",
+        modes: ["sale"],
       },
     ],
     blogPosts: [
@@ -73,6 +75,7 @@ const realEstateProperties: CoreMirrorRealEstateProperty[] = [
         date: "2026-02-05",
         image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop",
         ctaLabel: "Read checklist",
+        modes: ["sale"],
       },
       {
         title: "How to evaluate ROI in vacation markets",
@@ -80,6 +83,7 @@ const realEstateProperties: CoreMirrorRealEstateProperty[] = [
         date: "2026-02-10",
         image: "https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1200&auto=format&fit=crop",
         ctaLabel: "Open ROI guide",
+        modes: ["sale", "monthly_rent"],
       },
     ],
   },

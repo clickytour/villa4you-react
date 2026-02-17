@@ -1,9 +1,15 @@
 import type { CoreMirrorRealEstateProperty } from "@/lib/coreMirrorRealEstateMock";
 import { pickPrimaryCta, sanitizeDealTypes } from "@/lib/coreMirrorAdapters/dealTypeRules";
-import type { CanonicalDetailsViewModel } from "@/lib/coreMirrorAdapters/types";
+import type { CanonicalDetailsViewModel, DealType } from "@/lib/coreMirrorAdapters/types";
+
+function byMode<T extends { modes?: DealType[] }>(items: T[] | undefined, mode: DealType) {
+  if (!items) return undefined;
+  return items.filter((i) => !i.modes || i.modes.includes(mode));
+}
 
 export function toRealEstateDetailsVM(property: CoreMirrorRealEstateProperty): CanonicalDetailsViewModel {
   const dealType = sanitizeDealTypes("real-estate", property.dealType);
+  const mode = dealType[0];
   return {
     id: property.id,
     slug: property.slug,
@@ -31,8 +37,8 @@ export function toRealEstateDetailsVM(property: CoreMirrorRealEstateProperty): C
       tour3dUrl: property.media.tour3dUrl,
       contentUrls: property.media.contentUrls,
     },
-    relatedServices: property.nearbyServices,
-    relatedBlogPosts: property.blogPosts,
+    relatedServices: byMode(property.nearbyServices, mode),
+    relatedBlogPosts: byMode(property.blogPosts, mode),
     cta: {
       primary: pickPrimaryCta(dealType),
       secondary: "Schedule viewing",

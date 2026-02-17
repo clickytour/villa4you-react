@@ -14,6 +14,11 @@ function modeSlug(mode: DealType) {
   return "monthly";
 }
 
+function byMode<T extends { modes?: DealType[] }>(items: T[] | undefined, mode: DealType) {
+  if (!items) return undefined;
+  return items.filter((i) => !i.modes || i.modes.includes(mode));
+}
+
 export function toHotelRoomDetailsVM(room: CoreMirrorHotelRoom, activeMode?: DealType): CanonicalDetailsViewModel {
   const modes = sanitizeDealTypes("hotel-room", room.dealType);
   const mode = activeMode && modes.includes(activeMode) ? activeMode : modes[0];
@@ -77,8 +82,8 @@ export function toHotelRoomDetailsVM(room: CoreMirrorHotelRoom, activeMode?: Dea
             })),
           }
         : undefined,
-    relatedServices: room.nearbyServices,
-    relatedBlogPosts: room.blogPosts,
+    relatedServices: byMode(room.nearbyServices, mode),
+    relatedBlogPosts: byMode(room.blogPosts, mode),
     cta: {
       primary: pickPrimaryCta(dealType),
       secondary: "View parent hotel",

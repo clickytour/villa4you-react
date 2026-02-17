@@ -29,6 +29,21 @@ export function toVacationDetailsVM(property: CoreMirrorProperty): CanonicalDeta
       tour3dUrl: property.tour3dUrl,
       contentUrls: property.contentUrls,
     },
+    relatedServices: property.nearbyServices.map((s, idx) => ({
+      name: s.name,
+      detail: s.detail,
+      href: s.href,
+      image: property.gallery[idx % property.gallery.length],
+      ctaLabel: "View service",
+    })),
+    relatedBlogPosts: property.blogPosts.map((p) => ({
+      title: p.title,
+      href: p.href,
+      date: p.date,
+      excerpt: p.excerpt,
+      image: p.image,
+      ctaLabel: "Read post",
+    })),
     cta: {
       primary: pickPrimaryCta(dealType),
       secondary: "Send priority request",

@@ -17,8 +17,8 @@ export type CoreMirrorHotel = {
   prices: { fromNightlyEur: number; monthlyEur: number; saleEur: number };
   amenities: string[];
   distances: Array<{ label: string; value: string }>;
-  nearbyServices?: Array<{ name: string; detail: string; href: string; coverageKm?: number; image?: string; ctaLabel?: string }>;
-  blogPosts?: Array<{ title: string; href: string; date?: string; excerpt?: string; image?: string; ctaLabel?: string }>;
+  nearbyServices?: Array<{ name: string; detail: string; href: string; coverageKm?: number; image?: string; ctaLabel?: string; modes?: Array<"short_term_rent" | "monthly_rent" | "sale"> }>;
+  blogPosts?: Array<{ title: string; href: string; date?: string; excerpt?: string; image?: string; ctaLabel?: string; modes?: Array<"short_term_rent" | "monthly_rent" | "sale"> }>;
 };
 
 const hotels: CoreMirrorHotel[] = [
@@ -59,6 +59,7 @@ const hotels: CoreMirrorHotel[] = [
         coverageKm: 120,
         image: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?q=80&w=1200&auto=format&fit=crop",
         ctaLabel: "View service",
+        modes: ["short_term_rent", "monthly_rent"],
       },
       {
         name: "Private Chef",
@@ -67,6 +68,7 @@ const hotels: CoreMirrorHotel[] = [
         coverageKm: 35,
         image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1200&auto=format&fit=crop",
         ctaLabel: "Book chef",
+        modes: ["short_term_rent"],
       },
     ],
     blogPosts: [
@@ -76,6 +78,7 @@ const hotels: CoreMirrorHotel[] = [
         date: "2026-02-10",
         image: "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?q=80&w=1200&auto=format&fit=crop",
         ctaLabel: "Read article",
+        modes: ["short_term_rent", "monthly_rent"],
       },
       {
         title: "How service coverage improves stay conversion",
@@ -83,6 +86,7 @@ const hotels: CoreMirrorHotel[] = [
         date: "2026-02-05",
         image: "https://images.unsplash.com/photo-1431540015161-0bf868a2d407?q=80&w=1200&auto=format&fit=crop",
         ctaLabel: "Open insights",
+        modes: ["sale"],
       },
     ],
   },

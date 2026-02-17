@@ -2,6 +2,24 @@ import type { CoreMirrorService } from "@/lib/coreMirrorServicesMock";
 import { serviceTaxonomy } from "@/lib/serviceTaxonomy";
 import { GuestRequestInlineForm } from "@/components/GuestRequestInlineForm";
 
+const bookingTypeLabel: Record<string, string> = {
+  external_booking_link: "External Booking Link",
+  instant_booking: "Instant Booking",
+  request_to_book: "Request to Book",
+};
+const priceModelLabel: Record<string, string> = {
+  package: "Package",
+  per_hour: "Per Hour",
+  per_person: "Per Person",
+  per_service: "Per Service",
+  quote: "Quote",
+};
+const planLabel: Record<string, string> = {
+  free: "Free",
+  standard: "Standard",
+  premium: "Premium",
+};
+
 export function ServiceDetailSections({ service }: { service: CoreMirrorService }) {
   const category = serviceTaxonomy.find((c) => c.id === service.basicDetails.categoryId);
   const subcategory = category?.subcategories.find((s) => s.id === service.basicDetails.subcategoryId);
@@ -31,17 +49,63 @@ export function ServiceDetailSections({ service }: { service: CoreMirrorService 
               </div>
             )}
             <p className="text-sm text-slate-600">Coverage: {service.locationServiceArea.serviceAreaCoverageKm ?? "N/A"} km · City: {service.locationServiceArea.city}</p>
-            <p className="text-sm text-slate-600">Booking type: {service.pricingBooking.bookingType ?? "request_to_book"} · Prices: {service.pricingBooking.priceList.length} item(s)</p>
-            {service.pricingBooking.externalBookingLink && (
-              <p className="text-sm text-slate-600">External booking link: {service.pricingBooking.externalBookingLink}</p>
-            )}
-            {service.pricingBooking.pricingDescription && (
-              <p className="text-sm text-slate-700">Pricing description: {service.pricingBooking.pricingDescription}</p>
-            )}
-            {service.synchronization?.note && (
-              <p className="text-sm text-slate-600">Synchronization: {service.synchronization.note}</p>
-            )}
-            <p className="text-sm text-slate-600">Subscription: {service.platformSubscription.subscriptionPlan ?? "free"} · Audience: {service.platformSubscription.audienceTarget.join(", ")}</p>
+
+            <section className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+              <h3 className="text-sm font-semibold text-slate-900">Pricing & Booking</h3>
+              <p className="mt-1 text-xs text-slate-600">Booking type: {bookingTypeLabel[service.pricingBooking.bookingType ?? "request_to_book"]}</p>
+              {service.pricingBooking.externalBookingLink && (
+                <a href={service.pricingBooking.externalBookingLink} target="_blank" rel="noreferrer" className="mt-1 inline-block text-xs text-slate-900 underline underline-offset-2">
+                  External booking link
+                </a>
+              )}
+              {service.pricingBooking.pricingDescription && (
+                <p className="mt-2 text-xs text-slate-700">{service.pricingBooking.pricingDescription}</p>
+              )}
+
+              <div className="mt-3 overflow-x-auto rounded-lg border border-slate-200 bg-white">
+                <table className="min-w-full text-left text-xs text-slate-700">
+                  <thead className="bg-slate-100 text-slate-800">
+                    <tr>
+                      <th className="px-2 py-2">Photo</th>
+                      <th className="px-2 py-2">Title</th>
+                      <th className="px-2 py-2">Price Model</th>
+                      <th className="px-2 py-2">Guest Gross</th>
+                      <th className="px-2 py-2">Agent Net</th>
+                      <th className="px-2 py-2">Comm.</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {service.pricingBooking.priceList.map((row) => (
+                      <tr key={`${row.title}-${row.priceModel}`} className="border-t border-slate-200">
+                        <td className="px-2 py-2">{row.photo ? <img src={row.photo} alt={row.title} className="h-8 w-8 rounded object-cover" /> : <span className="text-slate-400">—</span>}</td>
+                        <td className="px-2 py-2">{row.title}</td>
+                        <td className="px-2 py-2">{priceModelLabel[row.priceModel]}</td>
+                        <td className="px-2 py-2">{typeof row.guestPriceGross === "number" ? `€${row.guestPriceGross.toFixed(2)}` : "—"}</td>
+                        <td className="px-2 py-2">{typeof row.agentPriceNet === "number" ? `€${row.agentPriceNet.toFixed(2)}` : "—"}</td>
+                        <td className="px-2 py-2">{row.commissionable ? "Yes" : "No"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+              <h3 className="text-sm font-semibold text-slate-900">Platform & Subscription</h3>
+              <p className="mt-1 text-xs text-slate-700">Plan: {planLabel[service.platformSubscription.subscriptionPlan ?? "free"]}</p>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {service.platformSubscription.audienceTarget.map((a) => (
+                  <span key={a} className="rounded-full border border-slate-300 bg-white px-2 py-0.5 text-[11px] text-slate-700">{a.replaceAll("_", " ")}</span>
+                ))}
+              </div>
+            </section>
+
+            <section className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+              <h3 className="text-sm font-semibold text-slate-900">Synchronization</h3>
+              <p className="mt-1 text-xs text-slate-700">Status: {service.synchronization?.status ?? "draft"}</p>
+              <p className="text-xs text-slate-700">Sites available: {service.synchronization?.sitesAvailable ?? 0}</p>
+              {service.synchronization?.note && <p className="text-xs text-slate-600">{service.synchronization.note}</p>}
+            </section>
 
             <div className="mt-4 grid gap-3 md:grid-cols-2">
               {service.relatedPropertySlug && (
