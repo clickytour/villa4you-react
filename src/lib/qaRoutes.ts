@@ -17,6 +17,7 @@ const staticRoutes: QARoute[] = [
   { href: "/services/airport-transfer-halkidiki", label: "Service Post (Sample)", group: "Company & Utility", status: "Pending QA" },
   { href: "/my-reservations", label: "My Reservations", group: "Company & Utility", status: "Pending QA" },
   { href: "/all-pages", label: "All Pages (QA)", group: "Company & Utility", status: "Pending QA" },
+  { href: "/qa/search-tracking", label: "QA: Search Tracking Live Feed", group: "Company & Utility", status: "Pending QA" },
   { href: "/search", label: "Unified Search (Canonical)", group: "Company & Utility", status: "Pending QA" },
   { href: "/search?vertical=stays&mode=vacation", label: "Search Deep-Link: Stays Vacation", group: "Company & Utility", status: "Pending QA" },
   { href: "/search?vertical=blog", label: "Search Deep-Link: Blog", group: "Company & Utility", status: "Pending QA" },
