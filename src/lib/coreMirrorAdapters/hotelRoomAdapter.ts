@@ -1,4 +1,4 @@
-import type { CoreMirrorHotelRoom } from "@/lib/coreMirrorHotelRoomMock";
+import { getCoreMirrorHotelRoomsByHotelSlug, type CoreMirrorHotelRoom } from "@/lib/coreMirrorHotelRoomMock";
 import { pickPrimaryCta, sanitizeDealTypes } from "@/lib/coreMirrorAdapters/dealTypeRules";
 import type { CanonicalDetailsViewModel, DealType } from "@/lib/coreMirrorAdapters/types";
 
@@ -54,6 +54,29 @@ export function toHotelRoomDetailsVM(room: CoreMirrorHotelRoom, activeMode?: Dea
       tour3dUrl: room.media.tour3dUrl,
       contentUrls: room.media.contentUrls,
     },
+    bookingWidget:
+      mode === "short_term_rent"
+        ? {
+            calendarId: "63884",
+            resourceId: room.id,
+            actionUrl: "/my-reservations",
+            currency: "EUR",
+            basicFrom: room.rates.nightlyEur,
+            seasonalRates: [
+              { label: "Mid", from: "2026-05-01", to: "2026-06-30", nightly: room.rates.nightlyEur },
+              { label: "High", from: "2026-07-01", to: "2026-08-31", nightly: Math.round(room.rates.nightlyEur * 1.3) },
+              { label: "Mid", from: "2026-09-01", to: "2026-09-30", nightly: Math.round(room.rates.nightlyEur * 1.1) },
+            ],
+            unavailableDates: [],
+            minStayNights: 2,
+            relatedOptions: getCoreMirrorHotelRoomsByHotelSlug(room.hotelSlug).map((r) => ({
+              title: r.title,
+              href: `/property/hotel-room/${r.slug}/vacation`,
+              from: r.rates.nightlyEur,
+              image: r.media.primaryImage,
+            })),
+          }
+        : undefined,
     cta: {
       primary: pickPrimaryCta(dealType),
       secondary: "View parent hotel",
