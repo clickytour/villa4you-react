@@ -1,7 +1,7 @@
-import { coreMirrorServices } from "@/lib/coreMirrorServicesMock";
+import type { CoreMirrorService } from "@/lib/coreMirrorServicesMock";
 import { serviceTaxonomy } from "@/lib/serviceTaxonomy";
 
-export function ServicesIndexSections() {
+export function ServicesIndexSections({ services }: { services: CoreMirrorService[] }) {
   return (
     <section className="mx-auto max-w-[1280px] px-4 pb-8 pt-4">
       <div className="rounded-2xl border border-slate-300 bg-white p-6">
@@ -10,7 +10,7 @@ export function ServicesIndexSections() {
         <p className="mt-2 text-slate-600">Core-mirror service template with dynamic single-service pages.</p>
 
         <div className="mt-5 grid gap-4 md:grid-cols-2">
-          {coreMirrorServices.map((service) => {
+          {services.map((service) => {
             const category = serviceTaxonomy.find((c) => c.id === service.basicDetails.categoryId);
             const sub = category?.subcategories.find((s) => s.id === service.basicDetails.subcategoryId);
             return (

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ServiceDetailSections } from "@/components/ServiceDetailSections";
-import { getCoreMirrorServiceBySlug } from "@/lib/coreMirrorServicesMock";
+import { getServiceBySlug } from "@/lib/servicesDataSource";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const service = getCoreMirrorServiceBySlug(slug);
+  const service = await getServiceBySlug(slug);
   if (!service) return { title: "Service | Villa4You" };
   return {
     title: `${service.basicDetails.businessName} | Villa4You Services`,
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const service = getCoreMirrorServiceBySlug(slug);
+  const service = await getServiceBySlug(slug);
   if (!service) notFound();
 
   return (
