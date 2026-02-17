@@ -1,5 +1,7 @@
 # CORE_MIRROR_SERVICES_SCHEMA_V1
 
+Status: **Frozen V1 baseline** (pre-Core API integration)
+
 This document mirrors Core `Create Services` screens into a typed mock schema until final canonical Core payload is delivered.
 
 ## Covered Core tabs
