@@ -56,6 +56,7 @@
     .feedback-row { display:flex; justify-content:space-between; align-items:center; gap:8px; padding:10px; border-bottom:1px solid var(--line); }
     .feedback-row .label { font-size:12px; color:var(--muted); }
     .feedback-actions { display:flex; gap:8px; }
+    .proposal-feedback { border:1px solid var(--line); border-radius:12px; background:#fff; padding:10px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; gap:8px; }
 
     .cover { width:100%; height:150px; object-fit:cover; border-bottom:1px solid var(--line); }
     .preview { padding:10px; background:#fcfdff; flex:1; }
@@ -109,6 +110,7 @@
         </section>
 
         <section class="bundle" id="bundle"></section>
+        <section class="proposal-feedback" id="proposalFeedback"></section>
         <section class="stack" id="stack"></section>
 
         <div class="dock">
@@ -175,6 +177,7 @@
     const pillRow = document.getElementById('pillRow');
     const stack = document.getElementById('stack');
     const bundle = document.getElementById('bundle');
+    const proposalFeedback = document.getElementById('proposalFeedback');
     const subtitle = document.getElementById('subtitle');
     const navState = document.getElementById('navState');
     const dockText = document.getElementById('dockText');
@@ -210,7 +213,18 @@
         <h4>${bundleData.title}</h4>
         <div class="muted" style="margin-top:6px">Bundle total: ${bundleData.totalPrice}</div>
         <div class="bundle-grid">
-          ${bundleData.items.map(i => `<div class="bundle-item"><div class="kicker">${i.type}</div><div style="font-weight:600">${i.label}</div><div class="muted">${i.ref} • ${i.detail}</div><div style="margin-top:6px;display:flex;gap:6px"><button class="btn">👍</button><button class="btn">👎</button></div></div>`).join('')}
+          ${bundleData.items.map(i => `<div class="bundle-item"><div class="kicker">${i.type}</div><div style="font-weight:600">${i.label}</div><div class="muted">${i.ref} • ${i.detail}</div></div>`).join('')}
+        </div>
+      `;
+    }
+
+    function renderProposalFeedback(collectionRef) {
+      proposalFeedback.innerHTML = `
+        <span class="label">Proposal feedback (whole package):</span>
+        <div class="feedback-actions">
+          <button class="btn">👍 Like proposal</button>
+          <button class="btn">👎 Dislike proposal</button>
+          <button class="btn">📞 Call me back</button>
         </div>
       `;
     }
@@ -221,14 +235,6 @@
         const el = document.createElement('article');
         el.className = 'card';
         el.innerHTML = `
-          <div class="feedback-row">
-            <span class="label">Feedback</span>
-            <div class="feedback-actions">
-              <button class="btn">👍 Like</button>
-              <button class="btn">👎 Dislike</button>
-            </div>
-          </div>
-
           <img class="cover" src="${card.image}" alt="${card.label}" />
 
           <div class="preview">
@@ -266,8 +272,9 @@
         <span class="pill">ID-only refs (proposal / unit / offer)</span>
       `;
 
-      dockText.textContent = `Events: collection_view(${c.collectionRef}) • bundle_feedback_selected • card_impression • feedback_selected(like|dislike) • cta_selected(view_details|reserve|book)`;
+      dockText.textContent = `Events: collection_view(${c.collectionRef}) • proposal_feedback_selected(like|dislike|callback) • bundle_feedback_selected • card_impression • cta_selected(view_details|reserve|book)`;
       renderBundle(c.bundle);
+      renderProposalFeedback(c.collectionRef);
       renderCards(c.cards);
 
       if (variantSel.value === 'wl') {
