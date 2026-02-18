@@ -21,7 +21,7 @@ export type CoreMirrorHotel = {
   blogPosts?: Array<{ title: string; href: string; date?: string; excerpt?: string; image?: string; ctaLabel?: string; modes?: Array<"short_term_rent" | "monthly_rent" | "sale"> }>;
 };
 
-const hotels: CoreMirrorHotel[] = [
+export const hotels: CoreMirrorHotel[] = [
   {
     id: "h-301",
     slug: "aegean-boutique-hotel",

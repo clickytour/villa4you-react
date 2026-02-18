@@ -1,41 +1,23 @@
 import type { Metadata } from "next";
-import { SearchResultsGuestSections } from "@/components/SearchResultsGuestSections";
-import type { SearchMode, SearchVertical } from "@/lib/searchSimulation";
+import { Suspense } from "react";
+import { SearchHub } from "@/components/SearchHub";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://staging.villa4you.gr";
 
 export const metadata: Metadata = {
-  title: "Search | Villa4You",
-  description: "Unified search across stays, services and blog with mode-aware filtering.",
+  title: "Search Hub | Villa4You",
+  description: "Discover vacation rentals, real estate, services, hotels and travel guides — all in one universal search hub.",
   alternates: {
     canonical: `${baseUrl}/search`,
   },
 };
 
-export default async function SearchPage({
-  searchParams,
-}: {
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-}) {
-  const params = await searchParams;
-  const q = typeof params.q === "string" ? params.q : undefined;
-  const verticalRaw = typeof params.vertical === "string" ? params.vertical : undefined;
-  const modeRaw = typeof params.mode === "string" ? params.mode : undefined;
-  const location = typeof params.location === "string" ? params.location : undefined;
-
-  const verticals: SearchVertical[] = ["all", "stays", "services", "blog"];
-  const modes: SearchMode[] = ["all", "vacation", "sale", "monthly"];
-  const vertical = verticalRaw && verticals.includes(verticalRaw as SearchVertical) ? (verticalRaw as SearchVertical) : undefined;
-  const mode = modeRaw && modes.includes(modeRaw as SearchMode) ? (modeRaw as SearchMode) : undefined;
-
+export default function SearchPage() {
   return (
-    <div className="min-h-screen bg-[#f3f5f8]">
-      <SearchResultsGuestSections
-        initialQ={q}
-        initialVertical={vertical}
-        initialMode={mode}
-        initialLocation={location}
-      />
+    <div className="min-h-screen bg-slate-50">
+      <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" /></div>}>
+        <SearchHub />
+      </Suspense>
     </div>
   );
 }

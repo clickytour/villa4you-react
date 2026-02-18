@@ -21,7 +21,7 @@ export type CoreMirrorRealEstateProperty = {
   blogPosts?: Array<{ title: string; href: string; date?: string; excerpt?: string; image?: string; ctaLabel?: string; modes?: Array<"short_term_rent" | "monthly_rent" | "sale"> }>;
 };
 
-const realEstateProperties: CoreMirrorRealEstateProperty[] = [
+export const realEstateProperties: CoreMirrorRealEstateProperty[] = [
   {
     id: "re-101",
     slug: "kassandra-investment-villa",
