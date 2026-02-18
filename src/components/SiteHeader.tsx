@@ -1,7 +1,16 @@
+type SubmenuItem = {
+  label: string;
+  href?: string;
+  draft?: boolean;
+  disabled?: boolean;
+  separator?: boolean;
+  sectionLabel?: boolean;
+};
+
 type NavItem = {
   href: string;
   label: string;
-  submenu?: { href: string; label: string; draft?: boolean }[];
+  submenu?: SubmenuItem[];
 };
 
 const primaryNav: NavItem[] = [
@@ -13,10 +22,29 @@ const primaryNav: NavItem[] = [
       { href: "/for-guests", label: "For Guests Hub" },
       { href: "/search", label: "Search" },
       { href: "/search-results-page-for-guests", label: "Guest Search Results" },
-      { href: "/destinations", label: "Destinations" },
       { href: "/explore-map", label: "Explore Map" },
       { href: "/guest-help-faq", label: "Guest Help FAQ" },
       { href: "/plans-offers", label: "Plans & Offers" },
+    ],
+  },
+  {
+    href: "/destinations",
+    label: "Destinations",
+    submenu: [
+      { href: "/destinations", label: "Destinations Hub" },
+      { separator: true, label: "separator" },
+      { sectionLabel: true, label: "Halkidiki" },
+      { href: "/luxury-suites-elsa", label: "Luxury Suites Elsa" },
+      { href: "/galini-beachfront-masonettes-complex", label: "Galini Beachfront Masonettes" },
+      { href: "/olea-suites-apartments-complex", label: "Olea Suites Apartments" },
+      { href: "/deluxe-suites-bomo", label: "Deluxe Suites Bomo" },
+      { href: "/simonitiko-beachfront-villas-complex", label: "Simonitiko Beachfront Villas" },
+      { href: "/tripotsmos-beachfront-complex-a", label: "Tripotsmos Beachfront Complex A" },
+      { href: "/tripotamos-beachfront-villas-complex-b", label: "Tripotamos Beachfront Villas Complex B" },
+      { href: "/afitos-kassandra-halkidiki", label: "Afitos Kassandra Halkidiki" },
+      { href: "/complexes-sani-club-private-villas", label: "Sani Club Private Villas" },
+      { sectionLabel: true, label: "Myconos" },
+      { sectionLabel: true, label: "Crete (coming soon)", disabled: true },
     ],
   },
   {
@@ -44,6 +72,27 @@ const primaryNav: NavItem[] = [
   { href: "/support", label: "Support" },
   { href: "/about", label: "About" },
 ];
+
+function SubmenuEntry({ sub }: { sub: SubmenuItem }) {
+  if (sub.separator) {
+    return <div className="my-1 border-t border-slate-200" aria-hidden="true" />;
+  }
+
+  if (sub.sectionLabel || sub.disabled || !sub.href) {
+    return (
+      <div className={`rounded-lg px-2 py-1.5 text-sm ${sub.disabled ? "text-slate-400" : "font-semibold text-slate-500"}`}>
+        {sub.label}
+      </div>
+    );
+  }
+
+  return (
+    <a href={sub.href} className="flex items-center justify-between rounded-lg px-2 py-1.5 text-sm text-slate-700 hover:bg-slate-50">
+      <span>{sub.label}</span>
+      {sub.draft && <span className="rounded border border-amber-300 bg-amber-50 px-1.5 py-0.5 text-[10px] text-amber-700">Draft</span>}
+    </a>
+  );
+}
 
 export function SiteHeader() {
   return (
@@ -90,10 +139,7 @@ export function SiteHeader() {
                       <summary className="list-none cursor-pointer px-3 py-2 text-sm font-medium text-slate-900">{item.label} ▾</summary>
                       <div className="space-y-1 px-2 pb-2">
                         {item.submenu.map((sub) => (
-                          <a key={sub.href} href={sub.href} className="flex items-center justify-between rounded-lg px-2 py-2 text-sm text-slate-700 hover:bg-slate-50">
-                            <span>{sub.label}</span>
-                            {sub.draft && <span className="rounded border border-amber-300 bg-amber-50 px-1.5 py-0.5 text-[10px] text-amber-700">Draft</span>}
-                          </a>
+                          <SubmenuEntry key={`${item.href}-${sub.label}-${sub.href ?? "nolink"}`} sub={sub} />
                         ))}
                       </div>
                     </details>
@@ -117,10 +163,7 @@ export function SiteHeader() {
                 </summary>
                 <div className="absolute left-0 top-[110%] z-50 hidden min-w-[280px] rounded-xl border border-slate-200 bg-white p-2 shadow-lg group-open:block">
                   {item.submenu.map((sub) => (
-                    <a key={sub.href} href={sub.href} className="flex items-center justify-between rounded-lg px-2 py-1.5 text-sm text-slate-700 hover:bg-slate-50">
-                      <span>{sub.label}</span>
-                      {sub.draft && <span className="rounded border border-amber-300 bg-amber-50 px-1.5 py-0.5 text-[10px] text-amber-700">Draft</span>}
-                    </a>
+                    <SubmenuEntry key={`${item.href}-${sub.label}-${sub.href ?? "nolink"}`} sub={sub} />
                   ))}
                 </div>
               </details>
