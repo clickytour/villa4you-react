@@ -33,8 +33,8 @@ function ItemCard({ item, index, isBrand, entityType, accent }: { item: Proposal
           {(item.videoUrl || item.videoUrlGeneric || item.tour3dUrl || item.tour3dUrlGeneric) && <div className="mt-2"><MediaIcons videoUrl={item.videoUrl} videoUrlGeneric={item.videoUrlGeneric} tour3dUrl={item.tour3dUrl} tour3dUrlGeneric={item.tour3dUrlGeneric} isBrand={isBrand} light /></div>}
           {item.description && <p className="mt-2 line-clamp-2 text-sm text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{item.description}</p>}
           <div className="mt-3 flex flex-wrap gap-3 text-sm text-white/90">
-            {item.bedrooms != null && <span>🛏 {item.bedrooms} bed{item.bedrooms === 1 ? '' : 's'}</span>}
-            {item.bathrooms != null && <span>🚿 {item.bathrooms} bath{item.bathrooms === 1 ? '' : 's'}</span>}
+            {item.bedrooms != null && <span>🛏 {item.bedrooms} bed{Number(item.bedrooms) === 1 ? '' : 's'}</span>}
+            {item.bathrooms != null && <span>🚿 {item.bathrooms} bath{Number(item.bathrooms) === 1 ? '' : 's'}</span>}
             {item.maxGuests != null && <span>👥 {item.maxGuests}</span>}
           </div>
           <div className="mt-4 flex items-center justify-between">

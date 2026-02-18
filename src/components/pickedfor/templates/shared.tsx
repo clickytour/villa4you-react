@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState, type TouchEvent } from 'react';
 import { ProposalItem } from '@/lib/proposalMockData';
 
 const PICKEDFOR_BASE_URL = 'https://pickedfor.com';
@@ -56,25 +56,46 @@ export function StarRating({ rating, reviewCount }: { rating?: number; reviewCou
 // ─── Photo Carousel ───
 export function PhotoCarousel({ images, alt, className, overlay }: { images: string[]; alt: string; className?: string; overlay?: boolean }) {
   const [idx, setIdx] = useState(0);
+  const touchStartX = useRef<number | null>(null);
   const photos = images.length > 0 ? images : [''];
   const prev = () => setIdx((i) => (i === 0 ? photos.length - 1 : i - 1));
   const next = () => setIdx((i) => (i === photos.length - 1 ? 0 : i + 1));
 
+  const onTouchStart = (e: TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = e.touches[0]?.clientX ?? null;
+  };
+
+  const onTouchEnd = (e: TouchEvent<HTMLDivElement>) => {
+    if (touchStartX.current == null) return;
+    const endX = e.changedTouches[0]?.clientX;
+    if (typeof endX !== 'number') return;
+    const delta = endX - touchStartX.current;
+    touchStartX.current = null;
+
+    if (Math.abs(delta) < 30) return;
+    if (delta > 0) prev();
+    else next();
+  };
+
   return (
-    <div className={`group/carousel relative overflow-hidden ${className ?? ''}`}>
+    <div
+      className={`group/carousel relative overflow-hidden touch-pan-y ${className ?? ''}`}
+      onTouchStart={photos.length > 1 ? onTouchStart : undefined}
+      onTouchEnd={photos.length > 1 ? onTouchEnd : undefined}
+    >
       <img src={photos[idx]} alt={alt} className="h-full w-full object-cover transition-opacity duration-300" />
       {overlay && <div className="pointer-events-none absolute inset-0 z-[5] bg-gradient-to-t from-black/85 via-black/40 to-black/5" />}
       {photos.length > 1 && (
         <>
-          <button onClick={(e) => { e.preventDefault(); prev(); }} className="absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/80 p-1.5 opacity-0 shadow-md transition-opacity group-hover/carousel:opacity-100" aria-label="Previous">
+          <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); prev(); }} className="absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/80 p-1.5 opacity-100 shadow-md transition-opacity sm:opacity-0 sm:group-hover/carousel:opacity-100" aria-label="Previous">
             <svg className="h-4 w-4 text-gray-700" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
           </button>
-          <button onClick={(e) => { e.preventDefault(); next(); }} className="absolute right-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/80 p-1.5 opacity-0 shadow-md transition-opacity group-hover/carousel:opacity-100" aria-label="Next">
+          <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); next(); }} className="absolute right-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/80 p-1.5 opacity-100 shadow-md transition-opacity sm:opacity-0 sm:group-hover/carousel:opacity-100" aria-label="Next">
             <svg className="h-4 w-4 text-gray-700" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
           </button>
           <div className="absolute bottom-2 left-1/2 z-20 flex -translate-x-1/2 gap-1.5">
             {photos.map((_, i) => (
-              <button key={i} onClick={(e) => { e.preventDefault(); setIdx(i); }} className={`h-1.5 rounded-full transition-all ${i === idx ? 'w-4 bg-white' : 'w-1.5 bg-white/60'}`} aria-label={`Photo ${i + 1}`} />
+              <button key={i} onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIdx(i); }} className={`h-1.5 rounded-full transition-all ${i === idx ? 'w-4 bg-white' : 'w-1.5 bg-white/60'}`} aria-label={`Photo ${i + 1}`} />
             ))}
           </div>
         </>
