@@ -15,10 +15,10 @@ import { hotels, type CoreMirrorHotel } from "./coreMirrorHotelMock";
 export type SearchIntent = "vacation" | "real-estate" | "services" | "hotels" | "blog";
 
 export const INTENTS: { id: SearchIntent; label: string; icon: string }[] = [
-  { id: "vacation", label: "Vacation", icon: "🏖️" },
+  { id: "vacation", label: "Vacation Rentals", icon: "🏖️" },
+  { id: "hotels", label: "Hotels", icon: "🏨" },
   { id: "real-estate", label: "Real Estate", icon: "🏠" },
   { id: "services", label: "Services", icon: "✨" },
-  { id: "hotels", label: "Hotels", icon: "🏨" },
   { id: "blog", label: "Blog", icon: "📝" },
 ];
 
