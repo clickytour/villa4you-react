@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { headers } from "next/headers";
 import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -19,18 +20,21 @@ export const metadata: Metadata = {
   description: "Homepage pilot migration from WordPress to Next.js",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const hdrs = await headers();
+  const isPF = hdrs.get("x-pickedfor") === "1";
+
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div className="min-h-screen bg-[#f3f5f8] text-slate-900">
-          <SiteHeader />
+          {!isPF && <SiteHeader />}
           <main>{children}</main>
-          <SiteFooter />
+          {!isPF && <SiteFooter />}
         </div>
       </body>
     </html>
