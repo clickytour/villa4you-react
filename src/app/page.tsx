@@ -6,7 +6,9 @@ export default function Home() {
   return (
     <>
       <LandingHero config={heroPagesBySlug["homepage-template"]} />
-      <HomepageSections />
+      <div id="page-content">
+        <HomepageSections />
+      </div>
     </>
   );
 }

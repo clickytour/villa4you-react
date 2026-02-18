@@ -238,15 +238,17 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
   return (
     <div className="min-h-screen bg-[#f3f5f8]">
       <LandingHero config={page} />
-      {slug === "for-guests" && <ForGuestsSections />}
-      {slug === "for-owners" && <ForOwnersSections />}
-      {slug === "collaborate" && <CollaborateSections />}
-      {slug === "about" && <AboutSections />}
-      {slug === "vacation-property-management" && <VacationPropertyManagementSections />}
-      {slug === "search-results-page-for-guests" && <SearchResultsGuestSections />}
-      {slug === "partner-pmc" && <PartnerPmcSections />}
-      {slug === "partner-service-providers" && <PartnerServiceProvidersSections />}
-      {slug === "agents" && <AgentsSections />}
+      <div id="page-content">
+        {slug === "for-guests" && <ForGuestsSections />}
+        {slug === "for-owners" && <ForOwnersSections />}
+        {slug === "collaborate" && <CollaborateSections />}
+        {slug === "about" && <AboutSections />}
+        {slug === "vacation-property-management" && <VacationPropertyManagementSections />}
+        {slug === "search-results-page-for-guests" && <SearchResultsGuestSections />}
+        {slug === "partner-pmc" && <PartnerPmcSections />}
+        {slug === "partner-service-providers" && <PartnerServiceProvidersSections />}
+        {slug === "agents" && <AgentsSections />}
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, type TouchEvent } from 'react';
+import { useRef, useState, type MouseEvent, type TouchEvent } from 'react';
 import { ProposalItem } from '@/lib/proposalMockData';
 
 const PICKEDFOR_BASE_URL = 'https://pickedfor.com';
@@ -121,15 +121,54 @@ export function PhotoCarousel({ images, alt, className, overlay }: { images: str
 // ─── Like / Share ───
 export function ActionButtons({ light }: { light?: boolean }) {
   const [liked, setLiked] = useState(false);
+  const [shareFeedback, setShareFeedback] = useState<string | null>(null);
   const base = light ? 'hover:bg-white/20' : 'hover:bg-gray-100';
+
+  const handleShare = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    const title = document.title;
+    const url = window.location.href;
+
+    try {
+      if (navigator.share) {
+        await navigator.share({ title, url });
+        return;
+      }
+
+      await navigator.clipboard.writeText(url);
+      setShareFeedback('Copied!');
+      setTimeout(() => setShareFeedback(null), 1800);
+    } catch (error) {
+      const isAbort = error instanceof DOMException && error.name === 'AbortError';
+      if (isAbort) return;
+
+      try {
+        await navigator.clipboard.writeText(url);
+        setShareFeedback('Copied!');
+        setTimeout(() => setShareFeedback(null), 1800);
+      } catch {
+        setShareFeedback('Share failed');
+        setTimeout(() => setShareFeedback(null), 1800);
+      }
+    }
+  };
+
   return (
     <div className="flex items-center gap-0.5">
       <button onClick={(e) => { e.preventDefault(); setLiked(!liked); }} className={`rounded-full p-1.5 transition-colors ${base} ${liked ? 'text-red-500' : light ? 'text-white/60' : 'text-gray-400'}`} aria-label="Like">
         <svg className="h-5 w-5" fill={liked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" /></svg>
       </button>
-      <button onClick={(e) => { e.preventDefault(); }} className={`rounded-full p-1.5 transition-colors ${base} ${light ? 'text-white/60' : 'text-gray-400'}`} aria-label="Share">
-        <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
-      </button>
+      <div className="relative">
+        <button onClick={handleShare} className={`rounded-full p-1.5 transition-colors ${base} ${light ? 'text-white/60' : 'text-gray-400'}`} aria-label="Share">
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
+        </button>
+        {shareFeedback && (
+          <span className="pointer-events-none absolute left-1/2 top-full z-20 mt-1 -translate-x-1/2 rounded-md bg-black/80 px-2 py-1 text-[10px] font-medium text-white">
+            {shareFeedback}
+          </span>
+        )}
+      </div>
     </div>
   );
 }

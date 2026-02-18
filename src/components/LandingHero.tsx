@@ -1,5 +1,99 @@
+import Link from "next/link";
 import type { HeroPageConfig } from "@/lib/landingHeroes";
 import { QuickRequestPanel } from "@/components/QuickRequestPanel";
+
+function getCtaHref(config: HeroPageConfig, cta?: string, slot: "primary" | "secondary" | "tertiary" = "primary") {
+  if (!cta) return undefined;
+
+  const text = cta.toLowerCase();
+
+  const ctaMapBySlug: Record<string, Partial<Record<"primary" | "secondary" | "tertiary", string>>> = {
+    "homepage-template": {
+      primary: "/search",
+      secondary: "/for-guests",
+    },
+    "for-guests": {
+      primary: "/search",
+      secondary: "/plans-offers",
+      tertiary: "/plans-offers",
+    },
+    "for-owners": {
+      primary: "/free-evaluation",
+      secondary: "/vacation-property-management",
+    },
+    collaborate: {
+      primary: "/agents-apply",
+      secondary: "/collaborate#page-content",
+    },
+    "partner-pmc": {
+      primary: "/pmc-apply",
+      secondary: "/collaborate",
+    },
+    "partner-service-providers": {
+      primary: "/service-apply",
+      secondary: "/partner-service-providers#page-content",
+    },
+    agents: {
+      primary: "/agents-apply",
+      secondary: "/collaborate",
+    },
+    about: {
+      primary: "/about#page-content",
+      secondary: "/support",
+    },
+    "search-results-page-for-guests": {
+      primary: "/search",
+      secondary: "/support",
+    },
+    "vacation-property-management": {
+      primary: "/free-evaluation",
+      secondary: "/vacation-property-management#page-content",
+    },
+  };
+
+  const mappedBySlug = ctaMapBySlug[config.slug]?.[slot];
+  if (mappedBySlug) return mappedBySlug;
+
+  if (text.includes("search") || text.includes("find a villa") || text.includes("browse") || text.includes("preview guest search")) {
+    return "/search";
+  }
+
+  if (
+    text.includes("list your property") ||
+    text.includes("owner") ||
+    text.includes("grow my revenue") ||
+    text.includes("management plan")
+  ) {
+    return "/for-owners";
+  }
+
+  if (text.includes("learn more")) {
+    return `${config.route}#page-content`;
+  }
+
+  if (text.includes("get started")) {
+    return config.slug === "for-owners" ? "/free-evaluation" : config.route;
+  }
+
+  if (text.includes("apply") || text.includes("join")) {
+    return `/${config.slug}-apply`;
+  }
+
+  if (text.includes("explore") || text.includes("see") || text.includes("view") || text.includes("our story")) {
+    return `${config.route}#page-content`;
+  }
+
+  return config.route;
+}
+
+function CtaLink({ href, className, children }: { href?: string; className: string; children: string }) {
+  if (!href) return null;
+  return (
+    <Link href={href} className={`${className} inline-flex items-center justify-center`}>
+      {children}
+    </Link>
+  );
+}
 
 export function LandingHero({ config }: { config: HeroPageConfig }) {
   const isGuests = config.slug === "for-guests";
@@ -39,14 +133,16 @@ export function LandingHero({ config }: { config: HeroPageConfig }) {
               )}
 
               <div className="mt-5 flex flex-wrap gap-2.5">
-                <button className="h-11 rounded-[10px] bg-slate-900 px-4 text-[15px] font-medium text-white">{config.ctaPrimary}</button>
-                <button className="h-11 rounded-[10px] border border-slate-400 bg-white/75 px-4 text-[15px] font-medium text-slate-800">
+                <CtaLink href={getCtaHref(config, config.ctaPrimary, "primary")} className="h-11 rounded-[10px] bg-slate-900 px-4 text-[15px] font-medium text-white">
+                  {config.ctaPrimary}
+                </CtaLink>
+                <CtaLink href={getCtaHref(config, config.ctaSecondary, "secondary")} className="h-11 rounded-[10px] border border-slate-400 bg-white/75 px-4 text-[15px] font-medium text-slate-800">
                   {config.ctaSecondary}
-                </button>
+                </CtaLink>
                 {config.ctaTertiary && (
-                  <button className="h-11 rounded-[10px] border border-slate-400 bg-white/75 px-4 text-[15px] font-medium text-slate-800">
+                  <CtaLink href={getCtaHref(config, config.ctaTertiary, "tertiary")} className="h-11 rounded-[10px] border border-slate-400 bg-white/75 px-4 text-[15px] font-medium text-slate-800">
                     {config.ctaTertiary}
-                  </button>
+                  </CtaLink>
                 )}
               </div>
 
