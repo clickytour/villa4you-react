@@ -183,6 +183,47 @@ export const proposals: Proposal[] = [
       { name: "Guided Hiking Tour", description: "Full-day guided hike through Dimosari Waterfalls trail.", image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&h=400&fit=crop", region: "Lefkada, Greece", listingType: "Service", totalPrice: 65, rating: 4.8, detailsUrl: "/services/hiking" },
     ],
   },
+  {
+    id: "demo-nologo-hotel",
+    mode: "nologo",
+    type: "individual",
+    entityType: "hotel_room",
+    title: "Recommended Hotel Rooms",
+    subtitle: "Selected rooms for Aug 1–7, 2026",
+    createdAt: "2026-02-17T09:00:00Z",
+    items: [
+      { name: "Deluxe Sea View Room", description: "Spacious room with private balcony overlooking the sea.", image: IMG_HOTEL, region: "Corfu, Greece", listingType: "Hotel Room", bedrooms: 1, bathrooms: 1, maxGuests: 2, pricePerNight: 180, totalPrice: 1260, rating: 4.6, detailsUrl: "/property/corfu-deluxe" },
+      { name: "Junior Suite", description: "Elegant suite with sitting area and garden view.", image: IMG2, region: "Corfu, Greece", listingType: "Suite", bedrooms: 1, bathrooms: 1, maxGuests: 3, pricePerNight: 260, totalPrice: 1820, rating: 4.8, detailsUrl: "/property/corfu-suite" },
+    ],
+  },
+  {
+    id: "demo-nologo-realestate",
+    mode: "nologo",
+    type: "individual",
+    entityType: "real_estate",
+    title: "Selected Investment Properties",
+    subtitle: "Exclusive listings for sale",
+    createdAt: "2026-02-18T07:00:00Z",
+    items: [
+      { name: "Beachfront Plot — Agios Nikitas", description: "1,200 m² buildable plot, 50m from the beach.", image: IMG_RE, region: "Lefkada, Greece", listingType: "Land", totalPrice: 320000, rating: 5.0, detailsUrl: "/property/agios-nikitas-plot" },
+      { name: "Renovated Stone House", description: "Charming 3-bed stone house in Karya village.", image: IMG3, region: "Lefkada, Greece", listingType: "House", bedrooms: 3, bathrooms: 2, totalPrice: 185000, detailsUrl: "/property/karya-stone" },
+      { name: "Modern Villa with Pool", description: "New-build 4-bed villa, turnkey, sea views.", image: IMG, region: "Lefkada, Greece", listingType: "Villa", bedrooms: 4, bathrooms: 3, totalPrice: 520000, detailsUrl: "/property/modern-villa-pool" },
+    ],
+  },
+  {
+    id: "demo-nologo-service",
+    mode: "nologo",
+    type: "individual",
+    entityType: "service",
+    title: "Recommended Services",
+    subtitle: "Enhance your stay with premium add-ons",
+    createdAt: "2026-02-18T08:00:00Z",
+    items: [
+      { name: "Private Chef Experience", description: "In-villa dinner prepared by a local chef — 4-course Greek menu.", image: IMG_SERVICE, region: "Lefkada, Greece", listingType: "Service", totalPrice: 280, rating: 4.9, detailsUrl: "/services/private-chef" },
+      { name: "Yoga & Wellness Session", description: "Morning yoga on your terrace with a certified instructor.", image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop", region: "Lefkada, Greece", listingType: "Service", totalPrice: 90, rating: 4.7, detailsUrl: "/services/yoga" },
+      { name: "Guided Hiking Tour", description: "Full-day guided hike through Dimosari Waterfalls trail.", image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&h=400&fit=crop", region: "Lefkada, Greece", listingType: "Service", totalPrice: 65, rating: 4.8, detailsUrl: "/services/hiking" },
+    ],
+  },
 ];
 
 export function getProposalById(id: string): Proposal | undefined {

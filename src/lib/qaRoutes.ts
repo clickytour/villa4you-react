@@ -58,6 +58,9 @@ const staticRoutes: QARoute[] = [
   { href: "/proposal/demo-brand-hotel", label: "Proposal: Branded Hotel Rooms", group: "Templates", status: "Pending QA" },
   { href: "/proposal/demo-brand-realestate", label: "Proposal: Branded Real Estate", group: "Templates", status: "Pending QA" },
   { href: "/proposal/demo-brand-service", label: "Proposal: Branded Services", group: "Templates", status: "Pending QA" },
+  { href: "/proposal/demo-nologo-hotel", label: "Proposal: No-logo Hotel Rooms", group: "Templates", status: "Pending QA" },
+  { href: "/proposal/demo-nologo-realestate", label: "Proposal: No-logo Real Estate", group: "Templates", status: "Pending QA" },
+  { href: "/proposal/demo-nologo-service", label: "Proposal: No-logo Services", group: "Templates", status: "Pending QA" },
 
   { href: "/property/villa-glarokavos-sea-view", label: "Canonical Property Details (Core Mirror)", group: "Templates", status: "Pending QA" },
   { href: "/property/vacation/villa-glarokavos-sea-view", label: "Canonical Vacation Property (Type Route)", group: "Templates", status: "Pending QA" },
