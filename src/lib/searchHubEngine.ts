@@ -32,15 +32,23 @@ export type SearchResultItem = {
   title: string;
   description: string;
   image?: string;
+  images?: string[];
   href: string;
   price?: number;
+  totalPrice?: number;
   priceLabel?: string;
   location?: string;
   region?: string;
   badges: string[];
   facts: { label: string; value: string }[];
+  rating?: number;
+  reviewCount?: number;
+  videoUrl?: string;
+  tour3dUrl?: string;
+  availability?: "available" | "unavailable" | "new";
   // extras for filtering
   bedrooms?: number;
+  bathrooms?: number;
   guests?: number;
   areaSqm?: number;
   beachDistanceM?: number;
@@ -66,18 +74,27 @@ function vacationItems(): SearchResultItem[] {
       title: p.title,
       description: p.shortDescription,
       image: p.gallery[0],
+      images: p.gallery,
       href: `/property/${p.slug}`,
       price: p.pricing.basicFrom,
+      totalPrice: p.pricing.basicFrom * 7,
       priceLabel: `From €${p.pricing.basicFrom}/night`,
       location: p.location.area,
       region: p.location.region,
       badges: p.badges,
+      rating: 4.9,
+      reviewCount: 127,
+      videoUrl: p.videoUrl,
+      tour3dUrl: p.tour3dUrl,
+      availability: "available",
       facts: [
         { label: "Guests", value: String(p.metrics.guests) },
         { label: "Bedrooms", value: String(p.metrics.bedrooms) },
+        { label: "Bathrooms", value: String(p.metrics.bathrooms) },
         { label: "Beach", value: `${p.location.beachDistanceM}m` },
       ],
       bedrooms: p.metrics.bedrooms,
+      bathrooms: p.metrics.bathrooms,
       guests: p.metrics.guests,
       areaSqm: p.metrics.areaSqm,
       beachDistanceM: p.location.beachDistanceM,
@@ -88,25 +105,35 @@ function vacationItems(): SearchResultItem[] {
 }
 
 function realEstateItems(): SearchResultItem[] {
-  return realEstateProperties.map((r) => ({
+  return realEstateProperties.map((r, idx) => ({
     id: `re-${r.slug}`,
     intent: "real-estate" as SearchIntent,
     title: r.title,
     description: r.shortSummary,
     image: r.media.primaryImage,
+    images: [r.media.primaryImage, ...r.media.galleryImages],
     href: `/property/real-estate/${r.slug}`,
     price: r.prices.saleEur,
+    totalPrice: r.prices.saleEur,
     priceLabel: `Sale €${(r.prices.saleEur / 1000).toFixed(0)}K | Rent €${r.prices.monthlyEur}/mo`,
     location: r.location.city,
     region: r.location.region,
     badges: r.amenities.slice(0, 3),
+    rating: 4.7,
+    reviewCount: 92,
+    videoUrl: r.media.videoUrl,
+    tour3dUrl: r.media.tour3dUrl,
+    availability: idx % 2 === 0 ? "available" : "new",
     facts: [
       { label: "Bedrooms", value: String(r.metrics.bedrooms) },
+      { label: "Bathrooms", value: String(r.metrics.bathrooms) },
       { label: "Area", value: `${r.metrics.areaSqm} sqm` },
       { label: "ROI", value: `${r.prices.roiPercent}%` },
     ],
     bedrooms: r.metrics.bedrooms,
+    bathrooms: r.metrics.bathrooms,
     areaSqm: r.metrics.areaSqm,
+    beachDistanceM: parseDistanceM(r.distances.find((d) => d.label === "Beach")?.value),
     amenities: r.amenities,
     roiPercent: r.prices.roiPercent,
     dealTypes: r.dealType,
@@ -114,18 +141,25 @@ function realEstateItems(): SearchResultItem[] {
 }
 
 function hotelItems(): SearchResultItem[] {
-  return hotels.map((h) => ({
+  return hotels.map((h, idx) => ({
     id: `hotel-${h.slug}`,
     intent: "hotels" as SearchIntent,
     title: h.title,
     description: h.shortSummary,
     image: h.media.primaryImage,
+    images: [h.media.primaryImage, ...h.media.galleryImages],
     href: `/property/hotel/${h.slug}`,
     price: h.prices.fromNightlyEur,
+    totalPrice: h.prices.fromNightlyEur * 7,
     priceLabel: `From €${h.prices.fromNightlyEur}/night`,
     location: h.location.city,
     region: h.location.region,
     badges: h.amenities.slice(0, 3),
+    rating: 4.8,
+    reviewCount: 214,
+    videoUrl: h.media.videoUrl,
+    tour3dUrl: h.media.tour3dUrl,
+    availability: idx % 3 === 0 ? "new" : "available",
     facts: [
       { label: "Type", value: h.hotelType.replace(/_/g, " ") },
       { label: "From", value: `€${h.prices.fromNightlyEur}/night` },
@@ -138,7 +172,7 @@ function hotelItems(): SearchResultItem[] {
 }
 
 function serviceItems(): SearchResultItem[] {
-  return coreMirrorServices.map((s) => {
+  return coreMirrorServices.map((s, idx) => {
     const firstPrice = s.pricingBooking.priceList[0];
     return {
       id: `svc-${s.slug}`,
@@ -146,12 +180,18 @@ function serviceItems(): SearchResultItem[] {
       title: s.basicDetails.businessName,
       description: s.basicDetails.shortDescription,
       image: s.media.primaryPhoto,
+      images: [s.media.primaryPhoto, ...s.media.galleryPhotos],
       href: `/services/${s.slug}`,
       price: firstPrice?.guestPriceGross,
+      totalPrice: firstPrice?.guestPriceGross,
       priceLabel: s.basicDetails.priceDescription,
       location: s.locationServiceArea.city,
       region: s.locationServiceArea.stateRegion,
       badges: s.basicDetails.highlights,
+      rating: 4.6,
+      reviewCount: 61,
+      videoUrl: s.media.promoVideoUrl,
+      availability: idx % 2 === 0 ? "available" : "unavailable",
       facts: [
         { label: "Category", value: s.basicDetails.categoryId },
         { label: "Booking", value: s.pricingBooking.bookingType || "request" },
@@ -169,8 +209,10 @@ function blogItems(): SearchResultItem[] {
     title: b.title,
     description: b.excerpt,
     image: b.coverImage,
+    images: [b.coverImage],
     href: `/blog/${b.slug}`,
     badges: [b.category],
+    availability: "new",
     facts: [
       { label: "Category", value: b.category },
       { label: "Published", value: b.publishedAt },
@@ -190,17 +232,24 @@ function parseDistanceM(val?: string): number | undefined {
 
 /* Also add hotel rooms as vacation items */
 function hotelRoomVacationItems(): SearchResultItem[] {
-  return coreMirrorHotelRooms.map((r) => ({
+  return coreMirrorHotelRooms.map((r, idx) => ({
     id: `room-${r.slug}`,
     intent: "vacation" as SearchIntent,
     title: r.title,
     description: r.shortSummary,
     image: r.media.primaryImage,
+    images: [r.media.primaryImage, ...r.media.galleryImages],
     href: `/property/hotel-room/${r.slug}`,
     price: r.rates.nightlyEur,
+    totalPrice: r.rates.nightlyEur * 7,
     priceLabel: `From €${r.rates.nightlyEur}/night`,
     location: r.hotelSlug,
     badges: r.amenities.slice(0, 3),
+    rating: 4.7,
+    reviewCount: 73,
+    videoUrl: r.media.videoUrl,
+    tour3dUrl: r.media.tour3dUrl,
+    availability: idx % 2 === 0 ? "available" : "new",
     facts: [
       { label: "Max Guests", value: String(r.maxGuests) },
       { label: "Type", value: r.roomType },

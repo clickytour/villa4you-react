@@ -675,8 +675,8 @@ function SearchPhotoCarousel({ photos, alt, className }: { photos: string[]; alt
   const next = () => setIdx((i) => (i === imgs.length - 1 ? 0 : i + 1));
 
   return (
-    <div className={`group/carousel relative overflow-hidden ${className ?? ''}`}>
-      <img src={imgs[idx]} alt={alt} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+    <div className={`group/carousel relative overflow-hidden ${className ?? ""}`}>
+      <img src={imgs[idx]} alt={alt} className="h-full w-full object-cover transition-opacity duration-300" />
       {imgs.length > 1 && (
         <>
           <button
@@ -698,7 +698,7 @@ function SearchPhotoCarousel({ photos, alt, className }: { photos: string[]; alt
               <button
                 key={i}
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIdx(i); }}
-                className={`h-1.5 rounded-full transition-all ${i === idx ? 'w-4 bg-white' : 'w-1.5 bg-white/60'}`}
+                className={`h-1.5 rounded-full transition-all ${i === idx ? "w-4 bg-white" : "w-1.5 bg-white/60"}`}
                 aria-label={`Photo ${i + 1}`}
               />
             ))}
@@ -709,120 +709,108 @@ function SearchPhotoCarousel({ photos, alt, className }: { photos: string[]; alt
   );
 }
 
-/* ── Star Rating (matches ListingCard style) ────────────── */
+function availabilityBadge(status?: SearchResultItem["availability"]) {
+  if (status === "unavailable") {
+    return <span className="inline-flex items-center gap-1 rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-medium text-red-700"><span className="h-1.5 w-1.5 rounded-full bg-red-500" />No longer available</span>;
+  }
+  if (status === "new") {
+    return <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700"><span className="h-1.5 w-1.5 rounded-full bg-blue-500" />New Match</span>;
+  }
+  return <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700"><span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />Available</span>;
+}
 
-function SearchStarRating({ rating }: { rating?: number }) {
+function SearchStarRating({ rating, reviewCount }: { rating?: number; reviewCount?: number }) {
   if (!rating) return null;
   return (
     <span className="inline-flex items-center gap-1 text-sm">
-      <svg className="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
-        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-      </svg>
-      <span className="font-semibold">{rating}</span>
+      <svg className="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+      <span className="font-semibold">{rating.toFixed(1)}</span>
+      {reviewCount ? <span className="text-gray-400">({reviewCount})</span> : null}
     </span>
   );
 }
 
-/* ── Action Buttons (Like / Dislike / Share) ─────────────── */
-
-function SearchActionButtons({ light }: { light?: boolean }) {
+function SearchActionButtons() {
   const [liked, setLiked] = useState(false);
   return (
-    <div className="flex items-center gap-1">
-      <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); setLiked(!liked); }} className={`rounded-full p-1.5 transition-colors ${light ? 'hover:bg-white/20' : 'hover:bg-gray-100'}`} aria-label="Like">
-        <svg className={`h-5 w-5 ${liked ? 'text-red-500' : 'text-gray-400'}`} fill={liked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
-        </svg>
+    <div className="flex items-center gap-1 rounded-full bg-white/90 px-1 py-0.5 shadow-sm">
+      <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); setLiked(!liked); }} className="rounded-full p-1.5 transition-colors hover:bg-gray-100" aria-label="Like">
+        <svg className={`h-5 w-5 ${liked ? "text-red-500" : "text-gray-400"}`} fill={liked ? "currentColor" : "none"} stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" /></svg>
       </button>
-      <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className={`rounded-full p-1.5 transition-colors ${light ? 'hover:bg-white/20' : 'hover:bg-gray-100'}`} aria-label="Share">
-        <svg className={`h-4 w-4 ${light ? 'text-white/70' : 'text-gray-400'}`} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-        </svg>
+      <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className="rounded-full p-1.5 transition-colors hover:bg-gray-100" aria-label="Dislike">
+        <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+      <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className="rounded-full p-1.5 transition-colors hover:bg-gray-100" aria-label="Share">
+        <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
       </button>
     </div>
   );
 }
 
-/* ── Result Card (Grid) — matches ListingCard modern style ── */
+function typeLabel(intent: SearchIntent) {
+  if (intent === "vacation") return "VILLA";
+  if (intent === "hotels") return "HOTEL";
+  if (intent === "real-estate") return "PROPERTY";
+  if (intent === "services") return "SERVICE";
+  return "BLOG";
+}
+
+function factsRow(item: SearchResultItem) {
+  const beds = item.bedrooms ?? Number(item.facts.find((f) => /bed/i.test(f.label))?.value || 0);
+  const baths = item.bathrooms ?? Number(item.facts.find((f) => /bath/i.test(f.label))?.value || 0);
+  const guests = item.guests ?? Number(item.facts.find((f) => /guest/i.test(f.label))?.value || 0);
+  return (
+    <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-gray-600">
+      <span>🛏 {beds || "-"} beds</span><span className="text-gray-300">·</span>
+      <span>🚿 {baths || "-"} baths</span><span className="text-gray-300">·</span>
+      <span>👥 {guests || "-"} guests</span>
+    </div>
+  );
+}
+
+function PriceBlock({ item }: { item: SearchResultItem }) {
+  const night = item.price ? `€${item.price.toLocaleString()}/night` : item.priceLabel || "Price on request";
+  const total = item.totalPrice ? `€${item.totalPrice.toLocaleString()} total` : undefined;
+  return (
+    <div>
+      <p className="text-sm font-medium text-slate-600">{night}</p>
+      {total ? <p className="text-xl font-bold text-slate-900">{total}</p> : null}
+    </div>
+  );
+}
 
 function ResultCard({ item, isInBasket, onAdd, onRemove }: { item: SearchResultItem; isInBasket: boolean; onAdd: () => void; onRemove: () => void }) {
-  const images = item.image ? [item.image] : [];
-  // Extract extra images if available
-  if ((item as any).images) {
-    images.push(...(item as any).images);
-  }
+  const images = Array.from(new Set([...(item.images || []), ...(item.image ? [item.image] : [])]));
 
   return (
-    <div className="overflow-hidden rounded-xl bg-white shadow-sm transition-shadow hover:shadow-md group">
-      {/* Photo area */}
+    <div className="overflow-hidden rounded-xl bg-white shadow-sm transition-shadow hover:shadow-md">
       <div className="relative h-52">
-        {images.length > 0 ? (
-          <SearchPhotoCarousel photos={images} alt={item.title} className="h-full" />
-        ) : (
-          <div className="h-full w-full bg-slate-200 flex items-center justify-center text-slate-400 text-4xl">📷</div>
-        )}
-        {/* Top-left: intent badge + media pills */}
-        <div className="absolute left-3 top-3 flex items-center gap-2 z-10 pointer-events-none">
-          <span className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide shadow-sm ${INTENT_COLORS[item.intent]}`}>
-            {item.intent}
-          </span>
-          {(item as any).hasVideo && (
-            <span className="rounded-full bg-white/90 px-2 py-0.5 text-xs font-medium text-slate-700 shadow-sm">🎬 Video</span>
-          )}
-          {(item as any).has3DTour && (
-            <span className="rounded-full bg-white/90 px-2 py-0.5 text-xs font-medium text-slate-700 shadow-sm">🧊 3D Tour</span>
-          )}
+        {images.length > 0 ? <SearchPhotoCarousel photos={images} alt={item.title} className="h-full" /> : <div className="h-full w-full bg-slate-200 flex items-center justify-center text-slate-400 text-4xl">📷</div>}
+        <div className="absolute left-3 top-3 flex items-center gap-2 z-10">
+          <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gray-700 shadow-sm">{typeLabel(item.intent)}</span>
+          {availabilityBadge(item.availability)}
         </div>
-        {/* Top-right: action buttons */}
-        <div className="absolute right-3 top-3 z-10">
-          <SearchActionButtons />
-        </div>
+        <div className="absolute right-3 top-3 z-10"><SearchActionButtons /></div>
       </div>
 
-      {/* Content */}
       <div className="p-5">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="text-lg font-semibold text-gray-900 line-clamp-1">{item.title}</h3>
-          <SearchStarRating rating={(item as any).rating} />
+        <h3 className="text-lg font-semibold text-gray-900 line-clamp-1">{item.title}</h3>
+        {item.location && <p className="mt-0.5 text-sm text-gray-500">{item.location}</p>}
+        <div className="mt-2 flex items-center justify-between gap-2">
+          <SearchStarRating rating={item.rating} reviewCount={item.reviewCount} />
+          <div className="flex items-center gap-1.5">
+            {item.videoUrl ? <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700">▶ Video</span> : null}
+            {item.tour3dUrl ? <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700">◎ 3D Tour</span> : null}
+          </div>
         </div>
-        {(item as any).location && (
-          <p className="mt-0.5 text-sm text-gray-500">{(item as any).location}</p>
-        )}
         <p className="mt-2 line-clamp-2 text-sm text-gray-600">{item.description}</p>
-
-        {/* Facts as pills */}
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {item.facts.slice(0, 4).map((f) => (
-            <span key={f.label} className="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600">
-              {f.label}: {f.value}
-            </span>
-          ))}
-        </div>
-
-        {/* Price + CTA */}
-        <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-4">
-          {item.priceLabel && (
-            <p className="text-xl font-bold text-blue-700">
-              {item.priceLabel}
-            </p>
-          )}
+        {factsRow(item)}
+        <div className="mt-4 flex items-end justify-between border-t border-gray-100 pt-4">
+          <PriceBlock item={item} />
           <div className="flex gap-2">
-            <a
-              href={item.href}
-              className="rounded-lg border border-blue-600 px-3 py-1.5 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50"
-            >
-              View Details
-            </a>
-            <button
-              onClick={isInBasket ? onRemove : onAdd}
-              className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
-                isInBasket
-                  ? "bg-green-100 text-green-700 hover:bg-red-100 hover:text-red-600"
-                  : "bg-blue-600 text-white hover:bg-blue-700"
-              }`}
-            >
-              {isInBasket ? "✓ Added" : "➕ Add to Request"}
-            </button>
+            <a href={item.href} className="rounded-lg border border-blue-600 px-3 py-1.5 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50">View Details</a>
+            <a href="#inquire" className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-blue-700">Book Now</a>
+            <button onClick={isInBasket ? onRemove : onAdd} className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${isInBasket ? "bg-green-100 text-green-700 hover:bg-red-100 hover:text-red-600" : "bg-slate-100 text-slate-700 hover:bg-slate-200"}`}>{isInBasket ? "✓ Added" : "➕ Add"}</button>
           </div>
         </div>
       </div>
@@ -830,85 +818,36 @@ function ResultCard({ item, isInBasket, onAdd, onRemove }: { item: SearchResultI
   );
 }
 
-/* ── Result Row (List) — matches ListingCard document style ── */
-
 function ResultListRow({ item, isInBasket, onAdd, onRemove }: { item: SearchResultItem; isInBasket: boolean; onAdd: () => void; onRemove: () => void }) {
-  const images = item.image ? [item.image] : [];
-  if ((item as any).images) images.push(...(item as any).images);
+  const images = Array.from(new Set([...(item.images || []), ...(item.image ? [item.image] : [])]));
 
   return (
     <div className="overflow-hidden rounded-xl bg-white shadow-sm transition-shadow hover:shadow-md">
       <div className="flex flex-col sm:flex-row">
-        {/* Photo */}
-        <div className="relative h-48 flex-shrink-0 sm:h-auto sm:w-56">
-          {images.length > 0 ? (
-            <SearchPhotoCarousel photos={images} alt={item.title} className="h-full" />
-          ) : (
-            <div className="h-full w-full bg-slate-200 flex items-center justify-center text-slate-400 text-4xl min-h-[12rem]">📷</div>
-          )}
-          {/* Media pills */}
-          <div className="absolute left-2 top-2 flex gap-1 z-10 pointer-events-none">
-            {(item as any).hasVideo && (
-              <span className="rounded-full bg-white/90 px-2 py-0.5 text-xs font-medium text-slate-700 shadow-sm">🎬</span>
-            )}
-            {(item as any).has3DTour && (
-              <span className="rounded-full bg-white/90 px-2 py-0.5 text-xs font-medium text-slate-700 shadow-sm">🧊</span>
-            )}
+        <div className="relative h-52 flex-shrink-0 sm:h-auto sm:w-64">
+          {images.length > 0 ? <SearchPhotoCarousel photos={images} alt={item.title} className="h-full" /> : <div className="h-full w-full bg-slate-200 flex items-center justify-center text-slate-400 text-4xl min-h-[12rem]">📷</div>}
+          <div className="absolute left-3 top-3 flex items-center gap-2 z-10">
+            <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gray-700 shadow-sm">{typeLabel(item.intent)}</span>
+            {availabilityBadge(item.availability)}
           </div>
+          <div className="absolute right-3 top-3 z-10"><SearchActionButtons /></div>
         </div>
-
-        {/* Content */}
         <div className="flex flex-1 flex-col p-5">
-          <div className="flex items-start justify-between gap-2">
-            <div>
-              <span className={`mb-1 inline-block rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${INTENT_COLORS[item.intent]}`}>
-                {item.intent}
-              </span>
-              <h3 className="text-lg font-semibold text-gray-900">{item.title}</h3>
-            </div>
-            <SearchActionButtons />
-          </div>
-          {(item as any).location && (
-            <p className="mt-0.5 text-sm text-gray-500">{(item as any).location}</p>
-          )}
-          <div className="mt-1.5 flex items-center gap-3">
-            <SearchStarRating rating={(item as any).rating} />
+          <h3 className="text-lg font-semibold text-gray-900">{item.title}</h3>
+          {item.location && <p className="mt-0.5 text-sm text-gray-500">{item.location}</p>}
+          <div className="mt-2 flex items-center gap-2">
+            <SearchStarRating rating={item.rating} reviewCount={item.reviewCount} />
+            {item.videoUrl ? <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700">▶ Video</span> : null}
+            {item.tour3dUrl ? <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700">◎ 3D Tour</span> : null}
           </div>
           <p className="mt-2 line-clamp-2 text-sm text-gray-600">{item.description}</p>
-
-          {/* Facts as pills */}
-          <div className="mt-3 flex flex-wrap gap-1.5">
-            {item.facts.slice(0, 5).map((f) => (
-              <span key={f.label} className="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600">
-                {f.label}: {f.value}
-              </span>
-            ))}
-          </div>
-
-          {/* Price + CTA */}
-          <div className="mt-auto flex items-center justify-between pt-4">
-            {item.priceLabel && (
-              <p className="text-xl font-bold text-blue-700">
-                {item.priceLabel}
-              </p>
-            )}
+          {factsRow(item)}
+          <div className="mt-auto flex items-end justify-between pt-4">
+            <PriceBlock item={item} />
             <div className="flex gap-2">
-              <a
-                href={item.href}
-                className="rounded-lg border border-blue-600 px-3 py-1.5 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50"
-              >
-                View Details
-              </a>
-              <button
-                onClick={isInBasket ? onRemove : onAdd}
-                className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
-                  isInBasket
-                    ? "bg-green-100 text-green-700 hover:bg-red-100 hover:text-red-600"
-                    : "bg-blue-600 text-white hover:bg-blue-700"
-                }`}
-              >
-                {isInBasket ? "✓ Added" : "➕ Add to Request"}
-              </button>
+              <a href={item.href} className="rounded-lg border border-blue-600 px-3 py-1.5 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50">View Details</a>
+              <a href="#inquire" className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-blue-700">Book Now</a>
+              <button onClick={isInBasket ? onRemove : onAdd} className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${isInBasket ? "bg-green-100 text-green-700 hover:bg-red-100 hover:text-red-600" : "bg-slate-100 text-slate-700 hover:bg-slate-200"}`}>{isInBasket ? "✓ Added" : "➕ Add"}</button>
             </div>
           </div>
         </div>
