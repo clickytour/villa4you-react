@@ -8,6 +8,16 @@ interface Props {
   mode: 'brand' | 'nologo';
 }
 
+const PICKEDFOR_BASE_URL = 'https://pickedfor.com';
+
+function toPickedForUrl(pathOrUrl: string) {
+  if (!pathOrUrl) return PICKEDFOR_BASE_URL;
+  if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
+  if (pathOrUrl.startsWith('/pickedfor/detail/')) return `${PICKEDFOR_BASE_URL}${pathOrUrl}`;
+  const slug = pathOrUrl.split('/').filter(Boolean).pop();
+  return slug ? `${PICKEDFOR_BASE_URL}/pickedfor/detail/${slug}` : PICKEDFOR_BASE_URL;
+}
+
 function ItemCard({ item, index, isBrand, entityType }: { item: ProposalItem; index: number; isBrand: boolean; entityType: string }) {
   const label = isBrand ? item.name : `${item.listingType} ${String.fromCharCode(65 + index)}`;
   const isRealEstate = entityType === 'real_estate';
@@ -49,11 +59,11 @@ function ItemCard({ item, index, isBrand, entityType }: { item: ProposalItem; in
             )}
           </div>
           {isUnavailable ? (
-            <a href="#inquire" className="rounded-lg bg-blue-600 px-4 py-1.5 text-sm font-medium text-white hover:opacity-90">Find Similar</a>
+            <a href="https://pickedfor.com/contact" className="rounded-lg bg-blue-600 px-4 py-1.5 text-sm font-medium text-white hover:opacity-90">Find Similar</a>
           ) : (
             <div className="flex gap-2">
-              <a href={item.detailsUrl} className="rounded-lg border border-blue-600 px-3 py-1.5 text-sm font-medium text-blue-600 hover:bg-blue-50">View Details</a>
-              <a href="#inquire" className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:opacity-90">Book Now</a>
+              <a href={toPickedForUrl(item.detailsUrl)} className="rounded-lg border border-blue-600 px-3 py-1.5 text-sm font-medium text-blue-600 hover:bg-blue-50">View Details</a>
+              <a href="https://pickedfor.com/contact" className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:opacity-90">Book Now</a>
             </div>
           )}
         </div>
@@ -160,12 +170,12 @@ export function ModernTemplate({ proposal, mode }: Props) {
           {isBrand ? (
             <div className="flex items-center gap-2">
               <div className="flex h-8 w-8 items-center justify-center rounded bg-blue-700 text-sm font-bold text-white">V4</div>
-              <span className="text-lg font-semibold">Villa4you</span>
+              <span className="text-lg font-semibold">PickedFor</span>
             </div>
           ) : (
             <span className="text-lg font-light tracking-wide text-gray-400">Curated Proposal</span>
           )}
-          {isBrand && <a href="#contact" className="rounded-full bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:opacity-90">Contact Us</a>}
+          {isBrand && <a href="https://pickedfor.com/contact" className="rounded-full bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:opacity-90">Contact Us</a>}
         </div>
       </header>
 
@@ -212,14 +222,14 @@ export function ModernTemplate({ proposal, mode }: Props) {
       </div>
 
       <footer className="border-t border-gray-200 bg-white py-8 text-center text-sm text-gray-500">
-        {isBrand ? <p className="font-medium text-gray-700">Prepared for you by Villa4you</p> : <p>Prepared by your travel advisor</p>}
+        {isBrand ? <p className="font-medium text-gray-700">Prepared for you by PickedFor</p> : <p>Prepared by your travel advisor</p>}
         <p className="mt-2 text-xs text-gray-400">© {new Date().getFullYear()} · Powered by PickedFor</p>
       </footer>
 
       <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 bg-white/95 backdrop-blur-sm">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-          <p className="text-sm font-medium text-gray-700">{isBrand ? 'Ready to book? Contact Villa4you' : 'Ready to book? Get in touch'}</p>
-          <a href="#contact" className="rounded-lg bg-blue-600 px-4 py-1.5 text-sm font-medium text-white hover:opacity-90">{isBrand ? '✉️ Contact Us' : '✉️ Inquire'}</a>
+          <p className="text-sm font-medium text-gray-700">{isBrand ? 'Ready to book? Contact PickedFor' : 'Ready to book? Get in touch'}</p>
+          <a href="https://pickedfor.com/contact" className="rounded-lg bg-blue-600 px-4 py-1.5 text-sm font-medium text-white hover:opacity-90">{isBrand ? '✉️ Contact Us' : '✉️ Inquire'}</a>
         </div>
       </div>
     </div>

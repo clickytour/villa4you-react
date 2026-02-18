@@ -8,6 +8,16 @@ interface Props {
   mode: 'brand' | 'nologo';
 }
 
+const PICKEDFOR_BASE_URL = 'https://pickedfor.com';
+
+function toPickedForUrl(pathOrUrl: string) {
+  if (!pathOrUrl) return PICKEDFOR_BASE_URL;
+  if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
+  if (pathOrUrl.startsWith('/pickedfor/detail/')) return `${PICKEDFOR_BASE_URL}${pathOrUrl}`;
+  const slug = pathOrUrl.split('/').filter(Boolean).pop();
+  return slug ? `${PICKEDFOR_BASE_URL}/pickedfor/detail/${slug}` : PICKEDFOR_BASE_URL;
+}
+
 function ItemRow({ item, index, isBrand, entityType, accent }: { item: ProposalItem; index: number; isBrand: boolean; entityType: string; accent: string }) {
   const label = isBrand ? item.name : `${item.listingType} ${String.fromCharCode(65 + index)}`;
   const isRealEstate = entityType === 'real_estate';
@@ -54,11 +64,11 @@ function ItemRow({ item, index, isBrand, entityType, accent }: { item: ProposalI
               )}
             </div>
             {isUnavailable ? (
-              <a href="#inquire" className="rounded px-3 py-1.5 text-sm font-medium text-white" style={{ backgroundColor: accent }}>Find Similar</a>
+              <a href="https://pickedfor.com/contact" className="rounded px-3 py-1.5 text-sm font-medium text-white" style={{ backgroundColor: accent }}>Find Similar</a>
             ) : (
               <div className="flex gap-2">
-                <a href={item.detailsUrl} className="rounded border px-3 py-1.5 text-sm font-medium hover:bg-gray-50" style={{ borderColor: accent, color: accent }}>View Details</a>
-                <a href="#inquire" className="rounded px-3 py-1.5 text-sm font-medium text-white" style={{ backgroundColor: accent }}>Inquire</a>
+                <a href={toPickedForUrl(item.detailsUrl)} className="rounded border px-3 py-1.5 text-sm font-medium hover:bg-gray-50" style={{ borderColor: accent, color: accent }}>View Details</a>
+                <a href="https://pickedfor.com/contact" className="rounded px-3 py-1.5 text-sm font-medium text-white" style={{ backgroundColor: accent }}>Inquire</a>
               </div>
             )}
           </div>
@@ -139,11 +149,11 @@ export function DocumentTemplate({ proposal, mode }: Props) {
       <header className="w-full border-b border-gray-300 bg-white">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
           {isBrand ? (
-            <div className="flex items-center gap-2"><div className="flex h-8 w-8 items-center justify-center rounded bg-[#1e3a5f] text-sm font-bold text-white">V4</div><span className="font-serif text-lg font-semibold">Villa4you</span></div>
+            <div className="flex items-center gap-2"><div className="flex h-8 w-8 items-center justify-center rounded bg-[#1e3a5f] text-sm font-bold text-white">V4</div><span className="font-serif text-lg font-semibold">PickedFor</span></div>
           ) : (
             <span className="font-serif text-lg font-light text-gray-400">Travel Proposal</span>
           )}
-          {isBrand && <a href="#contact" className="rounded border px-4 py-2 text-sm font-medium hover:bg-gray-50" style={{ borderColor: accent, color: accent }}>Contact Us</a>}
+          {isBrand && <a href="https://pickedfor.com/contact" className="rounded border px-4 py-2 text-sm font-medium hover:bg-gray-50" style={{ borderColor: accent, color: accent }}>Contact Us</a>}
         </div>
       </header>
 
@@ -176,14 +186,14 @@ export function DocumentTemplate({ proposal, mode }: Props) {
       </div>
 
       <footer className="border-t border-gray-300 bg-white py-8 text-center text-sm text-gray-500">
-        {isBrand ? <p className="font-serif font-medium text-gray-700">Prepared for you by Villa4you</p> : <p className="font-serif">Prepared by your travel advisor</p>}
+        {isBrand ? <p className="font-serif font-medium text-gray-700">Prepared for you by PickedFor</p> : <p className="font-serif">Prepared by your travel advisor</p>}
         <p className="mt-2 text-xs text-gray-400">© {new Date().getFullYear()} · Powered by PickedFor</p>
       </footer>
 
       <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-gray-300 bg-white/95 backdrop-blur-sm">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
-          <p className="text-sm font-medium text-gray-700">{isBrand ? 'Ready to proceed? Contact Villa4you' : 'Interested? Get in touch'}</p>
-          <a href="#contact" className="rounded px-4 py-1.5 text-sm font-medium text-white" style={{ backgroundColor: accent }}>✉️ Contact</a>
+          <p className="text-sm font-medium text-gray-700">{isBrand ? 'Ready to proceed? Contact PickedFor' : 'Interested? Get in touch'}</p>
+          <a href="https://pickedfor.com/contact" className="rounded px-4 py-1.5 text-sm font-medium text-white" style={{ backgroundColor: accent }}>✉️ Contact</a>
         </div>
       </div>
     </div>

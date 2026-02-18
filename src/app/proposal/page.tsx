@@ -10,7 +10,7 @@ export default function ProposalIndex() {
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-2">Villa4you — QA Hub</h1>
+        <h1 className="text-3xl font-bold mb-2">PickedFor — QA Hub</h1>
         <p className="text-gray-500 mb-8 text-sm">All proposals, templates, detail pages, and search hub for QA review.</p>
 
         {/* ─── SEARCH HUB ─── */}
@@ -28,12 +28,12 @@ export default function ProposalIndex() {
               <span className="text-xs text-amber-600 font-medium">Pending QA</span>
             </div>
             <div className="flex flex-wrap gap-2">
-              <Link href="/search?intent=vacation" className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-gray-400 hover:bg-gray-50">🏖️ Vacation</Link>
-              <Link href="/search?intent=real-estate" className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-gray-400 hover:bg-gray-50">🏠 Real Estate</Link>
-              <Link href="/search?intent=services" className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-gray-400 hover:bg-gray-50">✨ Services</Link>
-              <Link href="/search?intent=hotels" className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-gray-400 hover:bg-gray-50">🏨 Hotels</Link>
-              <Link href="/search?intent=blog" className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-gray-400 hover:bg-gray-50">📝 Blog</Link>
-              <Link href="/search" className="rounded-lg border border-blue-300 bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 hover:border-blue-400">🔍 Full Hub</Link>
+              <Link href="https://pickedfor.com/search?intent=vacation" className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-gray-400 hover:bg-gray-50">🏖️ Vacation</Link>
+              <Link href="https://pickedfor.com/search?intent=real-estate" className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-gray-400 hover:bg-gray-50">🏠 Real Estate</Link>
+              <Link href="https://pickedfor.com/search?intent=services" className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-gray-400 hover:bg-gray-50">✨ Services</Link>
+              <Link href="https://pickedfor.com/search?intent=hotels" className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-gray-400 hover:bg-gray-50">🏨 Hotels</Link>
+              <Link href="https://pickedfor.com/search?intent=blog" className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-gray-400 hover:bg-gray-50">📝 Blog</Link>
+              <Link href="https://pickedfor.com/search" className="rounded-lg border border-blue-300 bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 hover:border-blue-400">🔍 Full Hub</Link>
             </div>
           </div>
         </div>
@@ -69,7 +69,7 @@ export default function ProposalIndex() {
                 {templates.map((t) => (
                   <Link
                     key={t}
-                    href={`/proposal/${p.id}?template=${t}`}
+                    href={`https://pickedfor.com/proposal/${p.id}?template=${t}`}
                     className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:border-gray-400"
                   >
                     {templateLabels[t]}
@@ -102,10 +102,10 @@ export default function ProposalIndex() {
                 <span className="text-xs text-amber-600 font-medium">Pending QA</span>
               </div>
               <div className="flex gap-2">
-                <Link href={`/pickedfor/detail/${l.slug}?mode=brand`} className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-gray-400 hover:bg-gray-50">
+                <Link href={`https://pickedfor.com/pickedfor/detail/${l.slug}?mode=brand`} className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-gray-400 hover:bg-gray-50">
                   🏷️ Branded
                 </Link>
-                <Link href={`/pickedfor/detail/${l.slug}?mode=nologo`} className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-gray-400 hover:bg-gray-50">
+                <Link href={`https://pickedfor.com/pickedfor/detail/${l.slug}?mode=nologo`} className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-gray-400 hover:bg-gray-50">
                   🔒 No-logo
                 </Link>
               </div>

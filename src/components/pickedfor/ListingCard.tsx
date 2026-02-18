@@ -122,7 +122,7 @@ export function ListingCard({
 }: Props) {
   const [liked, setLiked] = useState(false);
   const [dismissed, setDismissed] = useState(false);
-  const href = `/r/${proposalId}/${listing.slug}`;
+  const href = `https://pickedfor.com/pickedfor/detail/${listing.slug}`;
   const isUnavailable = listing.availability === 'unavailable';
 
   // Dismissed overlay
@@ -162,7 +162,7 @@ export function ListingCard({
   const CTAButtons = ({ outline, filled }: { outline: string; filled: string }) => {
     if (isUnavailable) {
       return (
-        <a href="#inquire" className={`rounded-lg px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 ${filled}`} style={{ backgroundColor: accentColor }}>
+        <a href="https://pickedfor.com/contact" className={`rounded-lg px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 ${filled}`} style={{ backgroundColor: accentColor }}>
           Find Similar
         </a>
       );
@@ -172,7 +172,7 @@ export function ListingCard({
         <Link href={href} className={`rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-gray-50 ${outline}`} style={{ borderColor: accentColor, color: accentColor }}>
           View Details
         </Link>
-        <a href="#inquire" className="rounded-lg px-3 py-1.5 text-sm font-medium text-white transition-opacity hover:opacity-90" style={{ backgroundColor: accentColor }}>
+        <a href="https://pickedfor.com/contact" className="rounded-lg px-3 py-1.5 text-sm font-medium text-white transition-opacity hover:opacity-90" style={{ backgroundColor: accentColor }}>
           Book Now
         </a>
       </div>
@@ -257,11 +257,11 @@ export function ListingCard({
                 {listing.price} <span className="text-sm font-normal text-white/70">{listing.priceNote}</span>
               </p>
               {isUnavailable ? (
-                <a href="#inquire" className="rounded-full px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90" style={{ backgroundColor: accentColor }}>Find Similar</a>
+                <a href="https://pickedfor.com/contact" className="rounded-full px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90" style={{ backgroundColor: accentColor }}>Find Similar</a>
               ) : (
                 <div className="flex gap-2">
                   <Link href={href} className="rounded-full border border-white/60 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/20">View Details</Link>
-                  <a href="#inquire" className="rounded-full px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90" style={{ backgroundColor: accentColor }}>Book Now</a>
+                  <a href="https://pickedfor.com/contact" className="rounded-full px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90" style={{ backgroundColor: accentColor }}>Book Now</a>
                 </div>
               )}
             </div>

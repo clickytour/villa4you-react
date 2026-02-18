@@ -15,8 +15,8 @@ interface Props {
 function RoomCard({ room, isBrand, hotelSlug, proposalId }: { room: HotelRoom; isBrand: boolean; hotelSlug: string; proposalId?: string }) {
   const displayName = isBrand ? room.name : `Room Option`;
   const detailUrl = proposalId
-    ? `/pickedfor/detail/${room.slug}?from=${proposalId}&mode=${isBrand ? 'brand' : 'nologo'}`
-    : `/pickedfor/detail/${room.slug}?mode=${isBrand ? 'brand' : 'nologo'}`;
+    ? `https://pickedfor.com/pickedfor/detail/${room.slug}?from=${proposalId}&mode=${isBrand ? 'brand' : 'nologo'}`
+    : `https://pickedfor.com/pickedfor/detail/${room.slug}?mode=${isBrand ? 'brand' : 'nologo'}`;
 
   return (
     <div className={`overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-md ${!room.available ? 'opacity-50' : ''}`}>
@@ -52,7 +52,7 @@ function RoomCard({ room, isBrand, hotelSlug, proposalId }: { room: HotelRoom; i
                 <Link href={detailUrl} className="rounded-lg border border-blue-600 px-3 py-1.5 text-sm font-medium text-blue-600 hover:bg-blue-50">
                   View Room
                 </Link>
-                <a href="#book" className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:opacity-90">
+                <a href="https://pickedfor.com" className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:opacity-90">
                   Book
                 </a>
               </div>
@@ -78,12 +78,12 @@ export function HotelPage({ hotel, isBrand, backUrl, proposalId }: Props) {
           {isBrand ? (
             <div className="flex items-center gap-2">
               <div className="flex h-8 w-8 items-center justify-center rounded bg-blue-700 text-sm font-bold text-white">V4</div>
-              <span className="text-lg font-semibold">Villa4you</span>
+              <span className="text-lg font-semibold">PickedFor</span>
             </div>
           ) : (
             <span className="text-lg font-light tracking-wide text-gray-400">Curated Proposal</span>
           )}
-          {isBrand && <a href="#contact" className="rounded-full bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:opacity-90">Contact Us</a>}
+          {isBrand && <a href="https://pickedfor.com/contact" className="rounded-full bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:opacity-90">Contact Us</a>}
         </div>
       </header>
 
@@ -188,7 +188,7 @@ export function HotelPage({ hotel, isBrand, backUrl, proposalId }: Props) {
 
       {/* Footer */}
       <footer className="mt-8 border-t border-gray-200 bg-white py-8 text-center text-sm text-gray-500">
-        {isBrand ? <p className="font-medium text-gray-700">Villa4you</p> : <p>Your travel advisor</p>}
+        {isBrand ? <p className="font-medium text-gray-700">PickedFor</p> : <p>Your travel advisor</p>}
         <p className="mt-2 text-xs text-gray-400">© {new Date().getFullYear()} · Powered by PickedFor</p>
       </footer>
     </div>

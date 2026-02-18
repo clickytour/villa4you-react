@@ -22,13 +22,13 @@ function DetailContent() {
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-400">404</h1>
           <p className="mt-2 text-gray-500">Listing not found</p>
-          <a href="/proposal" className="mt-4 inline-block text-sm text-blue-600 hover:underline">← Back to proposals</a>
+          <a href="https://pickedfor.com/proposal" className="mt-4 inline-block text-sm text-blue-600 hover:underline">← Back to proposals</a>
         </div>
       </div>
     );
   }
 
-  const backUrl = from ? `/proposal/${from}` : '/proposal';
+  const backUrl = from ? `https://pickedfor.com/proposal/${from}` : 'https://pickedfor.com/proposal';
 
   if (listing.type === 'hotel') {
     return <HotelPage hotel={listing} isBrand={isBrand} backUrl={backUrl} proposalId={from ?? undefined} />;

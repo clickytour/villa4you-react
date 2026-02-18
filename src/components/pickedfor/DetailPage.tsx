@@ -46,12 +46,12 @@ export function DetailPage({ listing, isBrand, backUrl, backLabel }: Props) {
           {isBrand ? (
             <div className="flex items-center gap-2">
               <div className="flex h-8 w-8 items-center justify-center rounded bg-blue-700 text-sm font-bold text-white">V4</div>
-              <span className="text-lg font-semibold">Villa4you</span>
+              <span className="text-lg font-semibold">PickedFor</span>
             </div>
           ) : (
             <span className="text-lg font-light tracking-wide text-gray-400">Curated Proposal</span>
           )}
-          {isBrand && <a href="#contact" className="rounded-full bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:opacity-90">Contact Us</a>}
+          {isBrand && <a href="https://pickedfor.com/contact" className="rounded-full bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:opacity-90">Contact Us</a>}
         </div>
       </header>
 
@@ -185,18 +185,18 @@ export function DetailPage({ listing, isBrand, backUrl, backLabel }: Props) {
         <div className="mt-10 flex flex-col gap-3 sm:flex-row">
           {isRealEstate ? (
             <>
-              <a href="#inquire" className="flex-1 rounded-xl bg-blue-600 py-4 text-center text-lg font-semibold text-white hover:opacity-90">Request Information</a>
-              <a href="#schedule" className="flex-1 rounded-xl border-2 border-blue-600 py-4 text-center text-lg font-semibold text-blue-600 hover:bg-blue-50">Schedule Viewing</a>
+              <a href="https://pickedfor.com/contact" className="flex-1 rounded-xl bg-blue-600 py-4 text-center text-lg font-semibold text-white hover:opacity-90">Request Information</a>
+              <a href="https://pickedfor.com/contact" className="flex-1 rounded-xl border-2 border-blue-600 py-4 text-center text-lg font-semibold text-blue-600 hover:bg-blue-50">Schedule Viewing</a>
             </>
           ) : isService ? (
             <>
-              <a href="#book" className="flex-1 rounded-xl bg-blue-600 py-4 text-center text-lg font-semibold text-white hover:opacity-90">Book This Experience</a>
-              <a href="#inquire" className="flex-1 rounded-xl border-2 border-blue-600 py-4 text-center text-lg font-semibold text-blue-600 hover:bg-blue-50">Ask a Question</a>
+              <a href="https://pickedfor.com" className="flex-1 rounded-xl bg-blue-600 py-4 text-center text-lg font-semibold text-white hover:opacity-90">Book This Experience</a>
+              <a href="https://pickedfor.com/contact" className="flex-1 rounded-xl border-2 border-blue-600 py-4 text-center text-lg font-semibold text-blue-600 hover:bg-blue-50">Ask a Question</a>
             </>
           ) : (
             <>
-              <a href="#book" className="flex-1 rounded-xl bg-blue-600 py-4 text-center text-lg font-semibold text-white hover:opacity-90">Book Now</a>
-              <a href="#inquire" className="flex-1 rounded-xl border-2 border-blue-600 py-4 text-center text-lg font-semibold text-blue-600 hover:bg-blue-50">Inquire</a>
+              <a href="https://pickedfor.com" className="flex-1 rounded-xl bg-blue-600 py-4 text-center text-lg font-semibold text-white hover:opacity-90">Book Now</a>
+              <a href="https://pickedfor.com/contact" className="flex-1 rounded-xl border-2 border-blue-600 py-4 text-center text-lg font-semibold text-blue-600 hover:bg-blue-50">Inquire</a>
             </>
           )}
         </div>
@@ -210,7 +210,7 @@ export function DetailPage({ listing, isBrand, backUrl, backLabel }: Props) {
 
       {/* Footer */}
       <footer className="mt-8 border-t border-gray-200 bg-white py-8 text-center text-sm text-gray-500">
-        {isBrand ? <p className="font-medium text-gray-700">Villa4you</p> : <p>Your travel advisor</p>}
+        {isBrand ? <p className="font-medium text-gray-700">PickedFor</p> : <p>Your travel advisor</p>}
         <p className="mt-2 text-xs text-gray-400">© {new Date().getFullYear()} · Powered by PickedFor</p>
       </footer>
     </div>
