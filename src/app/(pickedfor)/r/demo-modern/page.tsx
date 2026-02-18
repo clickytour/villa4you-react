@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { sampleProposal } from '@/data/mock-proposals';
 import { ProposalHeader } from '@/components/pickedfor/ProposalHeader';
 import { ProposalFooter } from '@/components/pickedfor/ProposalFooter';
@@ -8,6 +9,13 @@ import {
   GroupedListings,
   StickyBottomCTA,
 } from '@/components/pickedfor/ProposalContent';
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function DemoModern({
   searchParams,

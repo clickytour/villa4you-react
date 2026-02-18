@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { sampleProposal } from '@/data/mock-proposals';
 import {
   CriteriaBanner,
@@ -6,6 +7,13 @@ import {
   GroupedListings,
   StickyBottomCTA,
 } from '@/components/pickedfor/ProposalContent';
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function DemoMagazine({
   searchParams,

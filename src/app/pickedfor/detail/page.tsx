@@ -1,5 +1,13 @@
-import { detailListings } from '@/lib/detailMockData';
-import Link from 'next/link';
+import type { Metadata } from "next";
+import { detailListings } from "@/lib/detailMockData";
+import Link from "next/link";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 const typeEmoji: Record<string, string> = { vacation: '🏖️', hotel: '🏨', 'hotel-room': '🛏️', 'real-estate': '🏠', service: '✨' };
 
