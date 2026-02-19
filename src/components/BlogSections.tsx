@@ -1,3 +1,5 @@
+"use client";
+
 import { trackSearchHandoffClick } from "@/lib/searchAnalytics";
 
 const demoPosts = [
