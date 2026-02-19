@@ -23,7 +23,9 @@ export default async function ProposalIndex({
   const params = await searchParams;
   const isDev = process.env.NODE_ENV === "development";
   const hasQaOverride = params.qa === "1";
-  const canViewQaHub = isDev || hasQaOverride;
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "").toLowerCase();
+  const isStaging = siteUrl.includes("staging") || siteUrl.includes("vercel.app");
+  const canViewQaHub = isDev || hasQaOverride || isStaging;
 
   if (!canViewQaHub) {
     redirect("/");
