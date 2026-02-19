@@ -1,7 +1,5 @@
 export function canAccessQa(): boolean {
-  const isDev = process.env.NODE_ENV === "development";
-  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "").toLowerCase();
-  const isStaging = siteUrl.includes("staging") || siteUrl.includes("vercel.app") || siteUrl.includes("localhost");
-
-  return isDev || isStaging;
+  // QA hub is always accessible — not sensitive, just a page index.
+  // Header button visibility is controlled separately in SiteHeader.tsx.
+  return true;
 }
