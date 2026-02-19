@@ -26,6 +26,11 @@ const nextConfig: NextConfig = {
         destination: "/service-apply",
         permanent: true,
       },
+      {
+        source: "/privacy-policy",
+        destination: "/privacy",
+        permanent: true,
+      },
     ];
   },
 };
