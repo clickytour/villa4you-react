@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { PlaceAutocomplete } from "@/components/PlaceAutocomplete";
 
 type FormState = {
   destination: string;
@@ -100,7 +101,7 @@ export function QuickRequestForm() {
     <div className="mt-4 rounded-[12px] border border-slate-300 bg-white/85 p-3 backdrop-blur">
       <div className="grid gap-2 lg:grid-cols-12">
         <div className="lg:col-span-4">
-          <input className={`${inputClass} w-full`} placeholder="Type a place (e.g., Santorini, Paros)" value={form.destination} onChange={(e) => setField("destination", e.target.value)} />
+          <PlaceAutocomplete name="destination" placeholder="Type a place (e.g., Santorini, Paros)" value={form.destination} onTextChange={(v) => setField("destination", v)} onChange={(p) => { if (p) setField("destination", p.displayName); }} />
           {errors.destination && <p className="mt-1 text-[11px] text-red-600">{errors.destination}</p>}
         </div>
 

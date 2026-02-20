@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { PlaceAutocomplete } from "@/components/PlaceAutocomplete";
 
 type RoleKey = "guests" | "owners" | "collab";
 
@@ -97,7 +98,7 @@ export function HomepageRoleExperience() {
             <aside className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-600">Quick Request (UI mock)</h3>
               <div className="mt-3 grid gap-2">
-                <input className="rounded-lg border bg-white px-3 py-2 text-sm" placeholder="Destination" />
+                <PlaceAutocomplete name="destination" placeholder="Destination" />
                 <div className="grid grid-cols-2 gap-2">
                   <input className="rounded-lg border bg-white px-3 py-2 text-sm" placeholder="Check-in" />
                   <input className="rounded-lg border bg-white px-3 py-2 text-sm" placeholder="Check-out" />

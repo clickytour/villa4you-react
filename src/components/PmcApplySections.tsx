@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { PlaceAutocomplete } from "@/components/PlaceAutocomplete";
 
 type OnboardingIntent = "full-management" | "co-managed" | "revenue-only";
 type Step = 1 | 2 | 3;
@@ -368,10 +369,10 @@ export function PmcApplySections() {
                 <fieldset className="rounded-xl border border-slate-200 p-3">
                   <legend className="px-2 text-sm font-semibold text-slate-800">Coverage & portfolio</legend>
                   <div className="grid gap-3 md:grid-cols-2">
-                    <label className={labelClass}>Regions / areas *
-                      <input className={inputClass} placeholder="Halkidiki, Crete..." value={form.regions} onChange={(e) => setField("regions", e.target.value)} />
+                    <div><label className={`${labelClass} mb-0`}>Regions / areas *</label>
+                      <PlaceAutocomplete name="regions" placeholder="Halkidiki, Crete..." value={form.regions} onTextChange={(v) => setField("regions", v)} onChange={(p) => { if (p) setField("regions", p.displayName); }} />
                       {errors.regions && <span className="text-xs text-red-600">{errors.regions}</span>}
-                    </label>
+                    </div>
                     <label className={labelClass}>Languages *
                       <input className={inputClass} placeholder="EN, EL, DE..." value={form.languages} onChange={(e) => setField("languages", e.target.value)} />
                       {errors.languages && <span className="text-xs text-red-600">{errors.languages}</span>}

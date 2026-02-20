@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { serviceTaxonomy } from "@/lib/serviceTaxonomy";
+import { PlaceAutocomplete } from "@/components/PlaceAutocomplete";
 import { trackSearchHandoffClick } from "@/lib/searchAnalytics";
 
 type Step = 1 | 2 | 3;
@@ -344,10 +345,10 @@ export function QuickRequestPanel() {
                 <input type="date" className={inputClass} value={form.checkOut} onChange={(e) => setField("checkOut", e.target.value)} />
                 {errors.checkOut && <span className="text-[10px] text-red-600">{errors.checkOut}</span>}
               </label>
-              <label className="text-[10px] font-semibold text-slate-700">Destination / Region*
-                <input className={inputClass} placeholder="e.g., Santorini" value={form.destination} onChange={(e) => setField("destination", e.target.value)} />
+              <div><span className="text-[10px] font-semibold text-slate-700">Destination / Region*</span>
+                <PlaceAutocomplete name="destination" placeholder="e.g., Santorini" value={form.destination} onTextChange={(v) => setField("destination", v)} onChange={(p) => { if (p) setField("destination", p.displayName); }} />
                 {errors.destination && <span className="text-[10px] text-red-600">{errors.destination}</span>}
-              </label>
+              </div>
               <label className="text-[10px] font-semibold text-slate-700">Adults*
                 <input type="number" min={1} className={inputClass} value={form.adults} onChange={(e) => setField("adults", e.target.value)} />
                 {errors.adults && <span className="text-[10px] text-red-600">{errors.adults}</span>}
@@ -357,10 +358,10 @@ export function QuickRequestPanel() {
 
           {form.guestRole === "tours-activities" && (
             <>
-              <label className="text-[10px] font-semibold text-slate-700">Destination / Region*
-                <input className={inputClass} placeholder="e.g., Chania" value={form.destination} onChange={(e) => setField("destination", e.target.value)} />
+              <div><span className="text-[10px] font-semibold text-slate-700">Destination / Region*</span>
+                <PlaceAutocomplete name="destination" placeholder="e.g., Chania" value={form.destination} onTextChange={(v) => setField("destination", v)} onChange={(p) => { if (p) setField("destination", p.displayName); }} />
                 {errors.destination && <span className="text-[10px] text-red-600">{errors.destination}</span>}
-              </label>
+              </div>
               <label className="text-[10px] font-semibold text-slate-700">Service Category*
                 <select
                   className={inputClass}
@@ -416,10 +417,10 @@ export function QuickRequestPanel() {
                   <option>Land</option>
                 </select>
               </label>
-              <label className="text-[10px] font-semibold text-slate-700 sm:col-span-2">Regions*
-                <input className={inputClass} value={form.regions} onChange={(e) => setField("regions", e.target.value)} />
+              <div className="sm:col-span-2"><span className="text-[10px] font-semibold text-slate-700">Regions*</span>
+                <PlaceAutocomplete name="regions" placeholder="e.g., Halkidiki" value={form.regions} onTextChange={(v) => setField("regions", v)} onChange={(p) => { if (p) setField("regions", p.displayName); }} />
                 {errors.regions && <span className="text-[10px] text-red-600">{errors.regions}</span>}
-              </label>
+              </div>
             </>
           )}
 

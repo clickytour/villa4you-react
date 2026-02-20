@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { serviceTaxonomy } from "@/lib/serviceTaxonomy";
+import { PlaceAutocomplete } from "@/components/PlaceAutocomplete";
 
 type Step = 1 | 2 | 3;
 
@@ -207,7 +208,7 @@ export function ServisApplySections() {
                 <label className={labelClass}>Email *<input type="email" className={inputClass} value={form.email} onChange={(e)=>setField("email", e.target.value)} />{errors.email && <span className="text-xs text-red-600">{errors.email}</span>}</label>
                 <label className={labelClass}>Phone<input className={inputClass} value={form.phone} onChange={(e)=>setField("phone", e.target.value)} /></label>
                 <label className={labelClass}>Website<input className={inputClass} value={form.website} onChange={(e)=>setField("website", e.target.value)} /></label>
-                <label className={labelClass}>Region *<input className={inputClass} placeholder="Halkidiki, Crete..." value={form.region} onChange={(e)=>setField("region", e.target.value)} />{errors.region && <span className="text-xs text-red-600">{errors.region}</span>}</label>
+                <div><label className={`${labelClass} mb-0`}>Region *</label><PlaceAutocomplete name="region" placeholder="Halkidiki, Crete..." value={form.region} onTextChange={(v) => setField("region", v)} onChange={(p) => { if (p) setField("region", p.displayName); }} />{errors.region && <span className="text-xs text-red-600">{errors.region}</span>}</div>
               </div>
             </fieldset>
           )}

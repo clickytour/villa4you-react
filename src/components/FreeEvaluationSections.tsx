@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PlaceAutocomplete } from "@/components/PlaceAutocomplete";
 
 const models = [
   {
@@ -51,7 +52,7 @@ export function FreeEvaluationSections() {
           <div className="mt-4 grid gap-5 md:grid-cols-[1.6fr_1fr] md:items-center">
             <div>
               <h1 className="text-[42px] font-semibold leading-none text-slate-900">Free Villa Evaluation: pricing plan, demand insights & next-step options</h1>
-              <p className="mt-3 text-[21px] text-slate-600">Get a concise review of your property’s revenue potential across channels, with a clear plan for Self-Managed, Multi-Platform Sync, or Fully Managed models.</p>
+              <p className="mt-3 text-[21px] text-slate-600">Get a concise review of your property's revenue potential across channels, with a clear plan for Self-Managed, Multi-Platform Sync, or Fully Managed models.</p>
 
               <div className="mt-4 flex flex-wrap gap-3">
                 <button className="rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Start Free Evaluation</button>
@@ -237,8 +238,7 @@ export function FreeEvaluationSections() {
               <fieldset className="mt-4 rounded-xl border border-slate-200 p-3">
                 <legend className="px-2 text-sm font-semibold text-slate-800">Region & Address</legend>
                 <div className="grid gap-3 md:grid-cols-2">
-                  <label className={labelClass}>Region *<select className={inputClass}><option>Crete</option><option>Halkidiki</option><option>Santorini</option><option>Athens</option><option>Mykonos</option><option>Paros</option><option>Other</option></select><span className="mt-1 block text-xs text-slate-500">Choose “Other” if not listed.</span></label>
-                  <label className={labelClass}>Region (text)<input className={inputClass} placeholder="e.g., Ida-Viru maakond" /></label>
+                  <div><label className={`${labelClass} mb-0`}>Region *</label><PlaceAutocomplete name="region" placeholder="Start typing a region..." required /><span className="mt-1 block text-xs text-slate-500">Type to search Greek regions.</span></div>
                   <label className={labelClass}>Street 1<input className={inputClass} /></label>
                   <label className={labelClass}>Street 2<input className={inputClass} /></label>
                   <label className={labelClass}>City<input className={inputClass} /></label>
@@ -344,11 +344,11 @@ export function FreeEvaluationSections() {
           {[
             {
               q: "Is the evaluation really free?",
-              a: "Yes. It’s a complimentary assessment to help you understand fit and potential before any commitment.",
+              a: "Yes. It's a complimentary assessment to help you understand fit and potential before any commitment.",
             },
             {
               q: "How fast do I get the results?",
-              a: "Usually within 1–2 business days. In peak months it may take slightly longer; we’ll keep you posted.",
+              a: "Usually within 1-2 business days. In peak months it may take slightly longer; we'll keep you posted.",
             },
             {
               q: "Can I keep my existing cleaners/maintenance?",
@@ -356,7 +356,7 @@ export function FreeEvaluationSections() {
             },
             {
               q: "Which areas do you cover?",
-              a: "Crete, Halkidiki, Santorini, Athens, Mykonos, and Paros. For other regions, ask—we expand via partners.",
+              a: "Crete, Halkidiki, Santorini, Athens, Mykonos, and Paros. For other regions, ask-we expand via partners.",
             },
           ].map((item, idx) => (
             <details key={item.q} className={idx < 3 ? "border-b border-slate-200" : ""} open={idx === 3}>
@@ -373,7 +373,7 @@ export function FreeEvaluationSections() {
 
       <section className="mx-auto max-w-[1280px] px-4 pb-10">
         <div className="rounded-2xl border border-slate-300 bg-white px-4 py-8 text-center md:px-8">
-          <h3 className="text-[42px] font-semibold leading-none text-slate-900">Ready to see your villa’s revenue upside?</h3>
+          <h3 className="text-[42px] font-semibold leading-none text-slate-900">Ready to see your villa's revenue upside?</h3>
           <p className="mt-2 text-[21px] text-slate-600">Submit the form above or schedule a quick intro call.</p>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
             <button className="rounded-xl bg-slate-900 px-5 py-2.5 text-base font-medium text-white">Start Free Evaluation</button>

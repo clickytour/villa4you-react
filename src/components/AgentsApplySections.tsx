@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { PlaceAutocomplete } from "@/components/PlaceAutocomplete";
 
 type Step = 1 | 2 | 3;
 
@@ -315,10 +316,10 @@ export function AgentsApplySections() {
                     <input className={inputClass} placeholder="https://..." value={form.website} onChange={(e) => setField("website", e.target.value)} />
                     {errors.website && <span className="text-xs text-red-600">{errors.website}</span>}
                   </label>
-                  <label className={labelClass}>Regions *
-                    <input className={inputClass} placeholder="Halkidiki, Crete..." value={form.regions} onChange={(e) => setField("regions", e.target.value)} />
+                  <div><label className={`${labelClass} mb-0`}>Regions *</label>
+                    <PlaceAutocomplete name="regions" placeholder="Halkidiki, Crete..." value={form.regions} onTextChange={(v) => setField("regions", v)} onChange={(p) => { if (p) setField("regions", p.displayName); }} />
                     {errors.regions && <span className="text-xs text-red-600">{errors.regions}</span>}
-                  </label>
+                  </div>
                   <label className={labelClass}>Languages *
                     <input className={inputClass} placeholder="EN, EL, DE..." value={form.languages} onChange={(e) => setField("languages", e.target.value)} />
                     {errors.languages && <span className="text-xs text-red-600">{errors.languages}</span>}
