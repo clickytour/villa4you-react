@@ -2,6 +2,7 @@ const footerLinks = [
   { href: "/support", label: "Support" },
   { href: "/guest-help-faq", label: "Guest Help FAQ" },
   { href: "/plans-offers", label: "Plans & Offers" },
+  { href: "/tools", label: "Tools" },
   { href: "/blog", label: "Blog" },
 ];
 

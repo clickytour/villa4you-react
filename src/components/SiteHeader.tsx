@@ -59,6 +59,7 @@ const primaryNav: NavItem[] = [
       { href: "/for-owners", label: "For Owners Hub" },
       { href: "/vacation-property-management", label: "Vacation Property Management" },
       { href: "/free-evaluation", label: "Free Evaluation" },
+      { href: "/tools/vacation-owner-calculator", label: "Revenue Calculator" },
     ],
   },
   {
@@ -82,6 +83,7 @@ const primaryNav: NavItem[] = [
       { href: "/contact", label: "Contact" },
     ],
   },
+  { href: "/tools", label: "Tools" },
   { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },
 ];

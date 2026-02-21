@@ -55,17 +55,17 @@ const steps = [
 
 const results = [
   {
-    title: "Crete — 3BR sea-view villa",
+    title: "Crete - 3BR sea-view villa",
     text: "+21% shoulder-season occupancy after calendar sync & promo bundles.",
     image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1200&auto=format&fit=crop",
   },
   {
-    title: "Mykonos — premium hillside villa",
+    title: "Mykonos - premium hillside villa",
     text: "Higher ADR with minimum-stay tuning & content refresh; fewer gaps.",
     image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
   },
   {
-    title: "Halkidiki — family house",
+    title: "Halkidiki - family house",
     text: "Stabilized bookings via families segment + curated activity partners.",
     image: "",
   },
@@ -142,13 +142,13 @@ export function VacationPropertyManagementSections() {
       </section>
 
       <section className="mx-auto max-w-[1280px] px-4 pb-6">
-        <h2 className="text-[56px] font-semibold leading-none text-slate-900">Owners — frequently asked questions</h2>
+        <h2 className="text-[56px] font-semibold leading-none text-slate-900">Owners - frequently asked questions</h2>
         <div className="mt-4 overflow-hidden rounded-xl border border-slate-300 bg-white">
           <details className="border-b border-slate-300">
             <summary className="cursor-pointer list-none px-4 py-3 text-[30px] font-semibold text-slate-900 marker:content-none">
               Which model should I choose?
             </summary>
-            <p className="px-4 pb-4 text-[21px] text-slate-700">If you want hands-on control, start with <em>Self-Managed</em>. Want growth without changing ops? Pick <em>Multi-Platform Sync</em>. Prefer a complete hand-off? Go <em>Fully Managed</em>. We’ll advise after your evaluation.</p>
+            <p className="px-4 pb-4 text-[21px] text-slate-700">If you want hands-on control, start with <em>Self-Managed</em>. Want growth without changing ops? Pick <em>Multi-Platform Sync</em>. Prefer a complete hand-off? Go <em>Fully Managed</em>. We'll advise after your evaluation.</p>
           </details>
           <details className="border-b border-slate-300">
             <summary className="cursor-pointer list-none px-4 py-3 text-[30px] font-semibold text-slate-900 marker:content-none">
@@ -160,14 +160,28 @@ export function VacationPropertyManagementSections() {
             <summary className="cursor-pointer list-none px-4 py-3 text-[30px] font-semibold text-slate-900 marker:content-none">
               Can you work with our existing team?
             </summary>
-            <p className="px-4 pb-4 text-[21px] text-slate-700">Yes. We integrate with your current cleaners, maintenance, or concierge—then layer pricing, content, and distribution on top.</p>
+            <p className="px-4 pb-4 text-[21px] text-slate-700">Yes. We integrate with your current cleaners, maintenance, or concierge-then layer pricing, content, and distribution on top.</p>
           </details>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1280px] px-4 pb-6">
+        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 md:p-6">
+          <div className="flex flex-col md:flex-row md:items-center gap-4">
+            <div className="flex-1">
+              <h3 className="text-2xl font-semibold text-slate-900">Estimate your villa's earning potential</h3>
+              <p className="mt-1 text-sm text-slate-600">Use our revenue calculator with real data from 50 Greek destinations — see projected income, expenses, taxes, and net profit.</p>
+            </div>
+            <a href="/tools/vacation-owner-calculator" className="shrink-0 rounded-xl bg-[#0F2B46] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#1a3d5c] transition text-center">
+              Open Revenue Calculator
+            </a>
+          </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-[1280px] px-4 pb-10">
         <div className="rounded-2xl border border-slate-300 bg-white px-4 py-6 text-center">
-          <h2 className="text-[56px] font-semibold leading-none text-slate-900">Let’s review your villa’s revenue potential</h2>
+          <h2 className="text-[56px] font-semibold leading-none text-slate-900">Let&#39;s review your villa&#39;s revenue potential</h2>
           <p className="mt-3 text-[22px] text-slate-600">Get a free evaluation with pricing recommendations and demand insights.</p>
           <div className="mt-4 flex flex-wrap justify-center gap-3">
             <button className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-medium text-white">Start Free Evaluation</button>

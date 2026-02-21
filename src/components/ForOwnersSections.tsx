@@ -156,6 +156,30 @@ export function ForOwnersSections() {
       </section>
 
       <section className="mx-auto max-w-[1280px] px-4 pb-6">
+        <div className="rounded-[24px] border border-[#0F2B46]/20 bg-gradient-to-br from-[#0F2B46] to-[#1a3d5c] p-5 shadow-sm md:p-6 text-white">
+          <h2 className="text-[42px] font-semibold tracking-[-0.01em]">See what your villa could earn</h2>
+          <p className="mt-2 text-lg text-slate-300 max-w-2xl">
+            Use our revenue calculator with real market data from 50 Greek destinations. Compare management models, understand tax implications, and see your net profit — all in one tool.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <a href="/tools/vacation-owner-calculator" className="rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-[#0F2B46] hover:bg-slate-100 transition">
+              Open Revenue Calculator
+            </a>
+            <a href="/tools" className="rounded-xl border border-white/30 px-5 py-2.5 text-sm font-medium text-white hover:bg-white/10 transition">
+              Browse All Tools
+            </a>
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2 text-[11px] text-slate-400">
+            <span>&#10003; 50 destinations</span>
+            <span>&#10003; 2026 tax scales</span>
+            <span>&#10003; 5 management models</span>
+            <span>&#10003; Full expense breakdown</span>
+            <span>&#10003; Net yield calculation</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1280px] px-4 pb-6">
         <div className="rounded-[24px] border border-slate-200 bg-white/95 p-5 shadow-sm md:p-6">
           <h2 className="text-[42px] font-semibold tracking-[-0.01em] text-slate-900">Owners FAQ</h2>
 
